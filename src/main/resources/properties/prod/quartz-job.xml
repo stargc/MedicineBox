@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.1.xsd">
+
+	<!--  quartz start -->
+	<bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="jobFactory" ref="quartzJobFactory"></property>
+        <property name="configLocation" value="classpath:properties/quartz.properties"/>
+	    <property name="triggers">
+	        <list>
+	            <ref local="QueryDBJobTrigger"/>
+	            <ref local="CleanSendMsgParmTrigger"/>
+	            <ref local="SendEatMedicineTrigger"/>
+	        </list>
+	    </property>
+	</bean>
+
+	<!-- 1. 定时访问数据库 刷新连接状态  - 每1个小时  -->
+	<bean id="BaseQuartzJobClass" class="com.zhiyi.medicinebox.job.BaseQuartzJob" />
+	<bean name="QueryDBJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="BaseQuartzJobClass"/>
+        <property name="targetMethod" value="quaryDB"/>
+    </bean>
+    <bean id="QueryDBJobTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="QueryDBJob"/>
+        <property name="cronExpression" value=" 0 0 */1 * * ?  "/>
+        <property name="priority" value="1"/>
+    </bean>
+	<!-- 2. 每天清理 数据中过期的 fromID - 每天晚上2点 -->
+	<bean name="CleanSendMsgParmJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="BaseQuartzJobClass"/>
+        <property name="targetMethod" value="cleanSendMsgParm"/>
+    </bean>
+    <bean id="CleanSendMsgParmTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="CleanSendMsgParmJob"/>
+        <property name="cronExpression" value="0 0 2 * * ?"/>
+        <property name="priority" value="1"/>
+    </bean>
+	<!-- 3. 给用户发送吃药提醒 - 每10分钟 -->
+	<bean name="SendEatMedicineJob"
+          class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="BaseQuartzJobClass"/>
+        <property name="targetMethod" value="sendEatMedicine"/>
+    	<property name="concurrent" value="false"/>  
+    </bean>
+    <bean id="SendEatMedicineTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="SendEatMedicineJob"/>
+        <property name="cronExpression" value="0 0/10 * * * ?"/>
+        <!--优先执行   保证10分钟一次-->
+        <property name="priority" value="99"/>
+    </bean>
+	<!--  quartz end--> 
+	
+	
+</beans>
