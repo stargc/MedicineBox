@@ -20,7 +20,7 @@ public class SendMessageLog implements Serializable {
 
 	private String comment;
 
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date createDate;
 
 	private String message;

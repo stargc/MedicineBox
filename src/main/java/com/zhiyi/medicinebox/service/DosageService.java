@@ -7,6 +7,8 @@ import org.springframework.stereotype.Service;
 import com.zhiyi.medicinebox.dao.BaseDAO;
 import com.zhiyi.medicinebox.entity.Dosage;
 
+import java.util.Date;
+
 @Service("DosageService")
 public class DosageService {
 
@@ -15,6 +17,7 @@ public class DosageService {
 	
 	public boolean add(Dosage o) {
 		if (o != null) {
+			o.setCreateDate(new Date());
 			return baseDAO.save(o);
 		}
 		return false;

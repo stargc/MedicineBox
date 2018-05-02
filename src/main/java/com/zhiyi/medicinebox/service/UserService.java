@@ -1,6 +1,7 @@
 package com.zhiyi.medicinebox.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -23,6 +24,7 @@ public class UserService {
 	 */
 	public boolean add(User user) {
 		if(user != null){
+			user.setCreateDate(new Date());
 			return baseDAO.save(user);
 		}
 		return false;

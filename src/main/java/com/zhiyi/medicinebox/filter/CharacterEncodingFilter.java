@@ -1,4 +1,6 @@
 package com.zhiyi.medicinebox.filter;
+import org.apache.commons.httpclient.util.ExceptionUtil;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -31,15 +33,13 @@ public class CharacterEncodingFilter implements Filter {
 			try {
 				request.setCharacterEncoding("UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(ExceptionUtils.getStackTrace(e));
 			}
 		} else {
 			try {
 				request.setCharacterEncoding("UTF-8");
 			} catch (UnsupportedEncodingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.error(ExceptionUtils.getStackTrace(e));
 			}
 //			Iterator iter = request.getParameterMap().values().iterator();
 //			while (iter.hasNext()) {
@@ -48,7 +48,7 @@ public class CharacterEncodingFilter implements Filter {
 //					try {
 //						parames[i] = new String(parames[i].getBytes("iso8859-1"), "UTF-8");// 此处GBK与页面编码一样
 //					} catch (UnsupportedEncodingException e) {
-//						e.printStackTrace();
+//						logger.error(ExceptionUtils.getStackTrace(e));
 //					}
 //				}
 //			}

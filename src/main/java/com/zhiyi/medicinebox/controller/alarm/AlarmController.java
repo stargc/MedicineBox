@@ -1,6 +1,7 @@
 package com.zhiyi.medicinebox.controller.alarm;
 
 import com.zhiyi.medicinebox.service.AlarmService;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -36,15 +36,18 @@ public class AlarmController {
         logger.info("get image “"+ url + "” from server");
         String fileName = url;
         File file = new File(fileName);
-        //判断文件是否存在如果不存在就返回默认图标
-        if(!(file.exists() && file.canRead())) {
-        	return;
+        try {
+            //判断文件是否存在如果不存在就返回默认图标
+            if (!(file.exists() && file.canRead())) {
+                logger.error("alarm/getImage url {} 文件不存在", url);
+                return;
+            }
+            BufferedImage bufferedImage = ImageIO.read(file);
+            response.setContentType("image/png");
+            OutputStream os = response.getOutputStream();
+            ImageIO.write(bufferedImage, "png", os);
+        } catch (Exception e){
+            logger.error("get image 报错：" + ExceptionUtils.getStackTrace(e));
         }
-        FileInputStream inputStream = new FileInputStream(file);
-        BufferedImage bufferedImage = ImageIO.read(file);
-        response.setContentType("image/png");
-        OutputStream stream = response.getOutputStream();
-		OutputStream os = response.getOutputStream();
-		ImageIO.write(bufferedImage, "png", os);
     }
 }

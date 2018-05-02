@@ -1,6 +1,7 @@
 package com.zhiyi.medicinebox.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 
@@ -39,6 +40,9 @@ public class User implements Serializable {
 	private int sex;
 
 	private String userName;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
 
 	public User() {
 	}
@@ -139,4 +143,11 @@ public class User implements Serializable {
 		this.userName = userName;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 }

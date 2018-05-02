@@ -43,6 +43,9 @@ public class ViewAlarm implements Serializable {
 	
 	private String userName;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
+
 	public ViewAlarm() {
 	}
 
@@ -142,4 +145,11 @@ public class ViewAlarm implements Serializable {
 		this.userId = userId;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 }

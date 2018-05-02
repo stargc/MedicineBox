@@ -35,6 +35,9 @@ public class Alarm implements Serializable{
 	
 	private int issend;
 
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
+
 	public Alarm() {
 	}
 
@@ -100,5 +103,13 @@ public class Alarm implements Serializable{
 
 	public void setIssend(int issend) {
 		this.issend = issend;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
 	}
 }

@@ -1,6 +1,7 @@
 package com.zhiyi.medicinebox.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 
@@ -25,6 +26,9 @@ public class Medicine implements Serializable {
 	private String medName;
 
 	private String url;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
 
 	public Medicine() {
 	}
@@ -69,4 +73,11 @@ public class Medicine implements Serializable {
 		this.url = url;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 }

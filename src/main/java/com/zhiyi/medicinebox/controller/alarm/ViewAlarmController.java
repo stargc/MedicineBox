@@ -64,19 +64,27 @@ public class ViewAlarmController {
 	public ParmResponse add(Alarm alarm, Dosage dosage, Medicine medicine, Date startDate, Date endDate,
 			@RequestParam(value = "file", required = false) MultipartFile file,
 			HttpServletRequest request) {
+		String val = viewAlarmService.addVal(alarm,dosage,medicine,startDate,endDate);
+		if (val != null){
+			return ResponseUtils.getErrorResponse(ResultCode.RESULT_PARM_ERROR, val,request);
+		}
 		boolean isDone = false;
 		logger.info( alarm.getUserId() + " add alarm: medicine name = " + medicine.getMedName() + "；alarm time = " + alarm.getAlarmTime());
 		Date date = new Date();
-		SimpleDateFormat sf_path = new SimpleDateFormat("yyyyMMdd");
-		SimpleDateFormat sf_name = new SimpleDateFormat("hhmmssSSSS");
-		StringBuffer path = new StringBuffer(ConfigUtil.getValue("file_save_path_liunx"))
-				.append("/").append(sf_path.format(date))
-				.append("/").append(medicine.getMedName()).append(sf_name.format(date));
-		try {
-			FileUtils.saveFile(file, path.toString());
-		} catch (UnsupportedEncodingException e1) {
-			logger.error(ExceptionUtils.getStackTrace(e1));
-	        return ResponseUtils.getErrorResponse(ResultCode.RESULT_FILE_SAVE_ERROR, "文件保存错误",request);
+		String imgPath = null;
+		if (file != null) {
+			SimpleDateFormat sf_path = new SimpleDateFormat("yyyyMMdd");
+			SimpleDateFormat sf_name = new SimpleDateFormat("hhmmssSSSS");
+			StringBuffer path = new StringBuffer(ConfigUtil.getValue("file_save_path_liunx"))
+					.append("/").append(sf_path.format(date))
+					.append("/").append(alarm.getUserId()).append(sf_name.format(date));
+			imgPath = path.toString();
+			try {
+				FileUtils.saveFile(file, path.toString());
+			} catch (UnsupportedEncodingException e1) {
+				logger.error(ExceptionUtils.getStackTrace(e1));
+				return ResponseUtils.getErrorResponse(ResultCode.RESULT_FILE_SAVE_ERROR, "文件保存错误", request);
+			}
 		}
 
 		if (medicine != null && medicine.getMedName() != null) {
@@ -86,14 +94,18 @@ public class ViewAlarmController {
 				    defaultTransactionDefinition.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
 				    TransactionStatus status = transactionManager.getTransaction(defaultTransactionDefinition);
 				    try {
-				    	medicine.setUrl(path.toString());
+				    	medicine.setUrl(imgPath);
 				    	if (medicineService.add(medicine)) {
 				    		dosage.setMedId(medicine.getMedId());
 				    		if (dosageService.add(dosage)) {
 				    			int days = Long.valueOf((endDate.getTime() - startDate.getTime())/1000/60/60/24).intValue() + 1;
 				    			Calendar calendar = Calendar.getInstance();
 				    			calendar.setTime(startDate);
-
+								if (alarm.getStatusId() == 0){
+									//默认状态为 未服药 状态
+									alarm.setStatusId(1);
+								}
+				    			//添加当天记录
 								alarm.setAlarmDate(calendar.getTime());
 				    			alarm.setDosageId(dosage.getDosageId());
 				    			isDone = alarmService.add(alarm);
@@ -101,6 +113,7 @@ public class ViewAlarmController {
 									calendar.add(Calendar.DAY_OF_MONTH, 1);
 									alarm.setAlarmDate(calendar.getTime());
 					    			alarm.setDosageId(dosage.getDosageId());
+					    			alarm.setCreateDate(date);
 					    			isDone = alarmService.add(alarm);
 								}
 							}
@@ -108,7 +121,6 @@ public class ViewAlarmController {
 				        transactionManager.commit(status);
 				    } catch (Exception e) {
 				        transactionManager.rollback(status);
-				        isDone = false;
 						logger.error(ExceptionUtils.getStackTrace(e));
 				        return ResponseUtils.getErrorResponse(ResultCode.RESULT_PARM_ERROR, "参数错误，导致上传数据失败",request);
 				    }

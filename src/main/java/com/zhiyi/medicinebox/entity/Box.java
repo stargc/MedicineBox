@@ -1,6 +1,7 @@
 package com.zhiyi.medicinebox.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 import javax.persistence.*;
 
 
@@ -22,6 +23,9 @@ public class Box implements Serializable {
 
 	@Lob
 	private String qrCode;
+
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
 
 	public Box() {
 	}
@@ -50,4 +54,11 @@ public class Box implements Serializable {
 		this.qrCode = qrCode;
 	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
 }

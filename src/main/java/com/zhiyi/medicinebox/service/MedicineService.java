@@ -1,5 +1,6 @@
 package com.zhiyi.medicinebox.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -18,6 +19,7 @@ public class MedicineService {
 	
 	public boolean add(Medicine o) {
 		if (o != null) {
+			o.setCreateDate(new Date());
 			return baseDAO.save(o);
 		}
 		return false;

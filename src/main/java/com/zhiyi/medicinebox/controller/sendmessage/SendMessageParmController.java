@@ -34,7 +34,7 @@ public class SendMessageParmController {
 	@ResponseBody
 	public ParmResponse deleteByDate(Date date){
 		int num = sendParmService.deleteByDate(date);
-		return ResponseUtils.getBeanResponse(num, "成功删除数量",request);
+		return ResponseUtils.getBeanResponse(num, "成功删除数量" + num,request);
 	}
 
 	@RequestMapping("/addParm")

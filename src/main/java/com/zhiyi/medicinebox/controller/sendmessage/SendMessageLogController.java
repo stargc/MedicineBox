@@ -16,7 +16,7 @@ import com.zhiyi.medicinebox.service.SendMessageLogService;
 import com.zhiyi.medicinebox.util.ResponseUtils;
 
 @Controller
-@RequestMapping("/box")
+@RequestMapping("/SendMessageLog")
 public class SendMessageLogController {
 
 	private final Logger logger = LogManager.getLogger(this.getClass().getName());
@@ -27,7 +27,7 @@ public class SendMessageLogController {
 	@Resource
 	private SendMessageLogService sendService;
 	
-	@RequestMapping("/addSendMessageLog")
+	@RequestMapping("/add")
 	public ParmResponse addSendMessageLog(SendMessageLog log){
 		if (log != null && log.getUserId() != 0) {
 			boolean done = sendService.add(log);

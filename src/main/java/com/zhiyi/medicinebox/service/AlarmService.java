@@ -1,5 +1,6 @@
 package com.zhiyi.medicinebox.service;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -16,9 +17,10 @@ public class AlarmService {
 
 	@Resource
 	private BaseDAO<Alarm> baseDAO;
-	
+
 	public boolean add(Alarm alarm) {
 		if (alarm != null) {
+			alarm.setCreateDate(new Date());
 			return baseDAO.save(alarm);
 		}
 		return false;

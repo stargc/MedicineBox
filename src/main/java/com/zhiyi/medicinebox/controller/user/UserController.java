@@ -48,7 +48,7 @@ public class UserController {
 	@RequestMapping("/add")
 	@ResponseBody
 	public ParmResponse add(User user) {
-		List<User> users = new ArrayList<User>();
+		List<User> users;
 		if(user != null && user.getOpenId() != null && !user.getOpenId().equals("undefined")){
 			users = userService.findByOpenId(user.getOpenId());
 			if (users.size() == 0) {
@@ -72,7 +72,7 @@ public class UserController {
 	@RequestMapping("/findUserByOpenId")
 	@ResponseBody
 	public ParmResponse findUserByOpenId(String openId){
-		List<User> users = new ArrayList<User>();
+		List<User> users = new ArrayList<>();
 		if(openId != null){
 			users = userService.findByOpenId(openId);
 		}
