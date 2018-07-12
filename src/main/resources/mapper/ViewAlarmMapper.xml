@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.ViewAlarmMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.ViewAlarm" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.alarm.ViewAlarm" >
     <result column="alarmId" property="alarmid" jdbcType="INTEGER" />
     <result column="alarmDate" property="alarmdate" jdbcType="DATE" />
     <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />

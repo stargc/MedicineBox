@@ -11,7 +11,7 @@
 
     <!-- 配置自动扫描的包 -->
     <context:annotation-config/>
-    <context:component-scan base-package="com.zhiyi.medicinebox.controller.alarm"/>
+    <context:component-scan base-package="com.zhiyi.medicinebox.controller"/>
     <context:component-scan base-package="com.zhiyi.medicinebox.service"/>
     <context:component-scan base-package="com.zhiyi.medicinebox.dao"/>
     <!--<context:component-scan base-package="com.zhiyi.medicinebox.job" />-->

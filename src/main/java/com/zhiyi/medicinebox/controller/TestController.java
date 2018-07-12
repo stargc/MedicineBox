@@ -1,4 +1,4 @@
-package com.zhiyi.medicinebox.controller.alarm;
+package com.zhiyi.medicinebox.controller;
 
 import com.zhiyi.medicinebox.entity.alarm.Alarm;
 import com.zhiyi.medicinebox.parm.response.ParmResponse;
@@ -22,8 +22,8 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @Controller
-@RequestMapping("/test")
-public class AlarmController {
+@RequestMapping("/alarm")
+public class TestController {
 
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 	
@@ -33,8 +33,7 @@ public class AlarmController {
 	@Resource
 	private AlarmService alarmService;
 
-
-    @RequestMapping("/test")
+    @RequestMapping("/getAlarm")
     @ResponseBody
     public ParmResponse getAlarm(int alarmId) throws IOException {
         Alarm alarm = alarmService.findByid(alarmId);

@@ -106,7 +106,7 @@
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
-  <delete id="deleteByPrimaryKey" parameterType="java.util.Date" >
+  <delete id="deleteByDate" parameterType="java.util.Date" >
     DELETE from sendmessage_parm
     where createDate &lt; #{createdate,jdbcType=TIMESTAMP}
   </delete>
