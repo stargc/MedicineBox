@@ -53,29 +53,33 @@ public class JSONUtils {
 	}
 	
 	public static int getInt(String json, String key){
-		if (json == null)
+		if (json == null) {
 			return -1;
+		}
 		JSONObject jObject = (JSONObject) JSONObject.parse(json);
 		return jObject.getIntValue(key);
 	}
 	
 	public static String getString(String json, String key){
-		if (json == null)
+		if (json == null) {
 			return "";
+		}
 		JSONObject jObject = (JSONObject) JSONObject.parse(json);
 		return jObject.getString(key);
 	}
 
 	public static Object getDataToObject(String result, Class<?> c) {
-		if (result == null)
+		if (result == null) {
 			return null;
+		}
 		JSONObject json = (JSONObject) JSONObject.parse(result);
 		return JSONObject.parseObject(json.getString("data"), c);
 	}
 	
 	public static Long getLong(String json, String key){
-		if (json == null)
+		if (json == null) {
 			return -1L;
+		}
 		JSONObject jObject = (JSONObject) JSONObject.parse(json);
 		return jObject.getLong(key);
 	}
@@ -87,8 +91,9 @@ public class JSONUtils {
 	 * @return
 	 */
 	public static List<?> getDataList(String result, Class<?> c, String key) {
-		if (result == null)
+		if (result == null) {
 			return null;
+		}
 		JSONObject json = (JSONObject) JSONObject.parse(result);
 		return JSONArray.parseArray(json.getString(key), c);
 	}

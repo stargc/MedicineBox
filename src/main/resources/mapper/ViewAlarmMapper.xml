@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyi.medicinebox.dao.ViewAlarmMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.ViewAlarm" >
+    <result column="alarmId" property="alarmid" jdbcType="INTEGER" />
+    <result column="alarmDate" property="alarmdate" jdbcType="DATE" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="alarmTime" property="alarmtime" jdbcType="TIME" />
+    <result column="alarmLock" property="alarmlock" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="userName" property="username" jdbcType="VARCHAR" />
+    <result column="medName" property="medname" jdbcType="VARCHAR" />
+    <result column="dosage" property="dosage" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="VARCHAR" />
+    <result column="statusId" property="statusid" jdbcType="INTEGER" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="medId" property="medid" jdbcType="INTEGER" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+	a.`alarmId` AS `alarmId`,
+	a.`alarmDate` AS `alarmDate`,
+	a.`createDate` AS `createDate`,
+	a.`alarmTime` AS `alarmTime`,
+	a.`alarmLock` AS `alarmLock`,
+	a.`userId` AS `userId`,
+	u.`userName` AS `userName`,
+	m.`medName` AS `medName`,
+	d.`dosage` AS `dosage`,
+	sm.`status` AS `status`,
+	sm.`statusId` AS `statusId`,
+	m.`url` AS `url`,
+	m.`medId` AS `medId`
+  </sql>
+
+  <sql id="Base_table_List" >
+    `alarm` a
+	LEFT JOIN `dosage` d ON (a.`dosageId` = d.`dosageId`)
+	LEFT JOIN `medicine` m ON (d.`medId` = m.`medId`)
+	LEFT JOIN `status_med` sm ON (a.`statusId` = sm.`statusId`)
+	LEFT JOIN `user` u ON (a.`userId` = u.`userId`)
+  </sql>
+  <select id="findViewAlarmByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+   SELECT
+    <include refid="Base_Column_List" />
+	FROM
+    <include refid="Base_table_List" />
+    where  u.userId = #{userid,jdbcType=INTEGER} and a.statusId = 1  ORDER BY a.alarmDate,a.alarmTime
+  </select>
+
+  <select id="findViewAlarmByAlarmId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    <include refid="Base_table_List" />
+    where a.alarmId = #{alarmid,jdbcType=INTEGER}
+  </select>
+</mapper>

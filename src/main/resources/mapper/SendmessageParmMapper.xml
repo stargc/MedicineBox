@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyi.medicinebox.dao.SendmessageParmMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm" >
+    <id column="ID" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="openId" property="openid" jdbcType="VARCHAR" />
+    <result column="formId" property="formid" jdbcType="VARCHAR" />
+    <result column="prepayId" property="prepayid" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+    <result column="isused" property="isused" jdbcType="SMALLINT" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    ID, userId, openId, formId, prepayId, createDate, type, isused
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from sendmessage_parm
+    where ID = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from sendmessage_parm
+    where ID = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm" >
+    insert into sendmessage_parm
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        ID,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="openid != null" >
+        openId,
+      </if>
+      <if test="formid != null" >
+        formId,
+      </if>
+      <if test="prepayid != null" >
+        prepayId,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+      <if test="isused != null" >
+        isused,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="formid != null" >
+        #{formid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayid != null" >
+        #{prepayid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="isused != null" >
+        #{isused,jdbcType=SMALLINT},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm" >
+    update sendmessage_parm
+    <set >
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="openid != null" >
+        openId = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="formid != null" >
+        formId = #{formid,jdbcType=VARCHAR},
+      </if>
+      <if test="prepayid != null" >
+        prepayId = #{prepayid,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="isused != null" >
+        isused = #{isused,jdbcType=SMALLINT},
+      </if>
+    </set>
+    where ID = #{id,jdbcType=INTEGER}
+  </update>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Date" >
+    DELETE from sendmessage_parm
+    where createDate &lt; #{createdate,jdbcType=TIMESTAMP}
+  </delete>
+
+
+  <select id="findWXSendEatMedParm" resultType="com.zhiyi.medicinebox.entity.sendmsg.WXSendEatMedParmBean"  >
+    select a.alarmId, a.alarmDate , a.alarmTime,a.statusId,d.dosage,m.medName,
+    s.formId,s.prepayId,s.ID as parmId1,u.openId,u.userId,u.userName,m.medId
+    from alarm a LEFT JOIN user u on a.userId = u.userId
+    LEFT JOIN  dosage d on a.dosageId = d.dosageId
+    LEFT JOIN medicine m on d.medId = m.medId
+    LEFT JOIN sendmessage_parm s on a.userId = s.userId
+    where (a.statusId = '1' or a.statusId = '3') and a.issend=0  and s.isused=0
+    and a.alarmDate = #{date,jdbcType=TIMESTAMP} and a.alarmTime >= #{startTime,jdbcType=TIMESTAMP}
+    and a.alarmTime &lt;= #{endTime,jdbcType=TIMESTAMP} GROUP BY a.alarmId
+  </select>
+</mapper>

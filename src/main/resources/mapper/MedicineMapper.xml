@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyi.medicinebox.dao.MedicineMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.base.Medicine" >
+    <id column="medId" property="medid" jdbcType="INTEGER" />
+    <result column="medName" property="medname" jdbcType="VARCHAR" />
+    <result column="malady" property="malady" jdbcType="VARCHAR" />
+    <result column="instructions" property="instructions" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    medId, medName, malady, instructions, url, createDate
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from medicine
+    where medId = #{medid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from medicine
+    where medId = #{medid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.base.Medicine" >
+    insert into medicine
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="medid != null" >
+        medId,
+      </if>
+      <if test="medname != null" >
+        medName,
+      </if>
+      <if test="malady != null" >
+        malady,
+      </if>
+      <if test="instructions != null" >
+        instructions,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="medid != null" >
+        #{medid,jdbcType=INTEGER},
+      </if>
+      <if test="medname != null" >
+        #{medname,jdbcType=VARCHAR},
+      </if>
+      <if test="malady != null" >
+        #{malady,jdbcType=VARCHAR},
+      </if>
+      <if test="instructions != null" >
+        #{instructions,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.base.Medicine" >
+    update medicine
+    <set >
+      <if test="medname != null" >
+        medName = #{medname,jdbcType=VARCHAR},
+      </if>
+      <if test="malady != null" >
+        malady = #{malady,jdbcType=VARCHAR},
+      </if>
+      <if test="instructions != null" >
+        instructions = #{instructions,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where medId = #{medid,jdbcType=INTEGER}
+  </update>
+</mapper>

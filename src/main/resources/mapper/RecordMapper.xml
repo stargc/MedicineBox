@@ -1,0 +1,140 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyi.medicinebox.dao.RecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.alarm.Record" >
+    <id column="recordId" property="recordid" jdbcType="INTEGER" />
+    <result column="alarmId" property="alarmid" jdbcType="INTEGER" />
+    <result column="statusId" property="statusid" jdbcType="INTEGER" />
+    <result column="alarmDate" property="alarmdate" jdbcType="DATE" />
+    <result column="alarmTime" property="alarmtime" jdbcType="TIME" />
+    <result column="medName" property="medname" jdbcType="VARCHAR" />
+    <result column="dosage" property="dosage" jdbcType="VARCHAR" />
+    <result column="url" property="url" jdbcType="VARCHAR" />
+    <result column="userId" property="userid" jdbcType="INTEGER" />
+    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+    <result column="type" property="type" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    recordId, alarmId, statusId, alarmDate, alarmTime, medName, dosage, url, userId, 
+    createDate, type
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from record
+    where recordId = #{recordid,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from record
+    where recordId = #{recordid,jdbcType=INTEGER}
+  </delete>
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.alarm.Record" >
+    insert into record
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="recordid != null" >
+        recordId,
+      </if>
+      <if test="alarmid != null" >
+        alarmId,
+      </if>
+      <if test="statusid != null" >
+        statusId,
+      </if>
+      <if test="alarmdate != null" >
+        alarmDate,
+      </if>
+      <if test="alarmtime != null" >
+        alarmTime,
+      </if>
+      <if test="medname != null" >
+        medName,
+      </if>
+      <if test="dosage != null" >
+        dosage,
+      </if>
+      <if test="url != null" >
+        url,
+      </if>
+      <if test="userid != null" >
+        userId,
+      </if>
+      <if test="createdate != null" >
+        createDate,
+      </if>
+      <if test="type != null" >
+        type,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="recordid != null" >
+        #{recordid,jdbcType=INTEGER},
+      </if>
+      <if test="alarmid != null" >
+        #{alarmid,jdbcType=INTEGER},
+      </if>
+      <if test="statusid != null" >
+        #{statusid,jdbcType=INTEGER},
+      </if>
+      <if test="alarmdate != null" >
+        #{alarmdate,jdbcType=DATE},
+      </if>
+      <if test="alarmtime != null" >
+        #{alarmtime,jdbcType=TIME},
+      </if>
+      <if test="medname != null" >
+        #{medname,jdbcType=VARCHAR},
+      </if>
+      <if test="dosage != null" >
+        #{dosage,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        #{type,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.alarm.Record" >
+    update record
+    <set >
+      <if test="alarmid != null" >
+        alarmId = #{alarmid,jdbcType=INTEGER},
+      </if>
+      <if test="statusid != null" >
+        statusId = #{statusid,jdbcType=INTEGER},
+      </if>
+      <if test="alarmdate != null" >
+        alarmDate = #{alarmdate,jdbcType=DATE},
+      </if>
+      <if test="alarmtime != null" >
+        alarmTime = #{alarmtime,jdbcType=TIME},
+      </if>
+      <if test="medname != null" >
+        medName = #{medname,jdbcType=VARCHAR},
+      </if>
+      <if test="dosage != null" >
+        dosage = #{dosage,jdbcType=VARCHAR},
+      </if>
+      <if test="url != null" >
+        url = #{url,jdbcType=VARCHAR},
+      </if>
+      <if test="userid != null" >
+        userId = #{userid,jdbcType=INTEGER},
+      </if>
+      <if test="createdate != null" >
+        createDate = #{createdate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="type != null" >
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where recordId = #{recordid,jdbcType=INTEGER}
+  </update>
+</mapper>

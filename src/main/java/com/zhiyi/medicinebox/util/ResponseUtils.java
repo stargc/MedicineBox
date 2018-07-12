@@ -37,7 +37,7 @@ public class ResponseUtils {
 		try {
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			logger.info("返回结果：" + response.toJson());
 		}
 		return response;
@@ -81,7 +81,7 @@ public class ResponseUtils {
 		try {
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			logger.info( "返回结果：" + response.toJson());
 		}
 		return response;
@@ -100,7 +100,7 @@ public class ResponseUtils {
 		try {
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			logger.info( "返回结果：" + response.toJson());
 		}
 		return response;
@@ -131,7 +131,7 @@ public class ResponseUtils {
 		try {
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (Exception e) {
+		} catch (NullPointerException e) {
 			logger.info( "返回结果：" + response.toJson());
 		}
 		return response;

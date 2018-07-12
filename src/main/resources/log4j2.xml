@@ -30,7 +30,7 @@
 
 	</Appenders>
 	<Loggers>
-		<Root level="info">
+		<Root level="ALL">
 			<AppenderRef ref="Console" />
 			<AppenderRef ref="RollingFile" />
 			<AppenderRef ref="ERROR" />

@@ -1,12 +1,16 @@
 package com.zhiyi.medicinebox.controller.alarm;
 
-import com.zhiyi.medicinebox.service.AlarmService;
+import com.zhiyi.medicinebox.entity.alarm.Alarm;
+import com.zhiyi.medicinebox.parm.response.ParmResponse;
+import com.zhiyi.medicinebox.service.alarm.AlarmService;
+import com.zhiyi.medicinebox.util.ResponseUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -49,5 +53,15 @@ public class AlarmController {
         } catch (Exception e){
             logger.error("get image 报错：" + ExceptionUtils.getStackTrace(e));
         }
+    }
+
+
+
+    @RequestMapping("/getAlarm")
+    @ResponseBody
+    public ParmResponse getAlarm(int alarmId) throws IOException {
+        Alarm alarm = alarmService.findByid(alarmId);
+        return ResponseUtils.getBeanResponse(alarm, "",request);
+
     }
 }
