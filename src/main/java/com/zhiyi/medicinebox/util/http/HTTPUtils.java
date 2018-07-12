@@ -1,7 +1,6 @@
 package com.zhiyi.medicinebox.util.http;
 
 import com.alibaba.fastjson.JSONObject;
-import com.sun.deploy.config.ClientConfig;
 import com.zhiyi.medicinebox.util.tools.StringUtil;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
@@ -16,8 +15,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.io.*;
-import java.net.*;
-import java.util.*;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class HTTPUtils {
