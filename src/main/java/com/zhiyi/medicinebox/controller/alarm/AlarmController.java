@@ -22,7 +22,7 @@ import java.io.IOException;
 import java.io.OutputStream;
 
 @Controller
-@RequestMapping("/test")
+@RequestMapping("/alarm")
 public class AlarmController {
 
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
@@ -33,8 +33,31 @@ public class AlarmController {
 	@Resource
 	private AlarmService alarmService;
 
+    @RequestMapping("/getImage")
+    public void getIcon(String url,
+                        HttpServletRequest request,
+                        HttpServletResponse response) throws IOException {
+        logger.info("get image “"+ url + "” from server");
+        String fileName = url;
+        File file = new File(fileName);
+        try {
+            //判断文件是否存在如果不存在就返回默认图标
+            if (!(file.exists() && file.canRead())) {
+                logger.error("alarm/getImage url {} 文件不存在", url);
+                return;
+            }
+            BufferedImage bufferedImage = ImageIO.read(file);
+            response.setContentType("image/png");
+            OutputStream os = response.getOutputStream();
+            ImageIO.write(bufferedImage, "png", os);
+        } catch (Exception e){
+            logger.error("get image 报错：" + ExceptionUtils.getStackTrace(e));
+        }
+    }
 
-    @RequestMapping("/test")
+
+
+    @RequestMapping("/getAlarm")
     @ResponseBody
     public ParmResponse getAlarm(int alarmId) throws IOException {
         Alarm alarm = alarmService.findByid(alarmId);

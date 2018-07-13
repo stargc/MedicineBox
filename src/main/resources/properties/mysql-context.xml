@@ -71,7 +71,7 @@ http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-sprin
                 <property name="aggressiveLazyLoading" value="true"/>
                 <property name="cacheEnabled" value="true"/>
                 <property name="lazyLoadingEnabled" value="false"/>
-                <property name="logImpl" value="org.apache.ibatis.logging.slf4j.Slf4jImpl"/>
+                <property name="logImpl" value="org.apache.ibatis.logging.log4j.Log4jImpl"/>
             </bean>
         </property>
     </bean>

@@ -42,25 +42,6 @@ public class ResponseUtils {
 		}
 		return response;
 	}
-//	public static String getResponse(Object[] beans, Object msg) {
-//	Map<String, Object> map = new HashMap<String, Object>();
-//	if (beans == null || beans.length == 0) {
-//		map.put("code", 1);
-//		map.put("data", null);
-//		map.put("msg", "数据为空");
-//	} else {
-//		map.put("code", 0);
-//		// List<String> result = new ArrayList<String>();
-//		// for (int i = 0; i < beans.length; i++) {
-//		// String temp = JSONUtils.beanToJson(beans[i]).toString();
-//		// result.add(temp);
-//		// }
-//		map.put("data", JSONUtils.beanToJson(beans));
-//		map.put("msg", msg);
-//	}
-//	return JSONUtils.beanToJsonString(map);
-//}
-	
 
 	/***
 	 * 

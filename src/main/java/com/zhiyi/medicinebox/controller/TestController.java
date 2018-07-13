@@ -3,7 +3,14 @@ package com.zhiyi.medicinebox.controller;
 import com.zhiyi.medicinebox.entity.alarm.Alarm;
 import com.zhiyi.medicinebox.parm.response.ParmResponse;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
+import com.zhiyi.medicinebox.service.alarm.RecordService;
+import com.zhiyi.medicinebox.service.base.MedicineService;
+import com.zhiyi.medicinebox.service.base.UserService;
+import com.zhiyi.medicinebox.service.sendmsg.SendMessageLogService;
+import com.zhiyi.medicinebox.service.sendmsg.SendMessageParmService;
 import com.zhiyi.medicinebox.util.ResponseUtils;
+import com.zhiyi.medicinebox.util.tools.DateUtil;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,24 +27,46 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Date;
 
 @Controller
-@RequestMapping("/alarm")
+@RequestMapping("/test")
 public class TestController {
 
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
-	
-	@Autowired  
+
+	@Autowired
 	private HttpServletRequest request;
 
 	@Resource
 	private AlarmService alarmService;
+    @Resource
+    private RecordService recordService;
+    @Resource
+    private MedicineService medicineService;
+//    @Resource
+    private UserService userService;
+    @Resource
+    private SendMessageLogService sendMessageLogService;
+    @Resource
+    private SendMessageParmService sendMessageParmService;
 
-    @RequestMapping("/getAlarm")
+
+    @RequestMapping("/test")
     @ResponseBody
-    public ParmResponse getAlarm(int alarmId) throws IOException {
-        Alarm alarm = alarmService.findByid(alarmId);
-        return ResponseUtils.getBeanResponse(alarm, "",request);
+    public ParmResponse test() throws IOException {
+        userService.findByOpenId("otucO0WaKm9S6-mkGdFqXiCVkgvg");
+        return ResponseUtils.getBeanResponse("SUCCESS", "",request);
+    }
 
+    public static void main(String[] args) {
+        String s1 = "a";
+        String s2 = "";
+        String s3 = " ";
+        String s4 = null;
+        System.out.println(StringUtils.isBlank(s1) + "  " + StringUtils.isEmpty(s1));
+        System.out.println(StringUtils.isBlank(s2) + "  " + StringUtils.isEmpty(s2));
+        System.out.println(StringUtils.isBlank(s3) + "  " + StringUtils.isEmpty(s3));
+        System.out.println(StringUtils.isBlank(s4) + "  " + StringUtils.isEmpty(s4));
     }
 }

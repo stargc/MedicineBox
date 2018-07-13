@@ -74,6 +74,5 @@
     <bean class="com.zhiyi.medicinebox.util.spring.ServerStartupLinstener"/>
 
     <!--<import resource="classpath:properties/quartz-job.xml"/>-->
-
-
+    <bean id="exceptionResolver" class="com.zhiyi.medicinebox.util.spring.ExceptionHandler"/>
 </beans>
