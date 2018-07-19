@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.BoxMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.base.Box" >
-    <id column="boxId" property="boxid" jdbcType="INTEGER" />
-    <result column="boxName" property="boxname" jdbcType="VARCHAR" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.Box" >
+    <id column="box_id" property="boxId" jdbcType="INTEGER" />
+    <result column="box_name" property="boxName" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zhiyi.medicinebox.entity.base.Box" extends="BaseResultMap" >
-    <result column="qrCode" property="qrcode" jdbcType="LONGVARCHAR" />
+  <resultMap id="ResultMapWithBLOBs" type="com.zhiyi.medicinebox.entity.po.base.Box" extends="BaseResultMap" >
+    <result column="qr_code" property="qrCode" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
-    boxId, boxName, createDate
+    box_id, box_name, create_date
   </sql>
   <sql id="Blob_Column_List" >
-    qrCode
+    qr_code
   </sql>
   <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
-    select 
+    select
     <include refid="Base_Column_List" />
     ,
     <include refid="Blob_Column_List" />
     from box
-    where boxId = #{boxid,jdbcType=INTEGER}
+    where box_id = #{boxId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from box
-    where boxId = #{boxid,jdbcType=INTEGER}
+    where box_id = #{boxId,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.base.Box" >
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Box" >
     insert into box
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="boxid != null" >
-        boxId,
+      <if test="boxId != null" >
+        box_id,
       </if>
-      <if test="boxname != null" >
-        boxName,
+      <if test="boxName != null" >
+        box_name,
       </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="createDate != null" >
+        create_date,
       </if>
-      <if test="qrcode != null" >
-        qrCode,
+      <if test="qrCode != null" >
+        qr_code,
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="boxid != null" >
-        #{boxid,jdbcType=INTEGER},
+      <if test="boxId != null" >
+        #{boxId,jdbcType=INTEGER},
       </if>
-      <if test="boxname != null" >
-        #{boxname,jdbcType=VARCHAR},
+      <if test="boxName != null" >
+        #{boxName,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="qrcode != null" >
-        #{qrcode,jdbcType=LONGVARCHAR},
+      <if test="qrCode != null" >
+        #{qrCode,jdbcType=LONGVARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.base.Box" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Box" >
     update box
     <set >
-      <if test="boxname != null" >
-        boxName = #{boxname,jdbcType=VARCHAR},
+      <if test="boxName != null" >
+        box_name = #{boxName,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="qrcode != null" >
-        qrCode = #{qrcode,jdbcType=LONGVARCHAR},
+      <if test="qrCode != null" >
+        qr_code = #{qrCode,jdbcType=LONGVARCHAR},
       </if>
     </set>
-    where boxId = #{boxid,jdbcType=INTEGER}
+    where box_id = #{boxId,jdbcType=INTEGER}
   </update>
 </mapper>

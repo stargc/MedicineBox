@@ -1,6 +1,6 @@
 package com.zhiyi.medicinebox.dao;
 
-import com.zhiyi.medicinebox.entity.alarm.Record;
+import com.zhiyi.medicinebox.entity.po.alarm.Record;
 
 public interface RecordMapper {
     int deleteByPrimaryKey(Integer recordid);

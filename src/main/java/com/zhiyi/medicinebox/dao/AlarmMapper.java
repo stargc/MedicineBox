@@ -1,6 +1,6 @@
 package com.zhiyi.medicinebox.dao;
 
-import com.zhiyi.medicinebox.entity.alarm.Alarm;
+import com.zhiyi.medicinebox.entity.po.alarm.Alarm;
 
 public interface AlarmMapper {
     int deleteByPrimaryKey(Integer alarmid);

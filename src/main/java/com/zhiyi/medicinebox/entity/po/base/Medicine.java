@@ -1,11 +1,11 @@
-package com.zhiyi.medicinebox.entity.base;
+package com.zhiyi.medicinebox.entity.po.base;
 
 import java.util.Date;
 
 public class Medicine {
-    private Integer medid;
+    private Integer medId;
 
-    private String medname;
+    private String medName;
 
     private String malady;
 
@@ -13,22 +13,22 @@ public class Medicine {
 
     private String url;
 
-    private Date createdate;
+    private Date createDate;
 
-    public Integer getMedid() {
-        return medid;
+    public Integer getMedId() {
+        return medId;
     }
 
-    public void setMedid(Integer medid) {
-        this.medid = medid;
+    public void setMedId(Integer medId) {
+        this.medId = medId;
     }
 
-    public String getMedname() {
-        return medname;
+    public String getMedName() {
+        return medName;
     }
 
-    public void setMedname(String medname) {
-        this.medname = medname == null ? null : medname.trim();
+    public void setMedName(String medName) {
+        this.medName = medName == null ? null : medName.trim();
     }
 
     public String getMalady() {
@@ -55,11 +55,11 @@ public class Medicine {
         this.url = url == null ? null : url.trim();
     }
 
-    public Date getCreatedate() {
-        return createdate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

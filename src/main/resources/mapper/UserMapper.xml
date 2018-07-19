@@ -1,166 +1,184 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.base.User" >
-    <id column="userId" property="userid" jdbcType="INTEGER" />
-    <result column="userName" property="username" jdbcType="VARCHAR" />
-    <result column="password" property="password" jdbcType="VARCHAR" />
-    <result column="openId" property="openid" jdbcType="VARCHAR" />
-    <result column="nickName" property="nickname" jdbcType="VARCHAR" />
-    <result column="avatarUrl" property="avatarurl" jdbcType="VARCHAR" />
-    <result column="city" property="city" jdbcType="VARCHAR" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="age" property="age" jdbcType="INTEGER" />
-    <result column="sex" property="sex" jdbcType="INTEGER" />
-    <result column="phone" property="phone" jdbcType="VARCHAR" />
-    <result column="Column_12" property="column12" jdbcType="CHAR" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.User" >
+    <id column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="user_name" jdbcType="VARCHAR" property="userName" />
+    <result column="password" jdbcType="VARCHAR" property="password" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="nick_name" jdbcType="VARCHAR" property="nickName" />
+    <result column="avatar_url" jdbcType="VARCHAR" property="avatarUrl" />
+    <result column="wx_city" jdbcType="VARCHAR" property="wxCity" />
+    <result column="wx_name" jdbcType="VARCHAR" property="wxName" />
+    <result column="wx_age" jdbcType="INTEGER" property="wxAge" />
+    <result column="wx_sex" jdbcType="INTEGER" property="wxSex" />
+    <result column="wx_phone" jdbcType="VARCHAR" property="wxPhone" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    userId, userName, password, openId, nickName, avatarUrl, city, name, age, sex, phone, 
-    Column_12, createDate
+  <sql id="Base_Column_List">
+    user_id, user_name, password, open_id, nick_name, avatar_url, wx_city, wx_name, wx_age,
+    wx_sex, wx_phone, create_date
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from user
-    where userId = #{userid,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from user
-    where userId = #{userid,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.base.User" >
+  <insert id="insert" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
+    insert into user (user_id, user_name, password,
+    open_id, nick_name, avatar_url,
+    wx_city, wx_name, wx_age,
+    wx_sex, wx_phone, create_date
+    )
+    values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},
+    #{openId,jdbcType=VARCHAR}, #{nickName,jdbcType=VARCHAR}, #{avatarUrl,jdbcType=VARCHAR},
+    #{wxCity,jdbcType=VARCHAR}, #{wxName,jdbcType=VARCHAR}, #{wxAge,jdbcType=INTEGER},
+    #{wxSex,jdbcType=INTEGER}, #{wxPhone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
+    )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
     insert into user
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        userId,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        user_id,
       </if>
-      <if test="username != null" >
-        userName,
+      <if test="userName != null">
+        user_name,
       </if>
-      <if test="password != null" >
+      <if test="password != null">
         password,
       </if>
-      <if test="openid != null" >
-        openId,
+      <if test="openId != null">
+        open_id,
       </if>
-      <if test="nickname != null" >
-        nickName,
+      <if test="nickName != null">
+        nick_name,
       </if>
-      <if test="avatarurl != null" >
-        avatarUrl,
+      <if test="avatarUrl != null">
+        avatar_url,
       </if>
-      <if test="city != null" >
-        city,
+      <if test="wxCity != null">
+        wx_city,
       </if>
-      <if test="name != null" >
-        name,
+      <if test="wxName != null">
+        wx_name,
       </if>
-      <if test="age != null" >
-        age,
+      <if test="wxAge != null">
+        wx_age,
       </if>
-      <if test="sex != null" >
-        sex,
+      <if test="wxSex != null">
+        wx_sex,
       </if>
-      <if test="phone != null" >
-        phone,
+      <if test="wxPhone != null">
+        wx_phone,
       </if>
-      <if test="column12 != null" >
-        Column_12,
-      </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="createDate != null">
+        create_date,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="username != null" >
-        #{username,jdbcType=VARCHAR},
+      <if test="userName != null">
+        #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
+      <if test="password != null">
         #{password,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
-        #{openid,jdbcType=VARCHAR},
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        #{nickname,jdbcType=VARCHAR},
+      <if test="nickName != null">
+        #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="avatarurl != null" >
-        #{avatarurl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null">
+        #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
-        #{city,jdbcType=VARCHAR},
+      <if test="wxCity != null">
+        #{wxCity,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        #{name,jdbcType=VARCHAR},
+      <if test="wxName != null">
+        #{wxName,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
-        #{age,jdbcType=INTEGER},
+      <if test="wxAge != null">
+        #{wxAge,jdbcType=INTEGER},
       </if>
-      <if test="sex != null" >
-        #{sex,jdbcType=INTEGER},
+      <if test="wxSex != null">
+        #{wxSex,jdbcType=INTEGER},
       </if>
-      <if test="phone != null" >
-        #{phone,jdbcType=VARCHAR},
+      <if test="wxPhone != null">
+        #{wxPhone,jdbcType=VARCHAR},
       </if>
-      <if test="column12 != null" >
-        #{column12,jdbcType=CHAR},
-      </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.base.User" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
     update user
-    <set >
-      <if test="username != null" >
-        userName = #{username,jdbcType=VARCHAR},
+    <set>
+      <if test="userName != null">
+        user_name = #{userName,jdbcType=VARCHAR},
       </if>
-      <if test="password != null" >
+      <if test="password != null">
         password = #{password,jdbcType=VARCHAR},
       </if>
-      <if test="openid != null" >
-        openId = #{openid,jdbcType=VARCHAR},
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="nickname != null" >
-        nickName = #{nickname,jdbcType=VARCHAR},
+      <if test="nickName != null">
+        nick_name = #{nickName,jdbcType=VARCHAR},
       </if>
-      <if test="avatarurl != null" >
-        avatarUrl = #{avatarurl,jdbcType=VARCHAR},
+      <if test="avatarUrl != null">
+        avatar_url = #{avatarUrl,jdbcType=VARCHAR},
       </if>
-      <if test="city != null" >
-        city = #{city,jdbcType=VARCHAR},
+      <if test="wxCity != null">
+        wx_city = #{wxCity,jdbcType=VARCHAR},
       </if>
-      <if test="name != null" >
-        name = #{name,jdbcType=VARCHAR},
+      <if test="wxName != null">
+        wx_name = #{wxName,jdbcType=VARCHAR},
       </if>
-      <if test="age != null" >
-        age = #{age,jdbcType=INTEGER},
+      <if test="wxAge != null">
+        wx_age = #{wxAge,jdbcType=INTEGER},
       </if>
-      <if test="sex != null" >
-        sex = #{sex,jdbcType=INTEGER},
+      <if test="wxSex != null">
+        wx_sex = #{wxSex,jdbcType=INTEGER},
       </if>
-      <if test="phone != null" >
-        phone = #{phone,jdbcType=VARCHAR},
+      <if test="wxPhone != null">
+        wx_phone = #{wxPhone,jdbcType=VARCHAR},
       </if>
-      <if test="column12 != null" >
-        Column_12 = #{column12,jdbcType=CHAR},
-      </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where userId = #{userid,jdbcType=INTEGER}
+    where user_id = #{userId,jdbcType=INTEGER}
   </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
+    update user
+    set user_name = #{userName,jdbcType=VARCHAR},
+    password = #{password,jdbcType=VARCHAR},
+    open_id = #{openId,jdbcType=VARCHAR},
+    nick_name = #{nickName,jdbcType=VARCHAR},
+    avatar_url = #{avatarUrl,jdbcType=VARCHAR},
+    wx_city = #{wxCity,jdbcType=VARCHAR},
+    wx_name = #{wxName,jdbcType=VARCHAR},
+    wx_age = #{wxAge,jdbcType=INTEGER},
+    wx_sex = #{wxSex,jdbcType=INTEGER},
+    wx_phone = #{wxPhone,jdbcType=VARCHAR},
+    create_date = #{createDate,jdbcType=TIMESTAMP}
+    where user_id = #{userId,jdbcType=INTEGER}
+  </update>
+
   <select id="selectByOpenId" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select
     <include refid="Base_Column_List" />
     from user
-    where openid = #{openid,jdbcType=VARCHAR}
+    where open_id = #{openid,jdbcType=VARCHAR}
   </select>
 </mapper>

@@ -1,51 +1,49 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.ViewAlarmMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.alarm.ViewAlarm" >
-    <result column="alarmId" property="alarmid" jdbcType="INTEGER" />
-    <result column="alarmDate" property="alarmdate" jdbcType="DATE" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
-    <result column="alarmTime" property="alarmtime" jdbcType="TIME" />
-    <result column="alarmLock" property="alarmlock" jdbcType="INTEGER" />
-    <result column="userId" property="userid" jdbcType="INTEGER" />
-    <result column="userName" property="username" jdbcType="VARCHAR" />
-    <result column="medName" property="medname" jdbcType="VARCHAR" />
-    <result column="dosage" property="dosage" jdbcType="VARCHAR" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
-    <result column="statusId" property="statusid" jdbcType="INTEGER" />
-    <result column="url" property="url" jdbcType="VARCHAR" />
-    <result column="medId" property="medid" jdbcType="INTEGER" />
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm" >
+      <result column="alarm_id" property="alarmId" jdbcType="INTEGER" />
+      <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+      <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+      <result column="alarm_lock" property="alarmLock" jdbcType="INTEGER" />
+      <result column="user_id" property="userId" jdbcType="INTEGER" />
+      <result column="user_name" property="userName" jdbcType="VARCHAR" />
+      <result column="med_name" property="medName" jdbcType="VARCHAR" />
+      <result column="dosage" property="dosage" jdbcType="VARCHAR" />
+      <result column="status" property="status" jdbcType="VARCHAR" />
+      <result column="status_id" property="statusId" jdbcType="INTEGER" />
+      <result column="url" property="url" jdbcType="VARCHAR" />
+      <result column="med_id" property="medId" jdbcType="INTEGER" />
   </resultMap>
 
   <sql id="Base_Column_List" >
-	a.`alarmId` AS `alarmId`,
-	a.`alarmDate` AS `alarmDate`,
-	a.`createDate` AS `createDate`,
-	a.`alarmTime` AS `alarmTime`,
-	a.`alarmLock` AS `alarmLock`,
-	a.`userId` AS `userId`,
-	u.`userName` AS `userName`,
-	m.`medName` AS `medName`,
+	a.`alarm_id` AS `alarm_id`,
+	a.`create_date` AS `create_date`,
+	a.`alarm_time` AS `alarm_time`,
+	a.`alarm_lock` AS `alarm_lock`,
+	a.`user_id` AS `user_id`,
+	u.`user_name` AS `user_name`,
+	m.`med_name` AS `med_name`,
 	d.`dosage` AS `dosage`,
 	sm.`status` AS `status`,
-	sm.`statusId` AS `statusId`,
+	sm.`status_id` AS `status_id`,
 	m.`url` AS `url`,
-	m.`medId` AS `medId`
+	m.`med_id` AS `med_id`
   </sql>
 
   <sql id="Base_table_List" >
-    `alarm` a
-	LEFT JOIN `dosage` d ON (a.`dosageId` = d.`dosageId`)
-	LEFT JOIN `medicine` m ON (d.`medId` = m.`medId`)
-	LEFT JOIN `status_med` sm ON (a.`statusId` = sm.`statusId`)
-	LEFT JOIN `user` u ON (a.`userId` = u.`userId`)
+   `alarm` a
+	LEFT JOIN `dosage` d ON (a.`dosage_id` = d.`dosage_id`)
+	LEFT JOIN `medicine` m ON (d.`med_id` = m.`med_id`)
+	LEFT JOIN `status_med` sm ON (a.`status_id` = sm.`status_id`)
+	LEFT JOIN `user` u ON (a.`user_id` = u.`user_id`)
   </sql>
   <select id="findViewAlarmByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
    SELECT
     <include refid="Base_Column_List" />
 	FROM
     <include refid="Base_table_List" />
-    where  u.userId = #{userid,jdbcType=INTEGER} and a.statusId = 1  ORDER BY a.alarmDate,a.alarmTime
+    where  u.user_id = #{userid,jdbcType=INTEGER} and a.status_id = 1  ORDER BY a.alarm_time limit 100
   </select>
 
   <select id="findViewAlarmByAlarmId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
@@ -53,6 +51,6 @@
     <include refid="Base_Column_List" />
     FROM
     <include refid="Base_table_List" />
-    where a.alarmId = #{alarmid,jdbcType=INTEGER}
+    where a.alarm_id = #{alarmid,jdbcType=INTEGER} limit 100
   </select>
 </mapper>

@@ -1,79 +1,93 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.DosageMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.base.Dosage" >
-    <id column="dosageId" property="dosageid" jdbcType="INTEGER" />
-    <result column="medId" property="medid" jdbcType="INTEGER" />
-    <result column="dosage" property="dosage" jdbcType="VARCHAR" />
-    <result column="statusId" property="statusid" jdbcType="INTEGER" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.Dosage" >
+    <id column="dosage_id" jdbcType="INTEGER" property="dosageId" />
+    <result column="med_id" jdbcType="INTEGER" property="medId" />
+    <result column="dosage" jdbcType="VARCHAR" property="dosage" />
+    <result column="status_id" jdbcType="INTEGER" property="statusId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    dosageId, medId, dosage, statusId, createDate
+  <sql id="Base_Column_List">
+    dosage_id, med_id, dosage, status_id, create_date
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from dosage
-    where dosageId = #{dosageid,jdbcType=INTEGER}
+    where dosage_id = #{dosageId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from dosage
-    where dosageId = #{dosageid,jdbcType=INTEGER}
+    where dosage_id = #{dosageId,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.base.Dosage" >
+  <insert id="insert" parameterType="com.zhiyi.medicinebox.entity.po.base.Dosage">
+    insert into dosage (dosage_id, med_id, dosage,
+    status_id, create_date)
+    values (#{dosageId,jdbcType=INTEGER}, #{medId,jdbcType=INTEGER}, #{dosage,jdbcType=VARCHAR},
+    #{statusId,jdbcType=INTEGER}, #{createDate,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Dosage">
     insert into dosage
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="dosageid != null" >
-        dosageId,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dosageId != null">
+        dosage_id,
       </if>
-      <if test="medid != null" >
-        medId,
+      <if test="medId != null">
+        med_id,
       </if>
-      <if test="dosage != null" >
+      <if test="dosage != null">
         dosage,
       </if>
-      <if test="statusid != null" >
-        statusId,
+      <if test="statusId != null">
+        status_id,
       </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="createDate != null">
+        create_date,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="dosageid != null" >
-        #{dosageid,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dosageId != null">
+        #{dosageId,jdbcType=INTEGER},
       </if>
-      <if test="medid != null" >
-        #{medid,jdbcType=INTEGER},
+      <if test="medId != null">
+        #{medId,jdbcType=INTEGER},
       </if>
-      <if test="dosage != null" >
+      <if test="dosage != null">
         #{dosage,jdbcType=VARCHAR},
       </if>
-      <if test="statusid != null" >
-        #{statusid,jdbcType=INTEGER},
+      <if test="statusId != null">
+        #{statusId,jdbcType=INTEGER},
       </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.base.Dosage" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Dosage">
     update dosage
-    <set >
-      <if test="medid != null" >
-        medId = #{medid,jdbcType=INTEGER},
+    <set>
+      <if test="medId != null">
+        med_id = #{medId,jdbcType=INTEGER},
       </if>
-      <if test="dosage != null" >
+      <if test="dosage != null">
         dosage = #{dosage,jdbcType=VARCHAR},
       </if>
-      <if test="statusid != null" >
-        statusId = #{statusid,jdbcType=INTEGER},
+      <if test="statusId != null">
+        status_id = #{statusId,jdbcType=INTEGER},
       </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where dosageId = #{dosageid,jdbcType=INTEGER}
+    where dosage_id = #{dosageId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.entity.po.base.Dosage">
+    update dosage
+    set med_id = #{medId,jdbcType=INTEGER},
+      dosage = #{dosage,jdbcType=VARCHAR},
+      status_id = #{statusId,jdbcType=INTEGER},
+      create_date = #{createDate,jdbcType=TIMESTAMP}
+    where dosage_id = #{dosageId,jdbcType=INTEGER}
   </update>
 </mapper>

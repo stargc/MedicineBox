@@ -1,6 +1,6 @@
 package com.zhiyi.medicinebox.dao;
 
-import com.zhiyi.medicinebox.entity.alarm.ViewRecord;
+import com.zhiyi.medicinebox.entity.po.alarm.ViewRecord;
 
 import java.util.List;
 

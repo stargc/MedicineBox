@@ -1,6 +1,6 @@
 package com.zhiyi.medicinebox.controller;
 
-import com.zhiyi.medicinebox.entity.alarm.Alarm;
+import com.zhiyi.medicinebox.entity.po.alarm.Alarm;
 import com.zhiyi.medicinebox.parm.response.ParmResponse;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
 import com.zhiyi.medicinebox.service.alarm.RecordService;
@@ -9,9 +9,7 @@ import com.zhiyi.medicinebox.service.base.UserService;
 import com.zhiyi.medicinebox.service.sendmsg.SendMessageLogService;
 import com.zhiyi.medicinebox.service.sendmsg.SendMessageParmService;
 import com.zhiyi.medicinebox.util.ResponseUtils;
-import com.zhiyi.medicinebox.util.tools.DateUtil;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,13 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Date;
 
 @Controller
@@ -44,7 +37,7 @@ public class TestController {
     private RecordService recordService;
     @Resource
     private MedicineService medicineService;
-//    @Resource
+    @Resource
     private UserService userService;
     @Resource
     private SendMessageLogService sendMessageLogService;
@@ -56,6 +49,9 @@ public class TestController {
     @ResponseBody
     public ParmResponse test() throws IOException {
         userService.findByOpenId("otucO0WaKm9S6-mkGdFqXiCVkgvg");
+        alarmService.findByid(13);
+        recordService.findViewRecordByUserId(32,new Date());
+        alarmService.findViewAlarmByUserId(32,new Date());
         return ResponseUtils.getBeanResponse("SUCCESS", "",request);
     }
 

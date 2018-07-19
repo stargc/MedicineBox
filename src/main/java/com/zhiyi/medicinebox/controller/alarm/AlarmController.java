@@ -1,6 +1,6 @@
 package com.zhiyi.medicinebox.controller.alarm;
 
-import com.zhiyi.medicinebox.entity.alarm.Alarm;
+import com.zhiyi.medicinebox.entity.po.alarm.Alarm;
 import com.zhiyi.medicinebox.parm.response.ParmResponse;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
 import com.zhiyi.medicinebox.util.ResponseUtils;

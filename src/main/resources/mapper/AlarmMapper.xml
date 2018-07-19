@@ -1,121 +1,120 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.AlarmMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.alarm.Alarm" >
-    <id column="alarmId" property="alarmid" jdbcType="INTEGER" />
-    <result column="dosageId" property="dosageid" jdbcType="INTEGER" />
-    <result column="userId" property="userid" jdbcType="INTEGER" />
-    <result column="statusId" property="statusid" jdbcType="INTEGER" />
-    <result column="alarmDate" property="alarmdate" jdbcType="DATE" />
-    <result column="alarmTime" property="alarmtime" jdbcType="TIME" />
-    <result column="alarmLock" property="alarmlock" jdbcType="INTEGER" />
-    <result column="issend" property="issend" jdbcType="SMALLINT" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.alarm.Alarm" >
+    <id column="alarm_id" jdbcType="INTEGER" property="alarmId" />
+    <result column="dosage_id" jdbcType="INTEGER" property="dosageId" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="status_id" jdbcType="INTEGER" property="statusId" />
+    <result column="alarm_time" jdbcType="TIMESTAMP" property="alarmTime" />
+    <result column="alarm_lock" jdbcType="INTEGER" property="alarmLock" />
+    <result column="is_send" jdbcType="SMALLINT" property="isSend" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    alarmId, dosageId, userId, statusId, alarmDate, alarmTime, alarmLock, issend, createDate
+  <sql id="Base_Column_List">
+    alarm_id, dosage_id, user_id, status_id, alarm_time, alarm_lock, is_send, create_date,
+    update_date
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from alarm
-    where alarmId = #{alarmid,jdbcType=INTEGER}
+    where alarm_id = #{alarmId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from alarm
-    where alarmId = #{alarmid,jdbcType=INTEGER}
+    where alarm_id = #{alarmId,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.alarm.Alarm" >
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Alarm">
     insert into alarm
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="alarmid != null" >
-        alarmId,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="alarmId != null">
+        alarm_id,
       </if>
-      <if test="dosageid != null" >
-        dosageId,
+      <if test="dosageId != null">
+        dosage_id,
       </if>
-      <if test="userid != null" >
-        userId,
+      <if test="userId != null">
+        user_id,
       </if>
-      <if test="statusid != null" >
-        statusId,
+      <if test="statusId != null">
+        status_id,
       </if>
-      <if test="alarmdate != null" >
-        alarmDate,
+      <if test="alarmTime != null">
+        alarm_time,
       </if>
-      <if test="alarmtime != null" >
-        alarmTime,
+      <if test="alarmLock != null">
+        alarm_lock,
       </if>
-      <if test="alarmlock != null" >
-        alarmLock,
+      <if test="isSend != null">
+        is_send,
       </if>
-      <if test="issend != null" >
-        issend,
+      <if test="createDate != null">
+        create_date,
       </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="updateDate != null">
+        update_date,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="alarmid != null" >
-        #{alarmid,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="alarmId != null">
+        #{alarmId,jdbcType=INTEGER},
       </if>
-      <if test="dosageid != null" >
-        #{dosageid,jdbcType=INTEGER},
+      <if test="dosageId != null">
+        #{dosageId,jdbcType=INTEGER},
       </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="statusid != null" >
-        #{statusid,jdbcType=INTEGER},
+      <if test="statusId != null">
+        #{statusId,jdbcType=INTEGER},
       </if>
-      <if test="alarmdate != null" >
-        #{alarmdate,jdbcType=DATE},
+      <if test="alarmTime != null">
+        #{alarmTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="alarmtime != null" >
-        #{alarmtime,jdbcType=TIME},
+      <if test="alarmLock != null">
+        #{alarmLock,jdbcType=INTEGER},
       </if>
-      <if test="alarmlock != null" >
-        #{alarmlock,jdbcType=INTEGER},
+      <if test="isSend != null">
+        #{isSend,jdbcType=SMALLINT},
       </if>
-      <if test="issend != null" >
-        #{issend,jdbcType=SMALLINT},
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.alarm.Alarm" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Alarm">
     update alarm
-    <set >
-      <if test="dosageid != null" >
-        dosageId = #{dosageid,jdbcType=INTEGER},
+    <set>
+      <if test="dosageId != null">
+        dosage_id = #{dosageId,jdbcType=INTEGER},
       </if>
-      <if test="userid != null" >
-        userId = #{userid,jdbcType=INTEGER},
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="statusid != null" >
-        statusId = #{statusid,jdbcType=INTEGER},
+      <if test="statusId != null">
+        status_id = #{statusId,jdbcType=INTEGER},
       </if>
-      <if test="alarmdate != null" >
-        alarmDate = #{alarmdate,jdbcType=DATE},
+      <if test="alarmTime != null">
+        alarm_time = #{alarmTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="alarmtime != null" >
-        alarmTime = #{alarmtime,jdbcType=TIME},
+      <if test="alarmLock != null">
+        alarm_lock = #{alarmLock,jdbcType=INTEGER},
       </if>
-      <if test="alarmlock != null" >
-        alarmLock = #{alarmlock,jdbcType=INTEGER},
+      <if test="isSend != null">
+        is_send = #{isSend,jdbcType=SMALLINT},
       </if>
-      <if test="issend != null" >
-        issend = #{issend,jdbcType=SMALLINT},
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where alarmId = #{alarmid,jdbcType=INTEGER}
+    where alarm_id = #{alarmId,jdbcType=INTEGER}
   </update>
-
-
 </mapper>

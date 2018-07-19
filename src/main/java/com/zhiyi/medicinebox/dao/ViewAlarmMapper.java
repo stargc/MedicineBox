@@ -1,7 +1,7 @@
 package com.zhiyi.medicinebox.dao;
 
 
-import com.zhiyi.medicinebox.entity.alarm.ViewAlarm;
+import com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm;
 
 import java.util.List;
 

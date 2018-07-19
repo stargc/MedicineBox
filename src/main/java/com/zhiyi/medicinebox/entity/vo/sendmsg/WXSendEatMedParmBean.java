@@ -1,4 +1,4 @@
-package com.zhiyi.medicinebox.entity.sendmsg;
+package com.zhiyi.medicinebox.entity.vo.sendmsg;
 
 import java.util.Date;
 

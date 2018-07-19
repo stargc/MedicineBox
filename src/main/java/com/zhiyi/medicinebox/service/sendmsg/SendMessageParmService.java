@@ -1,8 +1,8 @@
 package com.zhiyi.medicinebox.service.sendmsg;
 
 import com.zhiyi.medicinebox.dao.SendmessageParmMapper;
-import com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm;
-import com.zhiyi.medicinebox.entity.sendmsg.WXSendEatMedParmBean;
+import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm;
+import com.zhiyi.medicinebox.entity.vo.sendmsg.WXSendEatMedParmBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -53,7 +53,7 @@ public class SendMessageParmService {
 	public int updateIsSend(Short isUserd,int id){
 		SendmessageParm bean = new SendmessageParm();
 		bean.setId(id);
-		bean.setIsused(isUserd);
+		bean.setIsUsed(isUserd);
 		return parmMapper.updateByPrimaryKeySelective(bean);
 	}
 }

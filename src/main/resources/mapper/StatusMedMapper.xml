@@ -1,49 +1,58 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.StatusMedMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.base.StatusMed" >
-    <id column="statusId" property="statusid" jdbcType="INTEGER" />
-    <result column="status" property="status" jdbcType="VARCHAR" />
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.StatusMed" >
+    <id column="status_id" jdbcType="INTEGER" property="statusId" />
+    <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    statusId, status
+  <sql id="Base_Column_List">
+    status_id, status
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from status_med
-    where statusId = #{statusid,jdbcType=INTEGER}
+    where status_id = #{statusId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from status_med
-    where statusId = #{statusid,jdbcType=INTEGER}
+    where status_id = #{statusId,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.base.StatusMed" >
+  <insert id="insert" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
+    insert into status_med (status_id, status)
+    values (#{statusId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
     insert into status_med
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="statusid != null" >
-        statusId,
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="statusId != null">
+        status_id,
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         status,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="statusid != null" >
-        #{statusid,jdbcType=INTEGER},
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="statusId != null">
+        #{statusId,jdbcType=INTEGER},
       </if>
-      <if test="status != null" >
+      <if test="status != null">
         #{status,jdbcType=VARCHAR},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.base.StatusMed" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
     update status_med
-    <set >
-      <if test="status != null" >
+    <set>
+      <if test="status != null">
         status = #{status,jdbcType=VARCHAR},
       </if>
     </set>
-    where statusId = #{statusid,jdbcType=INTEGER}
+    where status_id = #{statusId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
+    update status_med
+    set status = #{status,jdbcType=VARCHAR}
+    where status_id = #{statusId,jdbcType=INTEGER}
   </update>
 </mapper>

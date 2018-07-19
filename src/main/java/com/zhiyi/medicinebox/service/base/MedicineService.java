@@ -1,7 +1,7 @@
 package com.zhiyi.medicinebox.service.base;
 
 import com.zhiyi.medicinebox.dao.MedicineMapper;
-import com.zhiyi.medicinebox.entity.base.Medicine;
+import com.zhiyi.medicinebox.entity.po.base.Medicine;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -15,21 +15,21 @@ public class MedicineService {
 	
 	public boolean add(Medicine medicine) {
 		if (medicine != null) {
-			medicine.setCreatedate(new Date());
+			medicine.setCreateDate(new Date());
 			return mapper.insertSelective(medicine) > 0;
 		}
 		return false;
 	}
 	
 	public boolean delete(Medicine medicine) {
-		if (medicine != null && medicine.getMedid() != 0) {
-			return mapper.deleteByPrimaryKey(medicine.getMedid()) > 0;
+		if (medicine != null && medicine.getMedId() != 0) {
+			return mapper.deleteByPrimaryKey(medicine.getMedId()) > 0;
 		}
 		return false;
 	}
 	
 	public boolean update(Medicine medicine){
-		if (medicine != null && medicine.getMedid() != 0) {
+		if (medicine != null && medicine.getMedId() != 0) {
 			return mapper.updateByPrimaryKeySelective(medicine) > 0;
 		}
 		return false;

@@ -1,6 +1,6 @@
 package com.zhiyi.medicinebox.dao;
 
-import com.zhiyi.medicinebox.entity.base.User;
+import com.zhiyi.medicinebox.entity.po.base.User;
 
 public interface UserMapper {
     int deleteByPrimaryKey(Integer userid);

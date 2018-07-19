@@ -1,118 +1,130 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyi.medicinebox.dao.SendmessageParmMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm" >
-    <id column="ID" property="id" jdbcType="INTEGER" />
-    <result column="userId" property="userid" jdbcType="INTEGER" />
-    <result column="openId" property="openid" jdbcType="VARCHAR" />
-    <result column="formId" property="formid" jdbcType="VARCHAR" />
-    <result column="prepayId" property="prepayid" jdbcType="VARCHAR" />
-    <result column="createDate" property="createdate" jdbcType="TIMESTAMP" />
-    <result column="type" property="type" jdbcType="VARCHAR" />
-    <result column="isused" property="isused" jdbcType="SMALLINT" />
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm" >
+    <id column="ID" jdbcType="INTEGER" property="id" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="open_id" jdbcType="VARCHAR" property="openId" />
+    <result column="form_id" jdbcType="VARCHAR" property="formId" />
+    <result column="prepay_id" jdbcType="VARCHAR" property="prepayId" />
+    <result column="create_date" jdbcType="TIMESTAMP" property="createDate" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="is_used" jdbcType="SMALLINT" property="isUsed" />
+    <result column="update_date" jdbcType="TIMESTAMP" property="updateDate" />
   </resultMap>
-  <sql id="Base_Column_List" >
-    ID, userId, openId, formId, prepayId, createDate, type, isused
+  <sql id="Base_Column_List">
+    ID, user_id, open_id, form_id, prepay_id, create_date, type, is_used, update_date
   </sql>
-  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-    select 
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select
     <include refid="Base_Column_List" />
     from sendmessage_parm
     where ID = #{id,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
     delete from sendmessage_parm
     where ID = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm" >
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm">
     insert into sendmessage_parm
-    <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         ID,
       </if>
-      <if test="userid != null" >
-        userId,
+      <if test="userId != null">
+        user_id,
       </if>
-      <if test="openid != null" >
-        openId,
+      <if test="openId != null">
+        open_id,
       </if>
-      <if test="formid != null" >
-        formId,
+      <if test="formId != null">
+        form_id,
       </if>
-      <if test="prepayid != null" >
-        prepayId,
+      <if test="prepayId != null">
+        prepay_id,
       </if>
-      <if test="createdate != null" >
-        createDate,
+      <if test="createDate != null">
+        create_date,
       </if>
-      <if test="type != null" >
+      <if test="type != null">
         type,
       </if>
-      <if test="isused != null" >
-        isused,
+      <if test="isUsed != null">
+        is_used,
+      </if>
+      <if test="updateDate != null">
+        update_date,
       </if>
     </trim>
-    <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
         #{id,jdbcType=INTEGER},
       </if>
-      <if test="userid != null" >
-        #{userid,jdbcType=INTEGER},
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
       </if>
-      <if test="openid != null" >
-        #{openid,jdbcType=VARCHAR},
+      <if test="openId != null">
+        #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="formid != null" >
-        #{formid,jdbcType=VARCHAR},
+      <if test="formId != null">
+        #{formId,jdbcType=VARCHAR},
       </if>
-      <if test="prepayid != null" >
-        #{prepayid,jdbcType=VARCHAR},
+      <if test="prepayId != null">
+        #{prepayId,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null">
+        #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="type != null" >
+      <if test="type != null">
         #{type,jdbcType=VARCHAR},
       </if>
-      <if test="isused != null" >
-        #{isused,jdbcType=SMALLINT},
+      <if test="isUsed != null">
+        #{isUsed,jdbcType=SMALLINT},
+      </if>
+      <if test="updateDate != null">
+        #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm">
     update sendmessage_parm
-    <set >
-      <if test="userid != null" >
-        userId = #{userid,jdbcType=INTEGER},
+    <set>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
       </if>
-      <if test="openid != null" >
-        openId = #{openid,jdbcType=VARCHAR},
+      <if test="openId != null">
+        open_id = #{openId,jdbcType=VARCHAR},
       </if>
-      <if test="formid != null" >
-        formId = #{formid,jdbcType=VARCHAR},
+      <if test="formId != null">
+        form_id = #{formId,jdbcType=VARCHAR},
       </if>
-      <if test="prepayid != null" >
-        prepayId = #{prepayid,jdbcType=VARCHAR},
+      <if test="prepayId != null">
+        prepay_id = #{prepayId,jdbcType=VARCHAR},
       </if>
-      <if test="createdate != null" >
-        createDate = #{createdate,jdbcType=TIMESTAMP},
+      <if test="createDate != null">
+        create_date = #{createDate,jdbcType=TIMESTAMP},
       </if>
-      <if test="type != null" >
+      <if test="type != null">
         type = #{type,jdbcType=VARCHAR},
       </if>
-      <if test="isused != null" >
-        isused = #{isused,jdbcType=SMALLINT},
+      <if test="isUsed != null">
+        is_used = #{isUsed,jdbcType=SMALLINT},
+      </if>
+      <if test="updateDate != null">
+        update_date = #{updateDate,jdbcType=TIMESTAMP},
       </if>
     </set>
     where ID = #{id,jdbcType=INTEGER}
   </update>
+
+
   <delete id="deleteByDate" parameterType="java.util.Date" >
     DELETE from sendmessage_parm
     where createDate &lt; #{createdate,jdbcType=TIMESTAMP}
   </delete>
 
 
-  <select id="findWXSendEatMedParm" resultType="com.zhiyi.medicinebox.entity.sendmsg.WXSendEatMedParmBean"  >
+  <select id="findWXSendEatMedParm" resultType="com.zhiyi.medicinebox.entity.vo.sendmsg.WXSendEatMedParmBean"  >
     select a.alarmId, a.alarmDate , a.alarmTime,a.statusId,d.dosage,m.medName,
     s.formId,s.prepayId,s.ID as parmId1,u.openId,u.userId,u.userName,m.medId
     from alarm a LEFT JOIN user u on a.userId = u.userId

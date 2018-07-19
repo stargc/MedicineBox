@@ -1,7 +1,7 @@
 package com.zhiyi.medicinebox.service.sendmsg;
 
 import com.zhiyi.medicinebox.dao.SendmessageLogMapper;
-import com.zhiyi.medicinebox.entity.sendmsg.SendmessageLog;
+import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageLog;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;

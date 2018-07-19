@@ -1,15 +1,15 @@
-package com.zhiyi.medicinebox.entity.sendmsg;
+package com.zhiyi.medicinebox.entity.po.sendmsg;
 
 import java.util.Date;
 
 public class SendmessageLog {
     private Integer id;
 
-    private Integer userid;
+    private Integer userId;
 
-    private String username;
+    private String userName;
 
-    private String openid;
+    private String openId;
 
     private String message;
 
@@ -17,7 +17,7 @@ public class SendmessageLog {
 
     private String comment;
 
-    private Date createdate;
+    private Date createDate;
 
     public Integer getId() {
         return id;
@@ -27,28 +27,28 @@ public class SendmessageLog {
         this.id = id;
     }
 
-    public Integer getUserid() {
-        return userid;
+    public Integer getUserId() {
+        return userId;
     }
 
-    public void setUserid(Integer userid) {
-        this.userid = userid;
+    public void setUserId(Integer userId) {
+        this.userId = userId;
     }
 
-    public String getUsername() {
-        return username;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setUsername(String username) {
-        this.username = username == null ? null : username.trim();
+    public void setUserName(String userName) {
+        this.userName = userName == null ? null : userName.trim();
     }
 
-    public String getOpenid() {
-        return openid;
+    public String getOpenId() {
+        return openId;
     }
 
-    public void setOpenid(String openid) {
-        this.openid = openid == null ? null : openid.trim();
+    public void setOpenId(String openId) {
+        this.openId = openId == null ? null : openId.trim();
     }
 
     public String getMessage() {
@@ -75,11 +75,11 @@ public class SendmessageLog {
         this.comment = comment == null ? null : comment.trim();
     }
 
-    public Date getCreatedate() {
-        return createdate;
+    public Date getCreateDate() {
+        return createDate;
     }
 
-    public void setCreatedate(Date createdate) {
-        this.createdate = createdate;
+    public void setCreateDate(Date createDate) {
+        this.createDate = createDate;
     }
 }

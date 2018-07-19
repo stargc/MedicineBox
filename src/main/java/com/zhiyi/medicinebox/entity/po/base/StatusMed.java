@@ -1,16 +1,16 @@
-package com.zhiyi.medicinebox.entity.base;
+package com.zhiyi.medicinebox.entity.po.base;
 
 public class StatusMed {
-    private Integer statusid;
+    private Integer statusId;
 
     private String status;
 
-    public Integer getStatusid() {
-        return statusid;
+    public Integer getStatusId() {
+        return statusId;
     }
 
-    public void setStatusid(Integer statusid) {
-        this.statusid = statusid;
+    public void setStatusId(Integer statusId) {
+        this.statusId = statusId;
     }
 
     public String getStatus() {

@@ -9,6 +9,8 @@
         <commentGenerator>
             <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
             <property name="suppressAllComments" value="true"/>
+            <!--驼峰命名-->
+            <property name="useActualColumnNames" value="true"/>
         </commentGenerator>
         <!--数据库连接的信息：驱动类、连接地址、用户名、密码 -->
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
@@ -36,6 +38,7 @@
                              targetProject="src/main/out">
             <property name="enableSubPackages" value="false"/>
         </javaClientGenerator>
+
         <!-- 指定数据库表 -->
         <table schema="general" tableName="view_alarm"
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
@@ -46,6 +49,16 @@
                enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
                enableSelectByExample="false" selectByExampleQueryId="false">
         </table>
+
+        <!--<table schema="general" tableName="alarm"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <!--<table schema="general" tableName="box"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
 
         <!--<table schema="general" tableName="dosage"-->
                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->

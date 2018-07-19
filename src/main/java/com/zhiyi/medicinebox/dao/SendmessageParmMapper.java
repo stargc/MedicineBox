@@ -1,7 +1,7 @@
 package com.zhiyi.medicinebox.dao;
 
-import com.zhiyi.medicinebox.entity.sendmsg.SendmessageParm;
-import com.zhiyi.medicinebox.entity.sendmsg.WXSendEatMedParmBean;
+import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm;
+import com.zhiyi.medicinebox.entity.vo.sendmsg.WXSendEatMedParmBean;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.Date;
