@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.net.URLDecoder;
 import java.util.Date;
 
 @Controller
@@ -47,7 +48,7 @@ public class TestController {
 
     @RequestMapping("/test")
     @ResponseBody
-    public ParmResponse test() throws IOException {
+    public ParmResponse test(String name) throws IOException {
         userService.findByOpenId("otucO0WaKm9S6-mkGdFqXiCVkgvg");
         alarmService.findByid(13);
         recordService.findViewRecordByUserId(32,new Date());
@@ -65,4 +66,5 @@ public class TestController {
         System.out.println(StringUtils.isBlank(s3) + "  " + StringUtils.isEmpty(s3));
         System.out.println(StringUtils.isBlank(s4) + "  " + StringUtils.isEmpty(s4));
     }
+
 }

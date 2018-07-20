@@ -1,9 +1,9 @@
 //package com.zhiyi.medicinebox.entity.vo;
 //
 //import java.io.Serializable;
-//import javax.persistence.*;
 //import javax.swing.text.View;
 //
+//import com.zhiyi.medicinebox.entity.po.alarm.ViewRecord;
 //import com.zhiyi.medicinebox.util.tools.DateUtil;
 //
 //import java.util.Calendar;
@@ -16,8 +16,6 @@
 // */
 //public class ViewRecord_show implements Serializable {
 //	private static final long serialVersionUID = 1L;
-//
-//	private Date alarmDate;
 //
 //	private Date alarmTime;
 //
@@ -45,7 +43,6 @@
 //	private String alarmTime_show;
 //
 //	public ViewRecord_show(ViewRecord v) {
-//		this.alarmDate = v.getAlarmDate();
 //		this.alarmId = v.getAlarmId();
 //		this.alarmTime = v.getAlarmTime();
 //		this.dosage = v.getDosage();

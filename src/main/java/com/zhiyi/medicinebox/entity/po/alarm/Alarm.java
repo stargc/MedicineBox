@@ -5,8 +5,6 @@ import java.util.Date;
 public class Alarm {
     private Integer alarmId;
 
-    private Integer dosageId;
-
     private Integer userId;
 
     private Integer statusId;
@@ -21,20 +19,16 @@ public class Alarm {
 
     private Date updateDate;
 
+    private String dosage;
+
+    private Integer medId;
+
     public Integer getAlarmId() {
         return alarmId;
     }
 
     public void setAlarmId(Integer alarmId) {
         this.alarmId = alarmId;
-    }
-
-    public Integer getDosageId() {
-        return dosageId;
-    }
-
-    public void setDosageId(Integer dosageId) {
-        this.dosageId = dosageId;
     }
 
     public Integer getUserId() {
@@ -91,5 +85,21 @@ public class Alarm {
 
     public void setUpdateDate(Date updateDate) {
         this.updateDate = updateDate;
+    }
+
+    public String getDosage() {
+        return dosage;
+    }
+
+    public void setDosage(String dosage) {
+        this.dosage = dosage == null ? null : dosage.trim();
+    }
+
+    public Integer getMedId() {
+        return medId;
+    }
+
+    public void setMedId(Integer medId) {
+        this.medId = medId;
     }
 }

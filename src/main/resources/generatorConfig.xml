@@ -40,20 +40,20 @@
         </javaClientGenerator>
 
         <!-- 指定数据库表 -->
-        <table schema="general" tableName="view_alarm"
-               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false">
-        </table>
-
-        <table schema="general" tableName="view_record"
-               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
-               enableSelectByExample="false" selectByExampleQueryId="false">
-        </table>
-
-        <!--<table schema="general" tableName="alarm"-->
+        <!--<table schema="general" tableName="view_alarm"-->
                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
                <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
         <!--</table>-->
+
+        <!--<table schema="general" tableName="view_record"-->
+               <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->
+               <!--enableSelectByExample="false" selectByExampleQueryId="false">-->
+        <!--</table>-->
+
+        <table schema="general" tableName="alarm"
+               enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"
+               enableSelectByExample="false" selectByExampleQueryId="false">
+        </table>
 
         <!--<table schema="general" tableName="box"-->
                <!--enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false"-->

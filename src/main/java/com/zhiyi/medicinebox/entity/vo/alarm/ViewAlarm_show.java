@@ -1,5 +1,6 @@
 //package com.zhiyi.medicinebox.entity.vo;
 //
+//import com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm;
 //import com.zhiyi.medicinebox.util.tools.DateUtil;
 //
 //import java.io.Serializable;
@@ -13,8 +14,6 @@
 // */
 //public class ViewAlarm_show implements Serializable {
 //	private static final long serialVersionUID = 1L;
-//
-//	private Date alarmDate;
 //
 //	private int alarmId;
 //
@@ -40,7 +39,6 @@
 //	private String alarmTime_show;
 //
 //	public ViewAlarm_show(ViewAlarm v) {
-//		this.alarmDate = v.getAlarmDate();
 //		this.alarmId = v.getAlarmId();
 //		this.alarmLock = v.getAlarmLock();
 //		this.alarmTime = v.getAlarmTime();
