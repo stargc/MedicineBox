@@ -4,7 +4,6 @@ import com.zhiyi.medicinebox.util.tools.JSONUtils;
 
 /**
  * 返回参数总接口
- * @author Andy.Niu
  *
  */
 public class ParmResponse {

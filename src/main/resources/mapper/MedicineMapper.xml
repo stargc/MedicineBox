@@ -30,7 +30,7 @@
     #{instructions,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
     )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Medicine">
+  <insert id="insertSelective" keyProperty="medId" parameterType="com.zhiyi.medicinebox.entity.po.base.Medicine" useGeneratedKeys="true">
     insert into medicine
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="medId != null">

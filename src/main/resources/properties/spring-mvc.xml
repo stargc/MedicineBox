@@ -16,31 +16,8 @@
     <context:component-scan base-package="com.zhiyi.medicinebox.dao"/>
     <!--<context:component-scan base-package="com.zhiyi.medicinebox.job" />-->
 
-
-    <!--&lt;!&ndash; 对模型视图名称的解析，即在模型视图名称添加前后缀 &ndash;&gt;-->
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
-        <property name="prefix" value="/pages/"/>
-        <property name="suffix" value=".jsp"></property>
-    </bean>
-    <bean
-            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
-        <property name="messageConverters">
-            <list>
-                <bean
-                        class="org.springframework.http.converter.StringHttpMessageConverter">
-                    <property name="supportedMediaTypes">
-                        <list>
-                            <value>application/json; charset=UTF-8</value>
-                            <value>text/html;charset=UTF-8</value>
-                        </list>
-                    </property>
-                </bean>
-            </list>
-        </property>
-    </bean>
-
-    <mvc:annotation-driven>
+    <!-- 用于格式化 spring MVC传入传出参数 -->
+    <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters register-defaults="false">
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
@@ -62,6 +39,16 @@
         </mvc:message-converters>
     </mvc:annotation-driven>
 
+    <!--  spring MVC 传参 解析成 date -->
+    <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+        <property name="converters">
+            <set>
+                <ref bean="dateConvert"/>
+            </set>
+        </property>
+    </bean>
+    <bean id="dateConvert" class="com.zhiyi.medicinebox.util.spring.DateConvert"/>
+
     <!-- 拦截器
     <mvc:interceptors>
         <mvc:interceptor>
@@ -74,5 +61,11 @@
     <bean class="com.zhiyi.medicinebox.util.spring.ServerStartupLinstener"/>
 
     <!--<import resource="classpath:properties/quartz-job.xml"/>-->
+
+    <!-- 异常捕获 -->
     <bean id="exceptionResolver" class="com.zhiyi.medicinebox.util.spring.ExceptionHandler"/>
+
+    <!-- 支持上传文件 -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
 </beans>

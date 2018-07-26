@@ -17,6 +17,6 @@ public class ResultCode {
 	/**文件保存错误*/
 	public static final String RESULT_FILE_SAVE_ERROR = "4";
 
-	/**发送不可预见错误，filter 中直接catch住*/
+	/**发送不可预见错误 */
 	public static final String RESULT_ERROR = "999";
 }

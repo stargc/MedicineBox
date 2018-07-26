@@ -1,12 +1,17 @@
 package com.zhiyi.medicinebox.strategy;
 
+import com.zhiyi.medicinebox.constant.Consts;
+import com.zhiyi.medicinebox.constant.ResultCode;
 import com.zhiyi.medicinebox.entity.po.alarm.Alarm;
 import com.zhiyi.medicinebox.entity.po.alarm.Record;
 import com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm;
 import com.zhiyi.medicinebox.entity.po.base.Medicine;
 import com.zhiyi.medicinebox.entity.vo.alarm.AlarmAddReq;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
+import com.zhiyi.medicinebox.service.alarm.RecordService;
 import com.zhiyi.medicinebox.service.base.MedicineService;
+import com.zhiyi.medicinebox.util.ResponseUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,11 +29,22 @@ public class AlarmStrategy {
     private AlarmService alarmService;
     @Resource
     private MedicineService medicineService;
+    @Resource
+    private RecordService recordService;
 
+    /****
+     * 添加一套用药提醒
+     * @param medicine
+     * @param alarm
+     * @param startDate
+     * @param endDate
+     * @return
+     */
     @Transactional(rollbackFor = Exception.class)
     public boolean addViewAlarm(Medicine medicine, Alarm alarm, Date startDate, Date endDate) {
         boolean isDone = false;
         if (medicineService.add(medicine)) {
+            alarm.setMedId(medicine.getMedId());
             int days = Long.valueOf((endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24).intValue() + 1;
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(startDate);
@@ -37,7 +53,7 @@ public class AlarmStrategy {
                 alarm.setStatusId(1);
             }
             calendar.set(Calendar.HOUR_OF_DAY, alarm.getAlarmTime().getHours());
-            calendar.set(Calendar.MINUTE,alarm.getAlarmTime().getMinutes());
+            calendar.set(Calendar.MINUTE, alarm.getAlarmTime().getMinutes());
             //添加当天记录
             alarm.setAlarmTime(calendar.getTime());
             isDone = alarmService.add(alarm);
@@ -50,32 +66,45 @@ public class AlarmStrategy {
         return isDone;
     }
 
-    public String addVal(AlarmAddReq alarmAddReq) {
-        if (alarmAddReq == null) {
-            return "参数内容为空";
+    /***
+     * 用户针对一个用药提醒 服药操作
+     * @param alarmid
+     * @param statusid
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean takeMedicine(int alarmid, int statusid) {
+        if (alarmService.updateStatus(alarmid, statusid)) {
+            ViewAlarm newAlarm = alarmService.findViewAlarmById(alarmid);
+            if (newAlarm != null) {
+                Record record = getRecordFromAlarm(newAlarm, new Date());
+                record.setType(Consts.TAKE_MED_STATUS_EATED);
+                return recordService.add(record);
+            }
         }
-        if (alarmAddReq.getMedName() == null) {
-            return "药品信息不能为空";
-        }
-        if (alarmAddReq.getDosage() == null) {
-            return "药品用量不能为空";
-        }
-        if (alarmAddReq.getAlarmTime() == null) {
-            return "药品提醒时间不能为空";
-        }
-        if (alarmAddReq.getUserId() == 0) {
-            return "用户信息不能为空";
-        }
-        if (alarmAddReq.getStartDate() == null) {
-            return "药品提醒开始时间不能为空";
-        }
-        if (alarmAddReq.getEndDate() == null) {
-            return "药品提醒结束时间不能为空";
-        }
-        return null;
+        return false;
     }
 
-    public Record getRecordFromAlarm(ViewAlarm alarm, Date date) {
+    /***
+     * 用户针对一个用药提醒 跳过
+     * @param alarmid
+     * @param statusid
+     * @return
+     */
+    @Transactional(rollbackFor = Exception.class)
+    public boolean skipMedicine(int alarmid, int statusid){
+        if(alarmService.updateStatus(alarmid,statusid)){
+            ViewAlarm newAlarm = alarmService.findViewAlarmById(alarmid);
+            if (newAlarm != null) {
+                Record record = getRecordFromAlarm(newAlarm, new Date());
+                record.setType(Consts.TAKE_MED_STATUS_SKIP);
+                return recordService.add(record);
+            }
+        }
+        return false;
+    }
+
+    private Record getRecordFromAlarm(ViewAlarm alarm, Date date) {
         Record record = new Record();
         record.setAlarmId(alarm.getAlarmId());
         record.setAlarmTime(alarm.getAlarmTime());

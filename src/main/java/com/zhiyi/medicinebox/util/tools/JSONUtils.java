@@ -9,13 +9,6 @@ import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
 import com.alibaba.fastjson.serializer.SerializerFeature;
 
-/**
- * 对services程序返回的json格式数据进行解析 返回值格式是确定的: { code:0|1,//0:数据正常； :信息,
- * data:{} //可能是对象,也可能是数组,也可能是null }
- * 
- * @author 赵锋
- *
- */
 public class JSONUtils {
 
 	/**

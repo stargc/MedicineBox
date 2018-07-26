@@ -1,10 +1,8 @@
 package com.zhiyi.medicinebox.util.http;
 
 import com.alibaba.fastjson.JSONObject;
-import com.zhiyi.medicinebox.util.tools.StringUtil;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpStatus;
-import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
@@ -105,53 +103,6 @@ public class HTTPUtils {
 		}
 		return str;
 	}
-	/**
-	 * httpClient的方式下载文件
-	 * @param path
-	 * @param map
-	 * @param savePath 下载文件 保存地址
-	 * @return
-	 */
-	public static boolean downloadFile(String path, Map<String, String> map,String savePath) {
-		HttpClient client = new HttpClient();
-		String url = StringUtil.contactStr(path);
-		if (map != null) {
-			url=StringUtil.contactStr(url,"?");
-			for (Entry<String, String> entry : map.entrySet()) {
-				url=StringUtil.contactStr(url,entry.getKey(),"=",entry.getValue(),"&");
-			}
-			if(url.endsWith("&")) {
-				url = url.substring(0, url.length() - 1);
-			}
-		}
-		GetMethod httpGet = new GetMethod(url);
-		try {
-			client.executeMethod(httpGet);
-			InputStream in = httpGet.getResponseBodyAsStream();
-			File file = new File(savePath);
-			if (!file.exists()) {
-				if (!file.getParentFile().exists()) {
-					file.getParentFile().mkdir();
-				}
-				file.createNewFile();
-			}
-			FileOutputStream out = new FileOutputStream(file);
-			byte[] b = new byte[1024];
-			int len = 0;
-			while ((len = in.read(b)) != -1) {
-				out.write(b, 0, len);
-			}
-			in.close();
-			out.close();
-		} catch (Exception e) {
-			logger.error(ExceptionUtils.getStackTrace(e));
-			return false;
-		} finally {
-			httpGet.releaseConnection();
-		}
-		return true;
-	}
-	
 
     /**
 	 * 使用HttpURLConnection 发送HTTP post

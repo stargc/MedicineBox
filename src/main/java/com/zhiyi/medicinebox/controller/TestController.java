@@ -1,6 +1,9 @@
 package com.zhiyi.medicinebox.controller;
 
 import com.zhiyi.medicinebox.entity.po.alarm.Alarm;
+import com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm;
+import com.zhiyi.medicinebox.entity.po.alarm.ViewRecord;
+import com.zhiyi.medicinebox.entity.po.base.User;
 import com.zhiyi.medicinebox.parm.response.ParmResponse;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
 import com.zhiyi.medicinebox.service.alarm.RecordService;
@@ -22,6 +25,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.Date;
+import java.util.List;
 
 @Controller
 @RequestMapping("/test")
@@ -49,11 +53,11 @@ public class TestController {
     @RequestMapping("/test")
     @ResponseBody
     public ParmResponse test(String name) throws IOException {
-        userService.findByOpenId("otucO0WaKm9S6-mkGdFqXiCVkgvg");
-        alarmService.findByid(13);
-        recordService.findViewRecordByUserId(32,new Date());
-        alarmService.findViewAlarmByUserId(32,new Date());
-        return ResponseUtils.getBeanResponse("SUCCESS", "",request);
+        User u = userService.findByOpenId("otucO0WaKm9S6-mkGdFqXiCVkgvg");
+        Alarm a = alarmService.findByid(13);
+        List<ViewRecord> list = recordService.findViewRecordByUserId(32,new Date());
+        List<ViewAlarm> list1 = alarmService.findViewAlarmByUserId(32,new Date());
+        return ResponseUtils.getBeanResponse("SUCCESS", "");
     }
 
     public static void main(String[] args) {

@@ -61,7 +61,7 @@ public class AlarmController {
     @ResponseBody
     public ParmResponse getAlarm(int alarmId) throws IOException {
         Alarm alarm = alarmService.findByid(alarmId);
-        return ResponseUtils.getBeanResponse(alarm, "",request);
+        return ResponseUtils.getBeanResponse(alarm, "");
 
     }
 }

@@ -41,7 +41,7 @@
     #{wxSex,jdbcType=INTEGER}, #{wxPhone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
     )
   </insert>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
+  <insert id="insertSelective" keyProperty="userId" parameterType="com.zhiyi.medicinebox.entity.po.base.User" useGeneratedKeys="true" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

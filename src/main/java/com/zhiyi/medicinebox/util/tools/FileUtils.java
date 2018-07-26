@@ -10,9 +10,7 @@ import java.io.*;
 /**
  * 文件工具类
  * 
- * @author gaoyue
- * @date 2016年4月24日
- * @time 下午1:17:24
+ * @author guanchen
  */
 public class FileUtils {
 	private static final Logger logger = LogManager.getLogger(FileUtils.class);

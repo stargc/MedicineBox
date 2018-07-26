@@ -6,12 +6,12 @@ import com.zhiyi.medicinebox.constant.ResultCode;
 import com.zhiyi.medicinebox.parm.response.ParmResponse;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 /**
- * 对services程序返回的json string格式数据进行解析 返回值格式是确定的: { code:0|1,//0:数据正常；1:没有数据 msg
- * :信息,//class data:{} //可能是对象,也可能是数组,也可能是null }
- * 
- * @author 赵锋
+ *
+ * @author guanchen
  *
  */
 public class ResponseUtils {
@@ -24,7 +24,7 @@ public class ResponseUtils {
 	 * @param msg 对结果信息的描述
 	 * @return
 	 */
-	public static ParmResponse getListResponse(Object[] beans, String msg, HttpServletRequest request) {
+	public static ParmResponse getListResponse(Object[] beans, String msg) {
 		ParmResponse response = new ParmResponse();
 		if (beans == null || beans.length == 0) {
 			response.setCode(ResultCode.RESULT_NULL);
@@ -34,11 +34,13 @@ public class ResponseUtils {
 			response.setMsg(msg);
 			response.setData(beans);
 		}
-		try {
+
+		HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+		if (request != null){
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (NullPointerException e) {
-			logger.info("返回结果：" + response.toJson());
+		} else {
+			logger.info( "返回结果：" + response.toJson());
 		}
 		return response;
 	}
@@ -49,7 +51,7 @@ public class ResponseUtils {
 	 * @param msg 对结果信息的描述
 	 * @return
 	 */
-	public static ParmResponse getBeanResponse(Object bean, String msg, HttpServletRequest request) {
+	public static ParmResponse getBeanResponse(Object bean, String msg) {
 		ParmResponse response = new ParmResponse();
 		if (bean == null) {
 			response.setCode(ResultCode.RESULT_NULL);
@@ -59,10 +61,12 @@ public class ResponseUtils {
 			response.setMsg(msg);
 			response.setData(bean);
 		}
-		try {
+
+		HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+		if (request != null){
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (NullPointerException e) {
+		} else {
 			logger.info( "返回结果：" + response.toJson());
 		}
 		return response;
@@ -74,14 +78,16 @@ public class ResponseUtils {
 	 * @param msg 对code信息的描述
 	 * @return
 	 */
-	public static ParmResponse getErrorResponse(String code, String msg, HttpServletRequest request) {
+	public static ParmResponse getErrorResponse(String code, String msg) {
 		ParmResponse response = new ParmResponse();
 		response.setCode(code);
 		response.setMsg(msg);
-		try {
+
+		HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+		if (request != null){
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (NullPointerException e) {
+		} else {
 			logger.info( "返回结果：" + response.toJson());
 		}
 		return response;
@@ -100,7 +106,7 @@ public class ResponseUtils {
 	 * @param msg
 	 * @return
 	 */
-	public static ParmResponse getBooleanResponse(boolean single, String msg, HttpServletRequest request) {
+	public static ParmResponse getBooleanResponse(boolean single, String msg) {
 		ParmResponse response = new ParmResponse();
 		if (!single){
 			response.setCode(ResultCode.RESULT_FAIL);
@@ -109,10 +115,12 @@ public class ResponseUtils {
 		}
 		response.setMsg(msg);
 		response.setData(single);
-		try {
+
+		HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+		if (request != null){
 			logger.info( "【" + request.getAttribute("UUID").toString() + "】 --- " +
 					"返回结果：" + response.toJson());
-		} catch (NullPointerException e) {
+		} else {
 			logger.info( "返回结果：" + response.toJson());
 		}
 		return response;

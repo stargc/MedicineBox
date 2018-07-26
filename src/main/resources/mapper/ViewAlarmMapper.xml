@@ -33,7 +33,7 @@
 
   <sql id="Base_table_List" >
    `alarm` a
-	LEFT JOIN `medicine` m ON (d.`med_id` = m.`med_id`)
+	LEFT JOIN `medicine` m ON (a.`med_id` = m.`med_id`)
 	LEFT JOIN `status_med` sm ON (a.`status_id` = sm.`status_id`)
 	LEFT JOIN `user` u ON (a.`user_id` = u.`user_id`)
   </sql>

@@ -131,7 +131,7 @@
     LEFT JOIN  dosage d on a.dosageId = d.dosageId
     LEFT JOIN medicine m on d.medId = m.medId
     LEFT JOIN sendmessage_parm s on a.userId = s.userId
-    where (a.statusId = '1' or a.statusId = '3') and a.issend=0  and s.isused=0
+    where (a.statusId = '1' or a.statusId = '3') and a.issend=0  and s.isused=0 and a.alarmLock = 0
     and a.alarmDate = #{date,jdbcType=TIMESTAMP} and a.alarmTime >= #{startTime,jdbcType=TIMESTAMP}
     and a.alarmTime &lt;= #{endTime,jdbcType=TIMESTAMP} GROUP BY a.alarmId
   </select>
