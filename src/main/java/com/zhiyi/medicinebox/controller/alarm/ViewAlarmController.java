@@ -60,11 +60,11 @@ public class ViewAlarmController {
             logger.error("新建提醒参数错误 + " + val);
             return ResponseUtils.getErrorResponse(ResultCode.RESULT_PARM_ERROR, val);
         }
-        try {
-            alarmAddReq.setMedName(new String(alarmAddReq.getMedName().getBytes("iso8859-1"), "UTF-8"));
-        } catch (UnsupportedEncodingException e) {
-            logger.info("用户 " + alarmAddReq.getUserId() + " add alarm 药品名称解析错误 ");
-        }
+//        try {
+//            alarmAddReq.setMedName(new String(alarmAddReq.getMedName().getBytes("iso8859-1"), "UTF-8"));
+//        } catch (UnsupportedEncodingException e) {
+//            logger.info("用户 " + alarmAddReq.getUserId() + " add alarm 药品名称解析错误 ");
+//        }
         logger.info("用户 " + alarmAddReq.getUserId() + " add alarm: medicine name = " + alarmAddReq.getMedName() + "；alarm time = " + alarmAddReq.getAlarmTime());
         Date date = new Date();
 

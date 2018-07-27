@@ -49,7 +49,7 @@ public class BaseQuartzJob {
 
     public void sendEatMedicine() {
         logger.info( "定时 用户吃药提醒定时任务 -- 开启");
-        String method = "sendEatMed/send.do";
+        String method = "sendMsg/sendWXEatMed.do";
         try {
             Map<String, Object> parms = new HashMap<>();
             String url = ConfigUtil.getValue("local_host") + method;

@@ -8,4 +8,6 @@ public class Consts {
 	/**跳过*/
 	public static final String TAKE_MED_STATUS_SKIP = "SKIP";
 
+	/** 用药通知记录 type************************/
+	public static final String SEND_MESSAGE_LOG_TYPE = "EATMED";
 }

@@ -1,17 +1,15 @@
 package com.zhiyi.medicinebox.strategy;
 
 import com.zhiyi.medicinebox.constant.Consts;
-import com.zhiyi.medicinebox.constant.ResultCode;
 import com.zhiyi.medicinebox.entity.po.alarm.Alarm;
 import com.zhiyi.medicinebox.entity.po.alarm.Record;
 import com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm;
 import com.zhiyi.medicinebox.entity.po.base.Medicine;
-import com.zhiyi.medicinebox.entity.vo.alarm.AlarmAddReq;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
 import com.zhiyi.medicinebox.service.alarm.RecordService;
 import com.zhiyi.medicinebox.service.base.MedicineService;
-import com.zhiyi.medicinebox.util.ResponseUtils;
-import org.apache.commons.lang3.exception.ExceptionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,6 +23,8 @@ import java.util.Date;
  */
 @Service
 public class AlarmStrategy {
+    private final Logger logger = LogManager.getLogger(this.getClass().getName());
+
     @Resource
     private AlarmService alarmService;
     @Resource

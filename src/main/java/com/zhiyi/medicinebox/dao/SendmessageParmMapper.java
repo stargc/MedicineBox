@@ -18,5 +18,5 @@ public interface SendmessageParmMapper {
 
     int deleteByDate(@Param("createdate") Date createdate);
 
-    List<WXSendEatMedParmBean> findWXSendEatMedParm(@Param("date")Date date, @Param("startTime")Date startTime, @Param("endTime")Date endTime);
+    List<WXSendEatMedParmBean> findWXSendEatMedParm(@Param("startTime")Date startTime, @Param("endTime")Date endTime);
 }

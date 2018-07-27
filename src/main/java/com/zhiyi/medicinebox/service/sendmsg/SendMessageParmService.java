@@ -18,6 +18,7 @@ public class SendMessageParmService {
 	
 	public boolean add(SendmessageParm parm) {
 		if (parm != null) {
+			parm.setCreateDate(new Date());
 			return parmMapper.insertSelective(parm) > 0;
 		}
 		return false;
@@ -46,8 +47,8 @@ public class SendMessageParmService {
 		
 	}
 	
-	public List<WXSendEatMedParmBean> findWXSendEatMedParm(Date date, Date startTime, Date endTime){
-		return parmMapper.findWXSendEatMedParm(date,startTime,endTime);
+	public List<WXSendEatMedParmBean> findWXSendEatMedParm(Date startTime, Date endTime){
+		return parmMapper.findWXSendEatMedParm(startTime,endTime);
 	}
 	
 	public int updateIsSend(Short isUserd,int id){

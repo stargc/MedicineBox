@@ -12,7 +12,7 @@ public class WXSendEatMedParmBean {
     private String medName;
     private String formId;
     private String prepayId;
-    private Integer parmId1;
+    private Integer parmId;
     private String openId;
     private Integer userId;
     private String userName;
@@ -98,12 +98,12 @@ public class WXSendEatMedParmBean {
         this.prepayId = prepayId;
     }
 
-    public Integer getParmId1() {
-        return parmId1;
+    public Integer getParmId() {
+        return parmId;
     }
 
-    public void setParmId1(Integer parmId1) {
-        this.parmId1 = parmId1;
+    public void setParmId(Integer parmId) {
+        this.parmId = parmId;
     }
 
     public String getOpenId() {
