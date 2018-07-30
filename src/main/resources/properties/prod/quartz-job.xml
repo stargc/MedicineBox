@@ -12,7 +12,7 @@
 	    <property name="triggers">
 	        <list>
 	            <ref local="QueryDBJobTrigger"/>
-	            <ref local="CleanSendMsgParmTrigger"/>
+	            <!--<ref local="CleanSendMsgParmTrigger"/>-->
 	            <ref local="SendEatMedicineTrigger"/>
 	        </list>
 	    </property>

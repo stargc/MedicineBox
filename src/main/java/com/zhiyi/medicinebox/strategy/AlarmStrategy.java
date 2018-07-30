@@ -10,10 +10,12 @@ import com.zhiyi.medicinebox.service.alarm.RecordService;
 import com.zhiyi.medicinebox.service.base.MedicineService;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -31,6 +33,8 @@ public class AlarmStrategy {
     private MedicineService medicineService;
     @Resource
     private RecordService recordService;
+    @Autowired
+    private HttpServletRequest request;
 
     /****
      * 添加一套用药提醒
@@ -46,6 +50,7 @@ public class AlarmStrategy {
         if (medicineService.add(medicine)) {
             alarm.setMedId(medicine.getMedId());
             int days = Long.valueOf((endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24).intValue() + 1;
+            logger.info("【" + request.getAttribute("UUID") + "】- 用户 " + alarm.getUserId() + "添加记录 " + days + "条");
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(startDate);
             if (alarm.getStatusId() == null || 0 == alarm.getStatusId()) {

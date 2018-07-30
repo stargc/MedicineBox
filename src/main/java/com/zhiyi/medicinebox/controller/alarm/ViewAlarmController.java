@@ -19,11 +19,13 @@ import com.zhiyi.medicinebox.validate.AlarmVal;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import java.io.UnsupportedEncodingException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -51,6 +53,9 @@ public class ViewAlarmController {
     @Resource
     private AlarmVal alarmVal;
 
+    @Autowired
+    private HttpServletRequest request;
+
     @RequestMapping(value = ("/add"), method = RequestMethod.POST)
     @ResponseBody
     public ParmResponse add(AlarmAddReq alarmAddReq,
@@ -65,7 +70,8 @@ public class ViewAlarmController {
 //        } catch (UnsupportedEncodingException e) {
 //            logger.info("用户 " + alarmAddReq.getUserId() + " add alarm 药品名称解析错误 ");
 //        }
-        logger.info("用户 " + alarmAddReq.getUserId() + " add alarm: medicine name = " + alarmAddReq.getMedName() + "；alarm time = " + alarmAddReq.getAlarmTime());
+        logger.info("【" + request.getAttribute("UUID") + "】- 用户 " + alarmAddReq.getUserId() + " add alarm: medicine name = " + alarmAddReq.getMedName() +
+                "；alarm time = " + alarmAddReq.getAlarmTime() + " 开始时间：" + alarmAddReq.getStartDate() + " 结束时间：" + alarmAddReq.getEndDate());
         Date date = new Date();
 
         String imgPath = new StringBuffer(ConfigUtil.getValue("default_alarm_image_url")).toString();
@@ -73,7 +79,7 @@ public class ViewAlarmController {
             SimpleDateFormat sf_path = new SimpleDateFormat("yyyyMMdd");
             SimpleDateFormat sf_name = new SimpleDateFormat("hhmmssSSSS");
             StringBuffer path = new StringBuffer(ConfigUtil.getValue("file_save_path_liunx"))
-                    .append("/").append(sf_path.format(date))
+                    .append(sf_path.format(date))
                     .append("/").append(alarmAddReq.getUserId()).append(sf_name.format(date));
             imgPath = path.toString();
             try {
@@ -130,7 +136,7 @@ public class ViewAlarmController {
         if (Integer.compare(alarm.getStatusId(),statusId) == 0) {
             return ResponseUtils.getErrorResponse(ResultCode.RESULT_FAIL, "状态未改变");
         }
-        logger.info("用户[" + alarm.getUserId() + "]更改提醒[" + alarmId + "]状态为" + statusId);
+        logger.info("【" + request.getAttribute("UUID") + "】- 用户[" + alarm.getUserId() + "]更改提醒[" + alarmId + "]状态为" + statusId);
 
         switch (statusId) {
             case 1://未服药

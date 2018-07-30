@@ -8,6 +8,7 @@ import org.apache.commons.httpclient.methods.multipart.FilePart;
 import org.apache.commons.httpclient.methods.multipart.MultipartRequestEntity;
 import org.apache.commons.httpclient.methods.multipart.Part;
 import org.apache.commons.httpclient.methods.multipart.StringPart;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -201,7 +202,12 @@ public class HTTPUtils {
 							append(key).append("=").append(value);
 				}
 			}
-			StringBuffer urlNameString = new StringBuffer(url).append("?").append(parmString.substring(1,parmString.length()));
+			if (!StringUtils.isBlank(parmString)){
+				parmString =  new StringBuffer("?").append(parmString.substring(1,parmString.length()));
+			} else {
+				parmString = new StringBuffer("");
+			}
+			StringBuffer urlNameString = new StringBuffer(url).append(parmString);
 			URL realUrl = new URL(urlNameString.toString());
 			// 打开和URL之间的连接
 			URLConnection connection = realUrl.openConnection();

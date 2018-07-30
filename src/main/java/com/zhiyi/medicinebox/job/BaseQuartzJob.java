@@ -30,10 +30,10 @@ public class BaseQuartzJob {
         logger.info( "定时 调用数据库刷新连接状态");
         String method = "StatusMed/findById.do";
         try {
-            Map<String, Object> parms = new HashMap<>();
+            Map<String, String> parms = new HashMap<>();
             parms.put("id", "1");
             String url = ConfigUtil.getValue("local_host") + method;
-//            HTTPUtils.sendPostRequest(url,parms);
+            HTTPUtils.sendGet(url,parms);
         } catch (Exception e) {
             logger.error(ExceptionUtils.getStackTrace(e));
         }
@@ -43,12 +43,12 @@ public class BaseQuartzJob {
         logger.info( "定时清理 SendMessageParm 中过期的数据");
         String method = "SendMessageParm/deleteOverdueParm.do";
         try {
-            Map<String, Object> parms = new HashMap<>();
+            Map<String, String> parms = new HashMap<>();
             Date date = new Date(System.currentTimeMillis() - 7*24*60*60*1000);
             sendParmService.deleteByDate(date);
             parms.put("date", DateUtil.date2String(date));
             String url = ConfigUtil.getValue("local_host") + method;
-//            HTTPUtils.sendPostRequest(url,parms);
+            HTTPUtils.sendGet(url,parms);
         } catch (Exception e) {
             logger.error(ExceptionUtils.getStackTrace(e));
         }
@@ -58,9 +58,9 @@ public class BaseQuartzJob {
         logger.info( "定时 用户吃药提醒定时任务 -- 开启");
         String method = "sendMsg/sendWXEatMed.do";
         try {
-            Map<String, Object> parms = new HashMap<>();
+            Map<String, String> parms = new HashMap<>();
             String url = ConfigUtil.getValue("local_host") + method;
-//            HTTPUtils.sendPostRequest(url,parms);
+            HTTPUtils.sendGet(url,parms);
         } catch (Exception e) {
             logger.error(ExceptionUtils.getStackTrace(e));
         }
