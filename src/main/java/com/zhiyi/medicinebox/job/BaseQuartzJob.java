@@ -1,5 +1,7 @@
 package com.zhiyi.medicinebox.job;
 
+import com.zhiyi.medicinebox.service.sendmsg.SendMessageParmService;
+import com.zhiyi.medicinebox.strategy.AlarmStrategy;
 import com.zhiyi.medicinebox.util.http.HTTPUtils;
 import com.zhiyi.medicinebox.util.tools.ConfigUtil;
 import com.zhiyi.medicinebox.util.tools.DateUtil;
@@ -8,6 +10,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +22,9 @@ import java.util.Map;
 @Component
 public class BaseQuartzJob {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
+
+    @Resource
+    private SendMessageParmService sendParmService;
 
     public void quaryDB() {
         logger.info( "定时 调用数据库刷新连接状态");
@@ -39,6 +45,7 @@ public class BaseQuartzJob {
         try {
             Map<String, Object> parms = new HashMap<>();
             Date date = new Date(System.currentTimeMillis() - 7*24*60*60*1000);
+            sendParmService.deleteByDate(date);
             parms.put("date", DateUtil.date2String(date));
             String url = ConfigUtil.getValue("local_host") + method;
 //            HTTPUtils.sendPostRequest(url,parms);

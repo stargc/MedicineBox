@@ -14,7 +14,7 @@
     <context:component-scan base-package="com.zhiyi.medicinebox.controller"/>
     <context:component-scan base-package="com.zhiyi.medicinebox.service"/>
     <context:component-scan base-package="com.zhiyi.medicinebox.dao"/>
-    <!--<context:component-scan base-package="com.zhiyi.medicinebox.job" />-->
+    <context:component-scan base-package="com.zhiyi.medicinebox.job" />
 
     <!-- 用于格式化 spring MVC传入传出参数 -->
     <mvc:annotation-driven conversion-service="conversionService">
@@ -49,18 +49,10 @@
     </bean>
     <bean id="dateConvert" class="com.zhiyi.medicinebox.util.spring.DateConvert"/>
 
-    <!-- 拦截器
-    <mvc:interceptors>
-        <mvc:interceptor>
-            <mvc:mapping path="/**" />
-            <bean class="com.zhiyi.medicinebox.interceptor.LoginInterceptor"></bean>
-        </mvc:interceptor>
-    </mvc:interceptors>
-     -->
     <!-- 服务器 启动后 回调 ServerLinstener 中 onstart方法-->
     <bean class="com.zhiyi.medicinebox.util.spring.ServerStartupLinstener"/>
 
-    <!--<import resource="classpath:properties/quartz-job.xml"/>-->
+    <import resource="classpath:properties/quartz-job.xml"/>
 
     <!-- 异常捕获 -->
     <bean id="exceptionResolver" class="com.zhiyi.medicinebox.util.spring.ExceptionHandler"/>

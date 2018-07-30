@@ -11,14 +11,20 @@
         <property name="configLocation" value="classpath:properties/quartz.properties"/>
 	    <property name="triggers">
 	        <list>
-	            <!--<ref local="QueryDBJobTrigger"/>-->
+	            <ref local="QueryDBJobTrigger"/>
 	            <!--<ref local="CleanSendMsgParmTrigger"/>-->
 	            <!--<ref local="SendEatMedicineTrigger"/>-->
 	        </list>
 	    </property>
 	</bean>
 
-    <bean id="BaseQuartzJobClass" class="com.zhiyi.medicinebox.job.BaseQuartzJob" />
+    <bean id="BaseQuartzJobClass" class="com.zhiyi.medicinebox.job.BaseQuartzJob" >
+        <property name="jobDataAsMap">
+            <map>
+                <entry key="SendMessageParmService" value-ref="SendMessageParmService" />
+            </map>
+        </property>
+    </bean>
 
     <!-- 1. 定时访问数据库 刷新连接状态  -->
     <bean name="QueryDBJob"
