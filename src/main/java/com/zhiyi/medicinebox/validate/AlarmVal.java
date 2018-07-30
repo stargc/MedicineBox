@@ -33,6 +33,9 @@ public class AlarmVal {
         if (alarmAddReq.getEndDate() == null) {
             return "药品提醒结束时间不能为空";
         }
+        if (Long.compare(alarmAddReq.getStartDate().getTime(),alarmAddReq.getEndDate().getTime()) > 0) {
+            return "提醒开始日期需小于结束日期";
+        }
         return null;
     }
 }
