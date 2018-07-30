@@ -1,15 +1,8 @@
 package com.zhiyi.medicinebox.controller.wexin;
 
-import com.alibaba.fastjson.JSONObject;
-import com.zhiyi.medicinebox.parm.request.WXSendMegRequest;
-import com.zhiyi.medicinebox.parm.request.WXSendMegRequest.EatMedTemplate;
-import com.zhiyi.medicinebox.parm.request.WXSendMegRequest.MsgTemplate;
 import com.zhiyi.medicinebox.parm.response.ParmResponse;
 import com.zhiyi.medicinebox.strategy.WXStrategy;
 import com.zhiyi.medicinebox.util.ResponseUtils;
-import com.zhiyi.medicinebox.util.http.HTTPUtils;
-import com.zhiyi.medicinebox.util.tools.ConfigUtil;
-import com.zhiyi.medicinebox.util.tools.DateUtil;
 import com.zhiyi.medicinebox.util.tools.JSONUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,8 +14,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/WeXinAgent")

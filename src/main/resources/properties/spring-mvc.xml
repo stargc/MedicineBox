@@ -22,7 +22,7 @@
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
-                        <value>text/html;charset=UTF-8</value>
+                        <!--<value>text/html;charset=UTF-8</value>-->
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
@@ -31,7 +31,7 @@
                   class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
-                        <value>text/html;charset=UTF-8</value>
+                        <!--<value>text/html;charset=UTF-8</value>-->
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
@@ -60,7 +60,7 @@
     <!-- 服务器 启动后 回调 ServerLinstener 中 onstart方法-->
     <bean class="com.zhiyi.medicinebox.util.spring.ServerStartupLinstener"/>
 
-    <!--<import resource="classpath:properties/quartz-job.xml"/>-->
+    <import resource="classpath:properties/quartz-job.xml"/>
 
     <!-- 异常捕获 -->
     <bean id="exceptionResolver" class="com.zhiyi.medicinebox.util.spring.ExceptionHandler"/>
