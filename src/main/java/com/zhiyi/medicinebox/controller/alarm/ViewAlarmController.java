@@ -70,7 +70,7 @@ public class ViewAlarmController {
 //        } catch (UnsupportedEncodingException e) {
 //            logger.info("用户 " + alarmAddReq.getUserId() + " add alarm 药品名称解析错误 ");
 //        }
-        logger.info("【" + request.getAttribute("UUID") + "】用户 " + alarmAddReq.getUserId() + " add alarm: medicine name = " + alarmAddReq.getMedName() +
+        logger.info("【" + request.getAttribute("UUID") + "】- 用户 " + alarmAddReq.getUserId() + " add alarm: medicine name = " + alarmAddReq.getMedName() +
                 "；alarm time = " + alarmAddReq.getAlarmTime() + " 开始时间：" + alarmAddReq.getStartDate() + " 结束时间：" + alarmAddReq.getEndDate());
         Date date = new Date();
 
@@ -136,7 +136,7 @@ public class ViewAlarmController {
         if (Integer.compare(alarm.getStatusId(),statusId) == 0) {
             return ResponseUtils.getErrorResponse(ResultCode.RESULT_FAIL, "状态未改变");
         }
-        logger.info("用户[" + alarm.getUserId() + "]更改提醒[" + alarmId + "]状态为" + statusId);
+        logger.info("【" + request.getAttribute("UUID") + "】- 用户[" + alarm.getUserId() + "]更改提醒[" + alarmId + "]状态为" + statusId);
 
         switch (statusId) {
             case 1://未服药

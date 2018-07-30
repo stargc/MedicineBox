@@ -50,7 +50,7 @@ public class AlarmStrategy {
         if (medicineService.add(medicine)) {
             alarm.setMedId(medicine.getMedId());
             int days = Long.valueOf((endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24).intValue() + 1;
-            logger.info("【" + request.getAttribute("UUID") + "】用户 " + alarm.getUserId() + "添加记录 " + days + "条");
+            logger.info("【" + request.getAttribute("UUID") + "】- 用户 " + alarm.getUserId() + "添加记录 " + days + "条");
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(startDate);
             if (alarm.getStatusId() == null || 0 == alarm.getStatusId()) {
