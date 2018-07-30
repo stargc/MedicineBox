@@ -73,7 +73,7 @@ public class ViewAlarmController {
             SimpleDateFormat sf_path = new SimpleDateFormat("yyyyMMdd");
             SimpleDateFormat sf_name = new SimpleDateFormat("hhmmssSSSS");
             StringBuffer path = new StringBuffer(ConfigUtil.getValue("file_save_path_liunx"))
-                    .append("/").append(sf_path.format(date))
+                    .append(sf_path.format(date))
                     .append("/").append(alarmAddReq.getUserId()).append(sf_name.format(date));
             imgPath = path.toString();
             try {
