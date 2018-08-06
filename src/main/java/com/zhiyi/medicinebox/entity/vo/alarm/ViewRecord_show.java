@@ -41,17 +41,17 @@ public class ViewRecord_show implements Serializable {
 	private String alarmTime_show;
 
 	public ViewRecord_show(ViewRecord v) {
-		this.alarmId = v.getAlarmId();
+//		this.alarmId = v.getAlarmId();
 		this.alarmTime = v.getAlarmTime();
 		this.dosage = v.getDosage();
 		this.medName = v.getMedName();
 		this.status = v.getStatus();
-		this.statusId = v.getStatusId();
+//		this.statusId = v.getStatusId();
 		this.url = v.getUrl();
-		this.userId = v.getUserId();
-		this.recordId = v.getRecordId();
-		this.createDate = v.getCreateDate();
-		this.type = v.getType();
+//		this.userId = v.getUserId();
+//		this.recordId = v.getRecordId();
+//		this.createDate = v.getCreateDate();
+//		this.type = v.getType();
 
 		long oneday = 24 * 60 * 60 * 1000;
 		if (alarmTime != null) {

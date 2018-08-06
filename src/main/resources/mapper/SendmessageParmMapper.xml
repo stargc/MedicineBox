@@ -123,15 +123,12 @@
     where create_date &lt; #{createdate,jdbcType=TIMESTAMP}
   </delete>
 
-
-  <select id="findWXSendEatMedParm" resultType="com.zhiyi.medicinebox.entity.vo.sendmsg.WXSendEatMedParmBean"  >
-    select a.alarm_id,a.alarm_time,a.status_id,a.dosage,m.med_name,
-    s.form_id,s.prepay_id,s.ID as parm_id,u.open_id,u.user_id,u.user_name,m.med_id
-    from alarm a LEFT JOIN user u on a.user_id = u.user_id
-    LEFT JOIN medicine m on a.med_id = m.med_id
-    LEFT JOIN sendmessage_parm s on a.user_id = s.user_id
-    where (a.status_id = '1' or a.status_id = '3') and a.is_send=0  and s.is_used=0 and a.alarm_lock = 0
-    and a.alarm_time >= #{startTime,jdbcType=TIMESTAMP}
-    and a.alarm_time &lt;= #{endTime,jdbcType=TIMESTAMP} GROUP BY a.alarm_id
+  <select id="findByUserId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List"/>
+    FROM
+    sendmessage_parm
+    WHERE user_id = #{userid,jdbcType=INTEGER}
+    and is_used = 0 limit 1
   </select>
 </mapper>

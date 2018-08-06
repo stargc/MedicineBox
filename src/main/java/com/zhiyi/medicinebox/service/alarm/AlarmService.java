@@ -17,7 +17,7 @@ public class AlarmService {
 	private AlarmMapper mapper;
 
 	@Resource
-	private ViewAlarmMapper viewMapper;
+	private ViewAlarmMapper viewAlarmMapper;
 
 	public boolean add(Alarm alarm) {
 		if (alarm != null) {
@@ -61,12 +61,16 @@ public class AlarmService {
 	}
 
 	public List<ViewAlarm> findViewAlarmByUserId(int userId, Date date){
-		return viewMapper.findViewAlarmByUserId(userId);
+		return viewAlarmMapper.findViewAlarmByUserId(userId);
 	}
 
 	public ViewAlarm findViewAlarmById(int id) {
-		return viewMapper.findViewAlarmByAlarmId(id);
+		return viewAlarmMapper.findViewAlarmByAlarmId(id);
 	}
 
 
+
+	public List<ViewAlarm> findAlarmToSendMsg(Date startTime, Date endTime){
+		return viewAlarmMapper.findAlarmToSendMsg(startTime,endTime);
+	}
 }
