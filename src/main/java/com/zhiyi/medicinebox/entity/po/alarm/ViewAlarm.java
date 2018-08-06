@@ -27,6 +27,8 @@ public class ViewAlarm {
 
     private Integer medId;
 
+    private String OpenId;
+
     public Integer getAlarmId() {
         return alarmId;
     }
@@ -121,5 +123,13 @@ public class ViewAlarm {
 
     public void setMedId(Integer medId) {
         this.medId = medId;
+    }
+
+    public String getOpenId() {
+        return OpenId;
+    }
+
+    public void setOpenId(String openId) {
+        OpenId = openId;
     }
 }

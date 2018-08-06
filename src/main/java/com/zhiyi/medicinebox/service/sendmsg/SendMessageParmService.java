@@ -2,7 +2,6 @@ package com.zhiyi.medicinebox.service.sendmsg;
 
 import com.zhiyi.medicinebox.dao.SendmessageParmMapper;
 import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm;
-import com.zhiyi.medicinebox.entity.vo.sendmsg.WXSendEatMedParmBean;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -47,8 +46,8 @@ public class SendMessageParmService {
 		
 	}
 	
-	public List<WXSendEatMedParmBean> findWXSendEatMedParm(Date startTime, Date endTime){
-		return parmMapper.findWXSendEatMedParm(startTime,endTime);
+	public List<SendmessageParm> findByUserId(int userid){
+		return parmMapper.findByUserId(userid);
 	}
 	
 	public int updateIsSend(Short isUserd,int id){

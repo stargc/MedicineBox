@@ -106,9 +106,9 @@ public class WXStrategy {
         String result = HTTPUtils.httpConnectionPost(url, JSONObject.toJSONString(parms));
         logger.info("微信发送用户提醒结果：" + result);
         Map<String, String> resultMap = JSONObject.parseObject(result, Map.class);
-        if (resultMap == null || StringUtils.isEmpty(resultMap.get("errorcode"))) {
+        if (resultMap == null || StringUtils.isEmpty(String.valueOf(resultMap.get("errcode")))) {
             return false;
         }
-        return "0".equals(resultMap.get("errorcode"));
+        return "0".equals(String.valueOf(resultMap.get("errcode")));
     }
 }

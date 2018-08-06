@@ -44,5 +44,9 @@ public class UserService {
 		}
 		return false;
 	}
+
+	public User findByUserId(Integer userid) {
+		return mapper.selectByPrimaryKey(userid);
+	}
 	
 }

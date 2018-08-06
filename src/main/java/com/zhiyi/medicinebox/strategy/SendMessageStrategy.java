@@ -1,7 +1,9 @@
 package com.zhiyi.medicinebox.strategy;
 
 import com.zhiyi.medicinebox.constant.Consts;
+import com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm;
 import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageLog;
+import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm;
 import com.zhiyi.medicinebox.entity.vo.sendmsg.WXSendEatMedParmBean;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
 import com.zhiyi.medicinebox.service.sendmsg.SendMessageLogService;
@@ -33,46 +35,47 @@ public class SendMessageStrategy {
 
     /***
      * 发送微信吃药提醒
-     * @param bean
+     * @param alarm
+     * @param parm 微信用于发送消息的相关参数
      * @param access_token
      * @param pageUrl
      * @return
      */
-    public boolean sendWXEaitMessage(WXSendEatMedParmBean bean, String access_token, String pageUrl) {
-        if (bean != null) {
+    public boolean sendWXEaitMessage(ViewAlarm alarm, SendmessageParm parm, String access_token, String pageUrl) {
+        if (alarm != null && parm != null) {
             String formId = "";
-            if (bean.getFormId() != null) {
-                formId = bean.getFormId();
-            } else if (bean.getPrepayId() != null) {
-                formId = bean.getPrepayId();
+            if (parm.getFormId() != null) {
+                formId = parm.getFormId();
+            } else if (parm.getPrepayId() != null) {
+                formId = parm.getPrepayId();
             }
             if (!"".equals(formId)) {
-                logger.info("发送用药提醒到用户: alarmID:" + bean.getAlarmId() +
-                        ";药品名：" + bean.getMedName() + "; 提醒时间： " + bean.getAlarmTime() +
-                        "; UserID： " + bean.getUserId() + "; userName: " + bean.getUserName());
+                logger.info("开始发送用药提醒到用户: alarmID:" + alarm.getAlarmId() +
+                        ";药品名：" + alarm.getMedName() + "; 提醒时间： " + alarm.getAlarmTime() +
+                        "; UserID： " + alarm.getUserId() + "; userName: " + alarm.getUserName());
 
                 String page = new StringBuffer(pageUrl).append("?medId=")
-                        .append(bean.getMedId())
+                        .append(alarm.getMedId())
                         .append("&alarmId=")
-                        .append(bean.getAlarmId())
+                        .append(alarm.getAlarmId())
                         .append("&dosage=")
-                        .append(bean.getDosage()).toString();
-                boolean done = wxStrategy.sendEatMedicinePush(access_token, bean.getOpenId(),
-                        page, formId, bean.getMedName(), bean.getAlarmTime(), bean.getDosage());
-
+                        .append(alarm.getDosage()).toString();
+                boolean done = wxStrategy.sendEatMedicinePush(access_token, alarm.getOpenId(),
+                        page, formId, alarm.getMedName(), alarm.getAlarmTime(), alarm.getDosage());
+                logger.info("发送用药alarmID: " + alarm.getAlarmId() +"提醒结果：" + done);
                 if (done) {
                     // 设置该条提醒已经发送
-                    alarmService.updateIsSend(bean.getAlarmId(), (short) 1);
+                    alarmService.updateIsSend(alarm.getAlarmId(), (short) 1);
                     // 设置这个form 为 已使用
-                    service.updateIsSend((short) 1, bean.getParmId());
+                    service.updateIsSend((short) 1, parm.getId());
                     // 记录日志
                     SendmessageLog log = new SendmessageLog();
-                    log.setUserId(bean.getUserId());
-                    log.setUserName(bean.getUserName());
-                    log.setOpenId(bean.getOpenId());
-                    log.setMessage("发送用药提醒到用户: alarmID:" + bean.getAlarmId() + ": 药品名："
-                            + bean.getMedName() + "; 提醒时间： " + DateUtil.date2String(bean.getAlarmTime()) + "; UserID： "
-                            + bean.getUserId() + "; userName: " + bean.getUserName());
+                    log.setUserId(alarm.getUserId());
+                    log.setUserName(alarm.getUserName());
+                    log.setOpenId(alarm.getOpenId());
+                    log.setMessage("发送用药提醒到用户: alarmID:" + alarm.getAlarmId() + ": 药品名："
+                            + alarm.getMedName() + "; 提醒时间： " + DateUtil.date2String(alarm.getAlarmTime()) + "; UserID： "
+                            + alarm.getUserId() + "; userName: " + alarm.getUserName());
                     log.setType(Consts.SEND_MESSAGE_LOG_TYPE);
                     log.setCreateDate(new Date());
                     sendLogService.add(log);

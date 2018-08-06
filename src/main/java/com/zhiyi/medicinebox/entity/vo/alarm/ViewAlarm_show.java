@@ -34,21 +34,23 @@ public class ViewAlarm_show implements Serializable {
 	private String url;
 
 	private int userId;
+	private String opendId;
 
 	private String alarmDate_show;
 	private String alarmTime_show;
 
 	public ViewAlarm_show(ViewAlarm v) {
-		this.alarmId = v.getAlarmId();
-		this.alarmLock = v.getAlarmLock();
+//		this.alarmId = v.getAlarmId();
+//		this.alarmLock = v.getAlarmLock();
 		this.alarmTime = v.getAlarmTime();
 		this.dosage = v.getDosage();
-		this.medId = v.getMedId();
+//		this.medId = v.getMedId();
 		this.medName = v.getMedName();
 		this.status = v.getStatus();
-		this.statusId = v.getStatusId();
+//		this.statusId = v.getStatusId();
 		this.url = v.getUrl();
-		this.userId = v.getUserId();
+//		this.userId = v.getUserId();
+//		this.opendId = v.getOpenId();
 
 		long oneday = 24 * 60 * 60 * 1000;
 		if (alarmTime != null) {
@@ -164,4 +166,11 @@ public class ViewAlarm_show implements Serializable {
 		this.alarmTime_show = alarmTime_show;
 	}
 
+	public String getOpendId() {
+		return opendId;
+	}
+
+	public void setOpendId(String opendId) {
+		this.opendId = opendId;
+	}
 }
