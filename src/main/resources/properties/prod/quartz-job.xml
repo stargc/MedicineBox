@@ -11,8 +11,8 @@
         <property name="configLocation" value="classpath:properties/quartz.properties"/>
 	    <property name="triggers">
 	        <list>
-	            <ref local="QueryDBJobTrigger"/>
-	            <!--<ref local="CleanSendMsgParmTrigger"/>-->
+	            <!--<ref local="QueryDBJobTrigger"/>-->
+	            <ref local="CleanSendMsgParmTrigger"/>
 	            <ref local="SendEatMedicineTrigger"/>
 	        </list>
 	    </property>

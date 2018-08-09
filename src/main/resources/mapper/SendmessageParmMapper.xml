@@ -131,4 +131,13 @@
     WHERE user_id = #{userid,jdbcType=INTEGER}
     and is_used = 0 limit 1
   </select>
+
+  <update id="scrapParm" >
+    UPDATE
+    sendmessage_parm
+    <set>
+      is_used = 2
+    </set>
+    where create_date &lt; #{createdate,jdbcType=TIMESTAMP}
+  </update>
 </mapper>

@@ -19,4 +19,6 @@ public interface SendmessageParmMapper {
     int deleteByDate(@Param("createdate") Date createdate);
 
     List<SendmessageParm> findByUserId(int userid);
+
+    int scrapParm(@Param("createdate") Date createdate);
 }

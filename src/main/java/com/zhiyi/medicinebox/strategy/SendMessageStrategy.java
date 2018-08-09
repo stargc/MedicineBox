@@ -4,17 +4,20 @@ import com.zhiyi.medicinebox.constant.Consts;
 import com.zhiyi.medicinebox.entity.po.alarm.ViewAlarm;
 import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageLog;
 import com.zhiyi.medicinebox.entity.po.sendmsg.SendmessageParm;
-import com.zhiyi.medicinebox.entity.vo.sendmsg.WXSendEatMedParmBean;
 import com.zhiyi.medicinebox.service.alarm.AlarmService;
 import com.zhiyi.medicinebox.service.sendmsg.SendMessageLogService;
 import com.zhiyi.medicinebox.service.sendmsg.SendMessageParmService;
+import com.zhiyi.medicinebox.util.tools.ConfigUtil;
 import com.zhiyi.medicinebox.util.tools.DateUtil;
+import com.zhiyi.medicinebox.util.tools.JSONUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author guanchen
@@ -29,9 +32,37 @@ public class SendMessageStrategy {
     @Resource
     private AlarmService alarmService;
     @Resource
-    private SendMessageParmService service;
-    @Resource
     private SendMessageLogService sendLogService;
+    @Resource
+    private SendMessageParmService parmService;
+
+    /***
+     * 查询 time 秒内 所有的alarm,并发送提醒到指定用户
+     * @param time 单位秒
+     */
+    public void startSendEatMassage(long time){
+
+        String tokenResult = wxStrategy.getWinXinToken();
+        String access_token = JSONUtils.getString(tokenResult, "access_token");
+        String pageUrl = ConfigUtil.getValue("eat_medicine_notification_skip_page");
+        Date today = new Date();
+        Date startTime = new Date(today.getTime() - time);
+
+        List<ViewAlarm> alarmlist = alarmService.findAlarmToSendMsg(startTime,today);
+        logger.info("共需发送用药提醒：" + alarmlist != null ? alarmlist.size() : "0" + "条");
+        if (alarmlist != null && !alarmlist.isEmpty()){
+            for (int i = 0; i < alarmlist.size(); i++) {
+                List<SendmessageParm> parms = parmService.findByUserId(alarmlist.get(i).getUserId());
+                if (parms != null && !parms.isEmpty()){
+
+                    try {
+                        sendWXEatMessage(alarmlist.get(i), parms.get(0),access_token,pageUrl);
+                    } catch (Exception e) {
+                        logger.error(ExceptionUtils.getStackTrace(e));                    }
+                }
+            }
+        }
+    }
 
     /***
      * 发送微信吃药提醒
@@ -41,7 +72,7 @@ public class SendMessageStrategy {
      * @param pageUrl
      * @return
      */
-    public boolean sendWXEaitMessage(ViewAlarm alarm, SendmessageParm parm, String access_token, String pageUrl) {
+    public boolean sendWXEatMessage(ViewAlarm alarm, SendmessageParm parm, String access_token, String pageUrl) {
         if (alarm != null && parm != null) {
             String formId = "";
             if (parm.getFormId() != null) {
@@ -67,7 +98,7 @@ public class SendMessageStrategy {
                     // 设置该条提醒已经发送
                     alarmService.updateIsSend(alarm.getAlarmId(), (short) 1);
                     // 设置这个form 为 已使用
-                    service.updateIsSend((short) 1, parm.getId());
+                    parmService.updateIsSend((short) 1, parm.getId());
                     // 记录日志
                     SendmessageLog log = new SendmessageLog();
                     log.setUserId(alarm.getUserId());
