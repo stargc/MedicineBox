@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhiyi.medicinebox.dao.ViewRecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.alarm.ViewRecord" >
+      <result column="record_id" property="recordId" jdbcType="INTEGER" />
+      <result column="alarm_id" property="alarmId" jdbcType="INTEGER" />
+      <result column="alarm_time" property="alarmTime" jdbcType="TIMESTAMP" />
+      <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+      <result column="dosage" property="dosage" jdbcType="VARCHAR" />
+      <result column="med_name" property="medName" jdbcType="VARCHAR" />
+      <result column="url" property="url" jdbcType="VARCHAR" />
+      <result column="user_id" property="userId" jdbcType="INTEGER" />
+      <result column="user_name" property="userName" jdbcType="VARCHAR" />
+      <result column="status_id" property="statusId" jdbcType="INTEGER" />
+      <result column="type" property="type" jdbcType="VARCHAR" />
+      <result column="status" property="status" jdbcType="VARCHAR" />
+  </resultMap>
+  <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT
+	r.`record_id` AS `record_id`,
+	r.`alarm_id` AS `alarm_id`,
+	r.`alarm_time` AS `alarm_time`,
+	r.`create_date` AS `create_date`,
+	r.`dosage` AS `dosage`,
+	r.`med_name` AS `med_name`,
+	r.`url` AS `url`,
+	r.`user_id` AS `user_id`,
+	u.`user_name` AS `user_name`,
+	r.`status_id` AS `status_id`,
+	r.`type` AS `type`,
+	sm.`status` AS `status`
+	FROM
+	`record` r
+	LEFT JOIN `status_med` sm ON ((r.`status_id` = sm.`status_id`))
+	LEFT JOIN `user` u ON (r.`user_id` = u.`user_id`)
+	where u.user_id = #{userId,jdbcType=INTEGER}  ORDER BY r.alarm_time DESC limit 100
+  </select>
+</mapper>

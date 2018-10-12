@@ -21,16 +21,16 @@
             <property name="forceBigDecimals" value="false"/>
         </javaTypeResolver>
 
-        <javaModelGenerator targetPackage="com.hy.hicash.api.infrastructure.persistence.po" targetProject="./src/main/java">
+        <javaModelGenerator targetPackage="com.zhiyi.api.infrastructure.persistence.po" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>
         </javaModelGenerator>
 
-        <sqlMapGenerator targetPackage="com.hy.hicash.api.infrastructure.persistence.mapper" targetProject="./src/main/java">
+        <sqlMapGenerator targetPackage="com.zhiyi.api.infrastructure.persistence.mapper" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </sqlMapGenerator>
 
-        <javaClientGenerator type="XMLMAPPER" targetPackage="com.hy.hicash.api.infrastructure.persistence.mapper" targetProject="./src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zhiyi.api.infrastructure.persistence.mapper" targetProject="./src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
