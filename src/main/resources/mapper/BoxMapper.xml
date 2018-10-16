@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhiyi.medicinebox.dao.BoxMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.Box" >
+<mapper namespace="com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.BoxMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Box" >
     <id column="box_id" property="boxId" jdbcType="INTEGER" />
     <result column="box_name" property="boxName" jdbcType="VARCHAR" />
     <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
   </resultMap>
-  <resultMap id="ResultMapWithBLOBs" type="com.zhiyi.medicinebox.entity.po.base.Box" extends="BaseResultMap" >
+  <resultMap id="ResultMapWithBLOBs" type="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Box" extends="BaseResultMap" >
     <result column="qr_code" property="qrCode" jdbcType="LONGVARCHAR" />
   </resultMap>
   <sql id="Base_Column_List" >
@@ -27,7 +27,7 @@
     delete from box
     where box_id = #{boxId,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Box" >
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Box" >
     insert into box
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="boxId != null" >
@@ -58,7 +58,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Box" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Box" >
     update box
     <set >
       <if test="boxName != null" >

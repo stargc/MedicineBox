@@ -3,7 +3,6 @@ package com.zhiyi.medicinebox.api.business.strategy;
 import com.alibaba.fastjson.JSONObject;
 import com.zhiyi.medicinebox.api.business.common.vo.WXSendMegRequest;
 import com.zhiyi.medicinebox.api.infrastructure.util.DateUtils;
-import org.apache.commons.httpclient.util.DateUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

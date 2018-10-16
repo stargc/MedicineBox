@@ -9,7 +9,6 @@ import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageLog;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageParm;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.ViewAlarm;
 import com.zhiyi.medicinebox.api.infrastructure.util.DateUtils;
-import org.apache.commons.httpclient.util.DateUtil;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

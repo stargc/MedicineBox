@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhiyi.medicinebox.dao.StatusMedMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.StatusMed" >
+<mapper namespace="com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.StatusMedMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.api.infrastructure.persistence.po.StatusMed" >
     <id column="status_id" jdbcType="INTEGER" property="statusId" />
     <result column="status" jdbcType="VARCHAR" property="status" />
   </resultMap>
@@ -18,11 +18,11 @@
     delete from status_med
     where status_id = #{statusId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
+  <insert id="insert" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.StatusMed">
     insert into status_med (status_id, status)
     values (#{statusId,jdbcType=INTEGER}, #{status,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.StatusMed">
     insert into status_med
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="statusId != null">
@@ -41,7 +41,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.StatusMed">
     update status_med
     <set>
       <if test="status != null">
@@ -50,7 +50,7 @@
     </set>
     where status_id = #{statusId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.entity.po.base.StatusMed">
+  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.StatusMed">
     update status_med
     set status = #{status,jdbcType=VARCHAR}
     where status_id = #{statusId,jdbcType=INTEGER}

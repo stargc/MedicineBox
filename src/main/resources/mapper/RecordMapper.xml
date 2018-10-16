@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhiyi.medicinebox.dao.RecordMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.alarm.Record" >
+<mapper namespace="com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.RecordMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Record" >
     <id column="record_id" jdbcType="INTEGER" property="recordId" />
     <result column="alarm_id" jdbcType="INTEGER" property="alarmId" />
     <result column="status_id" jdbcType="INTEGER" property="statusId" />
@@ -27,7 +27,7 @@
     delete from record
     where record_id = #{recordId,jdbcType=INTEGER}
   </delete>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Record">
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Record">
     insert into record
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="recordId != null">
@@ -94,7 +94,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Record">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Record">
     update record
     <set>
       <if test="alarmId != null">

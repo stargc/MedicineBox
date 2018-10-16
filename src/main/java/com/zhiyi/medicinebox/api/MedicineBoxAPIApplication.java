@@ -9,7 +9,7 @@ import org.springframework.context.annotation.PropertySource;
 
 @SpringBootApplication
 @PropertySource({"classpath:config/application.properties", "classpath:config/system.properties"})
-@MapperScan("com.hy.hicash.api.infrastructure.persistence.mapper")
+@MapperScan("com.zhiyi.medicinebox.api.infrastructure.persistence.mapper")
 public class MedicineBoxAPIApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhiyi.medicinebox.dao.UserMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.User" >
+<mapper namespace="com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.api.infrastructure.persistence.po.User" >
     <id column="user_id" jdbcType="INTEGER" property="userId" />
     <result column="user_name" jdbcType="VARCHAR" property="userName" />
     <result column="password" jdbcType="VARCHAR" property="password" />
@@ -29,7 +29,7 @@
     delete from user
     where user_id = #{userId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
+  <insert id="insert" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.User">
     insert into user (user_id, user_name, password,
     open_id, nick_name, avatar_url,
     wx_city, wx_name, wx_age,
@@ -41,7 +41,7 @@
     #{wxSex,jdbcType=INTEGER}, #{wxPhone,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
     )
   </insert>
-  <insert id="insertSelective" keyProperty="userId" parameterType="com.zhiyi.medicinebox.entity.po.base.User" useGeneratedKeys="true" >
+  <insert id="insertSelective" keyProperty="userId" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.User" useGeneratedKeys="true" >
     insert into user
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">
@@ -120,7 +120,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.User">
     update user
     <set>
       <if test="userName != null">
@@ -159,7 +159,7 @@
     </set>
     where user_id = #{userId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.entity.po.base.User">
+  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.User">
     update user
     set user_name = #{userName,jdbcType=VARCHAR},
     password = #{password,jdbcType=VARCHAR},

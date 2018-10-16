@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhiyi.medicinebox.dao.AlarmMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.alarm.Alarm" >
+<mapper namespace="com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.AlarmMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm" >
     <id column="alarm_id" property="alarmId" jdbcType="INTEGER" />
     <result column="user_id" property="userId" jdbcType="INTEGER" />
     <result column="status_id" property="statusId" jdbcType="INTEGER" />
@@ -27,7 +27,7 @@
     delete from alarm
     where alarm_id = #{alarmId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Alarm" >
+  <insert id="insert" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm" >
     insert into alarm (alarm_id, user_id, status_id,
     alarm_time, alarm_lock, is_send,
     create_date, update_date, dosage,
@@ -37,7 +37,7 @@
     #{createDate,jdbcType=TIMESTAMP}, #{updateDate,jdbcType=TIMESTAMP}, #{dosage,jdbcType=VARCHAR},
     #{medId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Alarm" >
+  <insert id="insertSelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm" >
     insert into alarm
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="alarmId != null" >
@@ -104,7 +104,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Alarm" >
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm" >
     update alarm
     <set >
       <if test="userId != null" >
@@ -137,7 +137,7 @@
     </set>
     where alarm_id = #{alarmId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.entity.po.alarm.Alarm" >
+  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm" >
     update alarm
     set user_id = #{userId,jdbcType=INTEGER},
       status_id = #{statusId,jdbcType=INTEGER},

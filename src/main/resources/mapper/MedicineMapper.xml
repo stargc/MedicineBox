@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.zhiyi.medicinebox.dao.MedicineMapper" >
-  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.entity.po.base.Medicine" >
+<mapper namespace="com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.MedicineMapper" >
+  <resultMap id="BaseResultMap" type="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Medicine" >
     <id column="med_id" jdbcType="INTEGER" property="medId" />
     <result column="med_name" jdbcType="VARCHAR" property="medName" />
     <result column="malady" jdbcType="VARCHAR" property="malady" />
@@ -22,7 +22,7 @@
     delete from medicine
     where med_id = #{medId,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.zhiyi.medicinebox.entity.po.base.Medicine">
+  <insert id="insert" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Medicine">
     insert into medicine (med_id, med_name, malady,
     instructions, url, create_date
     )
@@ -30,7 +30,7 @@
     #{instructions,jdbcType=VARCHAR}, #{url,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}
     )
   </insert>
-  <insert id="insertSelective" keyProperty="medId" parameterType="com.zhiyi.medicinebox.entity.po.base.Medicine" useGeneratedKeys="true">
+  <insert id="insertSelective" keyProperty="medId" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Medicine" useGeneratedKeys="true">
     insert into medicine
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="medId != null">
@@ -73,7 +73,7 @@
       </if>
     </trim>
   </insert>
-  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.entity.po.base.Medicine">
+  <update id="updateByPrimaryKeySelective" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Medicine">
     update medicine
     <set>
       <if test="medName != null">
@@ -94,7 +94,7 @@
     </set>
     where med_id = #{medId,jdbcType=INTEGER}
   </update>
-  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.entity.po.base.Medicine">
+  <update id="updateByPrimaryKey" parameterType="com.zhiyi.medicinebox.api.infrastructure.persistence.po.Medicine">
     update medicine
     set med_name = #{medName,jdbcType=VARCHAR},
     malady = #{malady,jdbcType=VARCHAR},
