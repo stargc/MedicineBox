@@ -1,9 +1,9 @@
 package com.zhiyi.medicinebox.api.application.controller.wexin;
 
-import com.alibaba.fastjson.JSONObject;
-import com.zhiyi.medicinebox.api.business.common.vo.ParmResponse;
-import com.zhiyi.medicinebox.api.business.strategy.WXStrategy;
-import com.zhiyi.medicinebox.api.infrastructure.util.ResponseUtils;
+import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
+import com.zhiyi.medicinebox.api.business.service.weixin.WXOpenIdResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.WXTokenResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.WXService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -18,7 +18,7 @@ import java.util.Date;
 public class WeXinAgentController {
 
 	@Resource
-	private WXStrategy wxStrategy;
+	private WXService wxService;
 
 	/***
 	 * 获取微信的 openId
@@ -26,12 +26,8 @@ public class WeXinAgentController {
 	 */
 	@RequestMapping("/queryOpenId")
 	@ResponseBody
-	public ParmResponse getWinXinOpenId(String loginCode){
-		String result = wxStrategy.getWinXinOpenId(loginCode);
-		log.info( "获取微信用户openId结果：" + result);
-		Object data = JSONObject.parse(result);
-
-		return ResponseUtils.getBeanResponse(data, "");
+	public WXOpenIdResp getWinXinOpenId(String loginCode){
+		return wxService.getWinXinOpenId(loginCode);
 	}
 
 
@@ -41,23 +37,20 @@ public class WeXinAgentController {
 	 */
 	@RequestMapping("/queryToken")
 	@ResponseBody
-	public ParmResponse getWinXinToken(){
-		String result =wxStrategy.getWinXinToken();
-		log.info( "获取微信用户token结果：" + result);
-		Object data = JSONObject.parse(result);
-
-		return ResponseUtils.getBeanResponse(data, "");
+	public WXTokenResp getWinXinToken(){
+		return wxService.getWinXinToken();
 	}
 
 	/***
-	 * 通知维系发送用户提醒
+	 * 通知微信发送用户提醒
 	 * @return
 	 */
 	@RequestMapping("/sendEatMedicinePush")
 	@ResponseBody
-	public ParmResponse sendEatMedicinePush(String access_token, String openId, String page, String formId, String medicineName, Date alarmTime, String dosage){
-
-		Boolean done = wxStrategy.sendEatMedicinePush(access_token, openId, page, formId, medicineName, alarmTime, dosage);
-		return ResponseUtils.getBooleanResponse(done,"");
+	public BaseResponse sendEatMedicinePush(String access_token, String openId, String page, String formId, String medicineName, Date alarmTime, String dosage){
+		BaseResponse resp = new BaseResponse();
+		Boolean done = wxService.sendEatMedicinePush(access_token, openId, page, formId, medicineName, alarmTime, dosage);
+		resp.setResultCode(done ? BaseResponse.SUCCESS : BaseResponse.FAILED);
+		return resp;
 	}
 }

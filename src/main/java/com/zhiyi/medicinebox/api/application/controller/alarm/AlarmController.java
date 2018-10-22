@@ -83,7 +83,7 @@ public class AlarmController {
         AlarmListResp resp = new AlarmListResp();
         if (userId == 0) {
             resp.setResultCode(BaseResponse.FAILED);
-            resp.setResultMsg("用户ID， 参数异常");
+            resp.setResultMsg("参数异常");
             return resp;
         }
 
@@ -100,7 +100,7 @@ public class AlarmController {
         BaseResponse resp = new BaseResponse();
         if (alarmId == 0) {
             resp.setResultCode(BaseResponse.FAILED);
-            resp.setResultMsg("用户ID， 参数异常");
+            resp.setResultMsg("用户ID 参数异常");
             return resp;
         }
         return updateService.updateStatus(alarmId, statusId);
@@ -112,7 +112,7 @@ public class AlarmController {
         AlarmResp resp = new AlarmResp();
         if (alarmId == 0) {
             resp.setResultCode(BaseResponse.FAILED);
-            resp.setResultMsg("用户ID， 参数异常");
+            resp.setResultMsg("用户ID参数异常");
             return resp;
         }
         return searchService.searchByAlarmId(alarmId);

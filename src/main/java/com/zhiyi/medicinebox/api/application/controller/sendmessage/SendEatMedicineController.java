@@ -1,11 +1,8 @@
 package com.zhiyi.medicinebox.api.application.controller.sendmessage;
 
-import com.zhiyi.medicinebox.api.business.common.vo.ParmResponse;
+import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
 import com.zhiyi.medicinebox.api.business.strategy.SendMessageStrategy;
-import com.zhiyi.medicinebox.api.infrastructure.util.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,9 +24,11 @@ public class SendEatMedicineController {
 
     @RequestMapping("/sendWXEatMed")
     @ResponseBody
-    public ParmResponse sendWXEatMed(int time) throws IOException {
+    public BaseResponse sendWXEatMed(int time) throws IOException {
         sendMessageStrategy.startSendEatMassage(time*60*1000);
         log.info("发送吃药提醒--完成");
-        return ResponseUtils.getBooleanResponse(true,"");
+        BaseResponse resp = new BaseResponse();
+        resp.setResultCode(BaseResponse.SUCCESS);
+        return resp;
     }
 }

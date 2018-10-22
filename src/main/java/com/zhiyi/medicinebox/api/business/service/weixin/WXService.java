@@ -1,7 +1,12 @@
-package com.zhiyi.medicinebox.api.business.strategy;
+package com.zhiyi.medicinebox.api.business.service.weixin;
 
 import com.alibaba.fastjson.JSONObject;
+import com.mchange.util.Base64Encoder;
+import com.sun.javafx.collections.MappingChange;
+import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
 import com.zhiyi.medicinebox.api.business.common.vo.WXSendMegRequest;
+import com.zhiyi.medicinebox.api.business.service.weixin.WXOpenIdResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.WXTokenResp;
 import com.zhiyi.medicinebox.api.infrastructure.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -20,7 +25,7 @@ import java.util.Map;
  * @version $Id AlarmStrategy.java, v 0.1 2018-07-19 17:49 star Exp $$
  */
 @Service
-public class WXStrategy {
+public class WXService {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Autowired
@@ -48,7 +53,7 @@ public class WXStrategy {
      * @return {"openid": "OPENID","session_key": "SESSIONKEY"}
 
      */
-    public String getWinXinOpenId(String loginCode) {
+    public WXOpenIdResp getWinXinOpenId(String loginCode) {
 
         Map<String, String> parms = new HashMap<>();
         parms.put("appid", wxMedboxAppid);
@@ -57,7 +62,17 @@ public class WXStrategy {
         parms.put("grant_type", "authorization_code");
 
         String result = restTemplate.getForObject(wxOpenidServer, String.class, parms);
-        return result;
+        Map<String,String> resultMap = JSONObject.parseObject(result, Map.class);
+        WXOpenIdResp resp = new WXOpenIdResp();
+        if (StringUtils.isBlank(resultMap.get("openid"))){
+            resp.setResultCode(BaseResponse.FAILED);
+            resp.setResultMsg("获取失败");
+            return resp;
+        }
+        resp.setResultCode(BaseResponse.SUCCESS);
+        resp.setOpenid(resultMap.get("openid"));
+        resp.setSessionKey(resultMap.get("session_key"));
+        return resp;
     }
 
     /***
@@ -65,7 +80,7 @@ public class WXStrategy {
      *  access_token 是全局唯一接口调用凭据
      * @return {"access_token": "ACCESS_TOKEN", "expires_in": 7200}  < access_token:获取到的凭证; expires_in:凭证有效时间，单位：秒 >
      */
-    public String getWinXinToken() {
+    public WXTokenResp getWinXinToken() {
 
         Map<String, String> parms = new HashMap<>();
         parms.put("appid", wxMedboxAppid);
@@ -73,7 +88,17 @@ public class WXStrategy {
         parms.put("grant_type", "client_credential");
 
         String result = restTemplate.getForObject(wxTokenServer, String.class, parms);
-        return result;
+        Map<String,String> resultMap = JSONObject.parseObject(result, Map.class);
+        WXTokenResp resp = new WXTokenResp();
+        if (StringUtils.isBlank(resultMap.get("access_token"))){
+            resp.setResultCode(BaseResponse.FAILED);
+            resp.setResultMsg("获取失败");
+            return resp;
+        }
+        resp.setResultCode(BaseResponse.SUCCESS);
+        resp.setAccessToken(resultMap.get("access_token"));
+        resp.setExpiresIn(resultMap.get("expires_in"));
+        return resp;
     }
 
     /***

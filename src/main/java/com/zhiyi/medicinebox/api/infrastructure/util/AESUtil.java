@@ -1,9 +1,8 @@
 package com.zhiyi.medicinebox.api.infrastructure.util;
 
+import com.sun.org.apache.xml.internal.security.utils.Base64;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -57,7 +56,7 @@ public class AESUtil {
             //这里用Base64Encoder中会找不到包
             //解决办法：
             //在项目的Build path中先移除JRE System Library，再添加库JRE System Library，重新编译后就一切正常了。
-            resultEncode = new String(new BASE64Encoder().encode(bytesAes));
+            resultEncode = new StringBuilder(Base64.encode(bytesAes)).toString();
             //[11].将字符串返回
             return resultEncode;
         } catch (Exception exception) {
@@ -87,7 +86,7 @@ public class AESUtil {
             //[7]将加密并编码后的内容解码成字节数组
             cipher.init(Cipher.DECRYPT_MODE, secretKey);
             //[8]解密密文
-            byte[] byteContent = new BASE64Decoder().decodeBuffer(content);
+            byte[] byteContent = Base64.decode(content);
             byte[] byteEncode = cipher.doFinal(byteContent);
             resultEncode = new String(byteEncode, "utf-8");
             return resultEncode;

@@ -1,10 +1,8 @@
 package com.zhiyi.medicinebox.api.business.strategy;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zhiyi.medicinebox.api.business.common.constant.Consts;
-import com.zhiyi.medicinebox.api.business.service.alarm.AlarmService;
-import com.zhiyi.medicinebox.api.business.service.sendmsg.SendMessageLogService;
-import com.zhiyi.medicinebox.api.business.service.sendmsg.SendMessageParmService;
+import com.zhiyi.medicinebox.api.business.service.weixin.WXService;
+import com.zhiyi.medicinebox.api.business.service.weixin.WXTokenResp;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.AlarmMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageLogMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageParmMapper;
@@ -33,7 +31,7 @@ public class SendMessageStrategy {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Resource
-    private WXStrategy wxStrategy;
+    private WXService wxStrategy;
 
     @Resource
     private AlarmMapper alarmMapper;
@@ -53,10 +51,9 @@ public class SendMessageStrategy {
      */
     public void startSendEatMassage(long time){
 
-        String tokenResult = wxStrategy.getWinXinToken();
+        WXTokenResp tokenResult = wxStrategy.getWinXinToken();
 
-        JSONObject jObject = (JSONObject) JSONObject.parse(tokenResult);
-        String access_token =  jObject.getString("access_token");
+        String access_token =  tokenResult.getAccessToken();
         Date today = new Date();
         Date startTime = new Date(today.getTime() - time);
 

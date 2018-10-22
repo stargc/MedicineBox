@@ -1,10 +1,8 @@
 package com.zhiyi.medicinebox.api.application.controller.sendmessage;
 
-import com.zhiyi.medicinebox.api.business.common.constant.ResultCode;
-import com.zhiyi.medicinebox.api.business.common.vo.ParmResponse;
+import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageLogMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageLog;
-import com.zhiyi.medicinebox.api.infrastructure.util.ResponseUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,11 +18,15 @@ public class SendMessageLogController {
 
     @RequestMapping("/add")
     @ResponseBody
-    public ParmResponse addSendMessageLog(SendmessageLog log) {
+    public BaseResponse addSendMessageLog(SendmessageLog log) {
+        BaseResponse resp = new BaseResponse();
         if (log == null || log.getUserId() == null) {
-            return ResponseUtils.getErrorResponse(ResultCode.RESULT_PARM_ERROR, "参数错误");
+            resp.setResultCode(BaseResponse.FAILED);
+            resp.setResultMsg("参数错误");
+            return resp;
         }
         boolean done = sendmessageLogMapper.insertSelective(log) > 0;
-        return ResponseUtils.getBooleanResponse(done, "");
+        resp.setResultCode(done ? BaseResponse.SUCCESS : BaseResponse.FAILED);
+        return resp;
     }
 }

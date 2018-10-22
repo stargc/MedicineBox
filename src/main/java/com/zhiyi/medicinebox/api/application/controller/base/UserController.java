@@ -1,17 +1,15 @@
 package com.zhiyi.medicinebox.api.application.controller.base;
 
-import com.zhiyi.medicinebox.api.business.common.constant.ResultCode;
-import com.zhiyi.medicinebox.api.business.common.vo.ParmResponse;
-import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.UserMapper;
+import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
+import com.zhiyi.medicinebox.api.business.service.user.UserAddService;
+import com.zhiyi.medicinebox.api.business.service.user.UserResp;
+import com.zhiyi.medicinebox.api.business.service.user.UserSearchService;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.User;
-import com.zhiyi.medicinebox.api.infrastructure.util.ResponseUtils;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
-
-import javax.annotation.Resource;
 
 /****
  * 
@@ -23,9 +21,12 @@ import javax.annotation.Resource;
 @Slf4j
 public class UserController {
 
-	@Resource
-	private UserMapper userMapper;
-	
+	@Autowired
+	private UserAddService userAddService;
+
+	@Autowired
+	private UserSearchService userSearchService;
+
 	/***
 	 * 用于添加用户
 	 * @param userBean
@@ -33,20 +34,14 @@ public class UserController {
 	 */
 	@RequestMapping("/add")
 	@ResponseBody
-	public ParmResponse add(User userBean) {
-		if(userBean != null && userBean.getOpenId() != null && !userBean.getOpenId().equals("undefined")){
-			User oldUser = userMapper.selectByOpenId(userBean.getOpenId());
-			if (oldUser == null || StringUtils.isEmpty(oldUser.getOpenId())) {
-				boolean isDone = userMapper.insertSelective(userBean) > 0;
-				if (isDone) {
-					return ResponseUtils.getBeanResponse(userBean, User.class.toString());
-				}
-				return ResponseUtils.getErrorResponse(ResultCode.RESULT_FAIL, "参数错误！");
-			} else {
-				return ResponseUtils.getBeanResponse(oldUser, User.class.toString());
-			}
+	public BaseResponse add(User userBean) {
+		UserResp resp = new UserResp();
+		if(userBean == null || userBean.getOpenId() == null || userBean.getOpenId().equals("undefined")){
+			resp.setResultCode(BaseResponse.FAILED);
+			resp.setResultMsg("参数错误！");
+			return resp;
 		}
-		return ResponseUtils.getErrorResponse(ResultCode.RESULT_PARM_ERROR, "参数错误！");
+		return userAddService.responseVale(userBean);
 	}
 
 	/****
@@ -56,11 +51,13 @@ public class UserController {
 	 */
 	@RequestMapping("/findUserByOpenId")
 	@ResponseBody
-	public ParmResponse findUserByOpenId(String openId){
-		if(openId != null){
-			User user = userMapper.selectByOpenId(openId);
-			return ResponseUtils.getBeanResponse(user, User.class.toString());
+	public UserResp findUserByOpenId(String openId){
+		UserResp resp = new UserResp();
+		if(openId == null){
+			resp.setResultCode(BaseResponse.FAILED);
+			resp.setResultMsg("参数异常");
+			return resp;
 		}
-		return ResponseUtils.getErrorResponse(ResultCode.RESULT_PARM_ERROR,"openId 为空");
+		return userSearchService.findUserByOpenId(openId);
 	}
 }

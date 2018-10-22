@@ -39,20 +39,15 @@ public class AlarmAddService {
         log.info("用户 " + alarmAddReq.getUserId() + " add alarm: medicine name = " + alarmAddReq.getMedName() +
                 "；alarm time = " + alarmAddReq.getAlarmTime() + " 开始时间：" + alarmAddReq.getStartDate() + " 结束时间：" + alarmAddReq.getEndDate());
         BaseResponse resp = new BaseResponse();
-//        try {
-//            alarmAddReq.setMedName(new String(alarmAddReq.getMedName().getBytes("iso8859-1"), "UTF-8"));
-//        } catch (UnsupportedEncodingException e) {
-//            logger.info("用户 " + alarmAddReq.getUserId() + " add alarm 药品名称解析错误 ");
-//        }
         Date date = new Date();
 
         String imgPath = defaultAlarmImageUrl;
         if (file != null) {
-            SimpleDateFormat sf_path = new SimpleDateFormat("yyyyMMdd");
-            SimpleDateFormat sf_name = new SimpleDateFormat("hhmmssSSSS");
-            StringBuffer path = new StringBuffer(fileSavePathLiunx)
-                    .append(sf_path.format(date))
-                    .append("/").append(alarmAddReq.getUserId()).append(sf_name.format(date));
+            SimpleDateFormat sfPath = new SimpleDateFormat("yyyyMMdd");
+            SimpleDateFormat sfName = new SimpleDateFormat("hhmmssSSSS");
+            StringBuilder path = new StringBuilder(fileSavePathLiunx)
+                    .append(sfPath.format(date))
+                    .append("/").append(alarmAddReq.getUserId()).append(sfName.format(date));
             imgPath = path.toString();
             try {
                 FileUtils.saveFile(file, path.toString());
