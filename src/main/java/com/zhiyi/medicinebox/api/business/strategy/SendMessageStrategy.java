@@ -5,6 +5,11 @@ import com.zhiyi.medicinebox.api.business.common.constant.Consts;
 import com.zhiyi.medicinebox.api.business.service.alarm.AlarmService;
 import com.zhiyi.medicinebox.api.business.service.sendmsg.SendMessageLogService;
 import com.zhiyi.medicinebox.api.business.service.sendmsg.SendMessageParmService;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.AlarmMapper;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageLogMapper;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageParmMapper;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.ViewAlarmMapper;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageLog;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageParm;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.ViewAlarm;
@@ -29,12 +34,15 @@ public class SendMessageStrategy {
 
     @Resource
     private WXStrategy wxStrategy;
+
     @Resource
-    private AlarmService alarmService;
+    private AlarmMapper alarmMapper;
     @Resource
-    private SendMessageLogService sendLogService;
+    private ViewAlarmMapper viewAlarmMapper;
     @Resource
-    private SendMessageParmService parmService;
+    private SendmessageParmMapper sendmessageParmMapper;
+    @Resource
+    private SendmessageLogMapper sendmessageLogMapper;
 
     @Value("eat_medicine_notification_skip_page")
     private String eatMedicineNotificationSkipPage;
@@ -52,11 +60,11 @@ public class SendMessageStrategy {
         Date today = new Date();
         Date startTime = new Date(today.getTime() - time);
 
-        List<ViewAlarm> alarmlist = alarmService.findAlarmToSendMsg(startTime,today);
+        List<ViewAlarm> alarmlist = viewAlarmMapper.findAlarmToSendMsg(startTime,today);
         logger.info("共需发送用药提醒：" + alarmlist != null ? alarmlist.size() : "0" + "条");
         if (alarmlist != null && !alarmlist.isEmpty()){
             for (int i = 0; i < alarmlist.size(); i++) {
-                List<SendmessageParm> parms = parmService.findByUserId(alarmlist.get(i).getUserId());
+                List<SendmessageParm> parms = sendmessageParmMapper.findByUserId(alarmlist.get(i).getUserId());
                 if (parms != null && !parms.isEmpty()){
 
                     try {
@@ -100,9 +108,18 @@ public class SendMessageStrategy {
                 logger.info("发送用药alarmID: " + alarm.getAlarmId() +"提醒结果：" + done);
                 if (done) {
                     // 设置该条提醒已经发送
-                    alarmService.updateIsSend(alarm.getAlarmId(), (short) 1);
+
+                    Alarm alarmBean = new Alarm();
+                    alarmBean.setAlarmId(alarm.getAlarmId());
+                    alarmBean.setIsSend( (short) 1);
+                    alarmMapper.updateByPrimaryKeySelective(alarmBean);
+
                     // 设置这个form 为 已使用
-                    parmService.updateIsSend((short) 1, parm.getId());
+                    SendmessageParm parmBean = new SendmessageParm();
+                    parmBean.setId(parm.getId());
+                    parmBean.setIsUsed((short) 1);
+                    sendmessageParmMapper.updateByPrimaryKeySelective(parmBean);
+
                     // 记录日志
                     SendmessageLog log = new SendmessageLog();
                     log.setUserId(alarm.getUserId());
@@ -113,7 +130,7 @@ public class SendMessageStrategy {
                             + alarm.getUserId() + "; userName: " + alarm.getUserName());
                     log.setType(Consts.SEND_MESSAGE_LOG_TYPE);
                     log.setCreateDate(new Date());
-                    sendLogService.add(log);
+                    sendmessageLogMapper.insertSelective(log);
                 }
             }
         }

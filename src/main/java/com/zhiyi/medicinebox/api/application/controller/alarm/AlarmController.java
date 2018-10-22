@@ -1,16 +1,19 @@
 package com.zhiyi.medicinebox.api.application.controller.alarm;
 
-import com.zhiyi.medicinebox.api.business.common.vo.ParmResponse;
-import com.zhiyi.medicinebox.api.business.service.alarm.AlarmService;
-import com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm;
-import com.zhiyi.medicinebox.api.infrastructure.util.ResponseUtils;
+import com.zhiyi.medicinebox.api.business.common.validator.ValidationResult;
+import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
+import com.zhiyi.medicinebox.api.business.common.vo.alarm.AlarmAddReq;
+import com.zhiyi.medicinebox.api.business.service.alarm.add.AlarmAddService;
+import com.zhiyi.medicinebox.api.business.service.alarm.add.AlarmAddVal;
+import com.zhiyi.medicinebox.api.business.service.alarm.search.AlarmListResp;
+import com.zhiyi.medicinebox.api.business.service.alarm.search.AlarmResp;
+import com.zhiyi.medicinebox.api.business.service.alarm.search.AlarmSearchService;
+import com.zhiyi.medicinebox.api.business.service.alarm.updateStatus.AlarmUpdateStatusService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
 import javax.imageio.ImageIO;
@@ -21,29 +24,34 @@ import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 
-@Controller
+@RestController
 @RequestMapping("/alarm")
+@Slf4j
 public class AlarmController {
 
-    private final Logger logger = LogManager.getLogger(this.getClass().getName());
-	
-	@Autowired  
-	private HttpServletRequest request;
+    @Resource
+    private AlarmAddVal alarmVal;
 
-	@Resource
-	private AlarmService alarmService;
+    @Autowired
+    private AlarmAddService addService;
+
+    @Autowired
+    private AlarmSearchService searchService;
+
+    @Autowired
+    private AlarmUpdateStatusService updateService;
 
     @RequestMapping("/getImage")
     public void getIcon(String url,
                         HttpServletRequest request,
                         HttpServletResponse response) throws IOException {
-        logger.info("get image “"+ url + "” from server");
+        log.info("get image “"+ url + "” from server");
         String fileName = url;
         File file = new File(fileName);
         try {
             //判断文件是否存在如果不存在就返回默认图标
             if (!(file.exists() && file.canRead())) {
-                logger.error("alarm/getImage url {} 文件不存在", url);
+                log.error("alarm/getImage url {} 文件不存在", url);
                 return;
             }
             BufferedImage bufferedImage = ImageIO.read(file);
@@ -51,17 +59,62 @@ public class AlarmController {
             OutputStream os = response.getOutputStream();
             ImageIO.write(bufferedImage, "png", os);
         } catch (Exception e){
-            logger.error("get image 报错：" + ExceptionUtils.getStackTrace(e));
+            log.error("get image 报错：" + ExceptionUtils.getStackTrace(e));
         }
     }
 
 
+    @PostMapping("/add")
+    public BaseResponse add(AlarmAddReq alarmAddReq,
+                            @RequestParam(value = "file", required = false) MultipartFile file) {
+        BaseResponse resp = new BaseResponse();
+        ValidationResult val = alarmVal.validate(alarmAddReq);
+        if (!val.isValid()) {
+            log.error("新建提醒参数错误 + " + val.getErrorMessage());
+            resp.setResultCode(BaseResponse.FAILED);
+            resp.setResultMsg(val.getErrorMessage());
+            return resp;
+        }
+        return addService.responseValue(alarmAddReq, file);
+    }
 
-    @RequestMapping("/getAlarm")
+    @PostMapping("/findAlarmByUser")
+    public AlarmListResp findAlarmByUser(int userId) {
+        AlarmListResp resp = new AlarmListResp();
+        if (userId == 0) {
+            resp.setResultCode(BaseResponse.FAILED);
+            resp.setResultMsg("用户ID， 参数异常");
+            return resp;
+        }
+
+        resp = searchService.searchByUserId(userId);
+        return resp;
+    }
+
+    /***
+     * @param statusId  1：未服药   2：已服药   3：跳过   4：其他
+     * @return
+     */
+    @PostMapping("/updateStatus")
+    public BaseResponse updateStatus(int alarmId, int statusId) {
+        BaseResponse resp = new BaseResponse();
+        if (alarmId == 0) {
+            resp.setResultCode(BaseResponse.FAILED);
+            resp.setResultMsg("用户ID， 参数异常");
+            return resp;
+        }
+        return updateService.updateStatus(alarmId, statusId);
+    }
+
+    @RequestMapping("/findById")
     @ResponseBody
-    public ParmResponse getAlarm(int alarmId) throws IOException {
-        Alarm alarm = alarmService.findByid(alarmId);
-        return ResponseUtils.getBeanResponse(alarm, "");
-
+    public AlarmResp findById(int alarmId) {
+        AlarmResp resp = new AlarmResp();
+        if (alarmId == 0) {
+            resp.setResultCode(BaseResponse.FAILED);
+            resp.setResultMsg("用户ID， 参数异常");
+            return resp;
+        }
+        return searchService.searchByAlarmId(alarmId);
     }
 }

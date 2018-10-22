@@ -2,36 +2,29 @@ package com.zhiyi.medicinebox.api.application.controller.base;
 
 import com.zhiyi.medicinebox.api.business.common.constant.ResultCode;
 import com.zhiyi.medicinebox.api.business.common.vo.ParmResponse;
-import com.zhiyi.medicinebox.api.business.service.base.UserService;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.UserMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.User;
 import com.zhiyi.medicinebox.api.infrastructure.util.ResponseUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /****
  * 
  * @author Administrator
  *
  */
-@Controller
+@RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
 
-	private final Logger logger = LogManager.getLogger(this.getClass().getName());
-	
-	@Autowired
-	private HttpServletRequest request;
-	
 	@Resource
-	private UserService userService;
+	private UserMapper userMapper;
 	
 	/***
 	 * 用于添加用户
@@ -42,9 +35,9 @@ public class UserController {
 	@ResponseBody
 	public ParmResponse add(User userBean) {
 		if(userBean != null && userBean.getOpenId() != null && !userBean.getOpenId().equals("undefined")){
-			User oldUser = userService.findByOpenId(userBean.getOpenId());
+			User oldUser = userMapper.selectByOpenId(userBean.getOpenId());
 			if (oldUser == null || StringUtils.isEmpty(oldUser.getOpenId())) {
-				boolean isDone = userService.add(userBean);
+				boolean isDone = userMapper.insertSelective(userBean) > 0;
 				if (isDone) {
 					return ResponseUtils.getBeanResponse(userBean, User.class.toString());
 				}
@@ -65,7 +58,7 @@ public class UserController {
 	@ResponseBody
 	public ParmResponse findUserByOpenId(String openId){
 		if(openId != null){
-			User user = userService.findByOpenId(openId);
+			User user = userMapper.selectByOpenId(openId);
 			return ResponseUtils.getBeanResponse(user, User.class.toString());
 		}
 		return ResponseUtils.getErrorResponse(ResultCode.RESULT_PARM_ERROR,"openId 为空");

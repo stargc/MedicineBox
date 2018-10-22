@@ -4,25 +4,18 @@ import com.alibaba.fastjson.JSONObject;
 import com.zhiyi.medicinebox.api.business.common.vo.ParmResponse;
 import com.zhiyi.medicinebox.api.business.strategy.WXStrategy;
 import com.zhiyi.medicinebox.api.infrastructure.util.ResponseUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Date;
 
-@Controller
+@RestController
 @RequestMapping("/WeXinAgent")
+@Slf4j
 public class WeXinAgentController {
-
-	private final Logger logger = LogManager.getLogger(this.getClass().getName());
-
-	@Autowired
-	private HttpServletRequest request;
 
 	@Resource
 	private WXStrategy wxStrategy;
@@ -35,7 +28,7 @@ public class WeXinAgentController {
 	@ResponseBody
 	public ParmResponse getWinXinOpenId(String loginCode){
 		String result = wxStrategy.getWinXinOpenId(loginCode);
-		logger.info( "获取微信用户openId结果：" + result);
+		log.info( "获取微信用户openId结果：" + result);
 		Object data = JSONObject.parse(result);
 
 		return ResponseUtils.getBeanResponse(data, "");
@@ -50,7 +43,7 @@ public class WeXinAgentController {
 	@ResponseBody
 	public ParmResponse getWinXinToken(){
 		String result =wxStrategy.getWinXinToken();
-		logger.info( "获取微信用户token结果：" + result);
+		log.info( "获取微信用户token结果：" + result);
 		Object data = JSONObject.parse(result);
 
 		return ResponseUtils.getBeanResponse(data, "");

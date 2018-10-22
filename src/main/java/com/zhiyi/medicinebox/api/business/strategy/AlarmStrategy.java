@@ -1,9 +1,10 @@
 package com.zhiyi.medicinebox.api.business.strategy;
 
 import com.zhiyi.medicinebox.api.business.common.constant.Consts;
-import com.zhiyi.medicinebox.api.business.service.alarm.AlarmService;
-import com.zhiyi.medicinebox.api.business.service.alarm.RecordService;
-import com.zhiyi.medicinebox.api.business.service.base.MedicineService;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.AlarmMapper;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.MedicineMapper;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.RecordMapper;
+import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.ViewAlarmMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.Medicine;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.Record;
@@ -14,8 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,14 +26,18 @@ import java.util.Date;
 public class AlarmStrategy {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
-    @Resource
-    private AlarmService alarmService;
-    @Resource
-    private MedicineService medicineService;
-    @Resource
-    private RecordService recordService;
     @Autowired
-    private HttpServletRequest request;
+    private AlarmMapper alarmMapper;
+
+    @Autowired
+    private MedicineMapper medicineMapper;
+
+    @Autowired
+    private RecordMapper recordMapper;
+
+    @Autowired
+    private ViewAlarmMapper viewAlarmMapper;
+
 
     /****
      * 添加一套用药提醒
@@ -47,10 +50,10 @@ public class AlarmStrategy {
     @Transactional(rollbackFor = Exception.class)
     public boolean addViewAlarm(Medicine medicine, Alarm alarm, Date startDate, Date endDate) {
         boolean isDone = false;
-        if (medicineService.add(medicine)) {
+        if (medicineMapper.insertSelective(medicine) > 0) {
             alarm.setMedId(medicine.getMedId());
             int days = Long.valueOf((endDate.getTime() - startDate.getTime()) / 1000 / 60 / 60 / 24).intValue() + 1;
-            logger.info("【" + request.getAttribute("UUID") + "】- 用户 " + alarm.getUserId() + "添加记录 " + days + "条");
+            logger.info("用户 " + alarm.getUserId() + "添加记录 " + days + "条");
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(startDate);
             if (alarm.getStatusId() == null || 0 == alarm.getStatusId()) {
@@ -61,11 +64,11 @@ public class AlarmStrategy {
             calendar.set(Calendar.MINUTE, alarm.getAlarmTime().getMinutes());
             //添加当天记录
             alarm.setAlarmTime(calendar.getTime());
-            isDone = alarmService.add(alarm);
+            isDone = alarmMapper.insertSelective(alarm) > 0;
             for (int i = 1; i < days; i++) {
                 calendar.add(Calendar.DAY_OF_MONTH, 1);
                 alarm.setAlarmTime(calendar.getTime());
-                isDone = alarmService.add(alarm);
+                isDone = alarmMapper.insertSelective(alarm) > 0;
             }
         }
         return isDone;
@@ -73,18 +76,23 @@ public class AlarmStrategy {
 
     /***
      * 用户针对一个用药提醒 服药操作
-     * @param alarmid
-     * @param statusid
+     * @param alarmId
+     * @param statusId
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public boolean takeMedicine(int alarmid, int statusid) {
-        if (alarmService.updateStatus(alarmid, statusid)) {
-            ViewAlarm newAlarm = alarmService.findViewAlarmById(alarmid);
+    public boolean takeMedicine(int alarmId, int statusId) {
+        Alarm alarm = new Alarm();
+        alarm.setAlarmId(alarmId);
+        alarm.setStatusId(statusId);
+        Integer num = alarmMapper.updateByPrimaryKeySelective(alarm);
+
+        if (num != null && num > 0) {
+            ViewAlarm newAlarm = viewAlarmMapper.findViewAlarmByAlarmId(alarmId);
             if (newAlarm != null) {
                 Record record = getRecordFromAlarm(newAlarm, new Date());
                 record.setType(Consts.TAKE_MED_STATUS_EATED);
-                return recordService.add(record);
+                return recordMapper.insertSelective(record) > 0;
             }
         }
         return false;
@@ -92,18 +100,23 @@ public class AlarmStrategy {
 
     /***
      * 用户针对一个用药提醒 跳过
-     * @param alarmid
-     * @param statusid
+     * @param alarmId
+     * @param statusId
      * @return
      */
     @Transactional(rollbackFor = Exception.class)
-    public boolean skipMedicine(int alarmid, int statusid){
-        if(alarmService.updateStatus(alarmid,statusid)){
-            ViewAlarm newAlarm = alarmService.findViewAlarmById(alarmid);
+    public boolean skipMedicine(int alarmId, int statusId){
+        Alarm alarm = new Alarm();
+        alarm.setAlarmId(alarmId);
+        alarm.setStatusId(statusId);
+        Integer num = alarmMapper.updateByPrimaryKeySelective(alarm);
+
+        if (num != null && num > 0) {
+            ViewAlarm newAlarm = viewAlarmMapper.findViewAlarmByAlarmId(alarmId);
             if (newAlarm != null) {
                 Record record = getRecordFromAlarm(newAlarm, new Date());
                 record.setType(Consts.TAKE_MED_STATUS_SKIP);
-                return recordService.add(record);
+                return recordMapper.insertSelective(record) > 0;
             }
         }
         return false;
