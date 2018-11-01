@@ -1,4 +1,4 @@
-package com.zhiyi.medicinebox.api.business.service.weixin;
+package com.zhiyi.medicinebox.api.business.service.weixin.vo;
 
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
 import lombok.Data;

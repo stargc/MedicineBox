@@ -1,7 +1,6 @@
-package com.zhiyi.medicinebox.api.business.service.alarm.search;
+package com.zhiyi.medicinebox.api.business.service.alarm.search.vo;
 
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
-import com.zhiyi.medicinebox.api.business.common.vo.alarm.ViewAlarmShow;
 import lombok.Data;
 
 import java.util.List;

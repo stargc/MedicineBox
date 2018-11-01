@@ -1,4 +1,4 @@
-package com.zhiyi.medicinebox.api.business.service.alarm.search;
+package com.zhiyi.medicinebox.api.business.service.alarm.search.vo;
 
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.ViewAlarm;

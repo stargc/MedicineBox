@@ -1,6 +1,6 @@
-package com.zhiyi.medicinebox.api.business.common.vo;
+package com.zhiyi.medicinebox.api.business.service.weixin.vo;
 
-public class WXSendMegRequest {
+public class WXSendMegReq {
 	
 	private String touser;
 	private String template_id;

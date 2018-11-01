@@ -1,7 +1,6 @@
 package com.zhiyi.medicinebox.api.business.service.alarm.add;
 
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
-import com.zhiyi.medicinebox.api.business.common.vo.alarm.AlarmAddReq;
 import com.zhiyi.medicinebox.api.business.strategy.AlarmStrategy;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.Alarm;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.Medicine;
@@ -62,11 +61,13 @@ public class AlarmAddService {
         Medicine medicine = new Medicine();
         medicine.setMedName(alarmAddReq.getMedName());
         medicine.setUrl(imgPath);
+        medicine.setCreateDate(new Date());
         Alarm alarm = new Alarm();
         alarm.setStatusId(alarmAddReq.getStatusId());
         alarm.setDosage(alarmAddReq.getDosage());
         alarm.setUserId(alarmAddReq.getUserId());
         alarm.setAlarmTime(alarmAddReq.getAlarmTime());
+        alarm.setCreateDate(new Date());
 
         boolean isDone = alarmStrategy.addViewAlarm(medicine, alarm, alarmAddReq.getStartDate(), alarmAddReq.getEndDate());
         resp.setResultCode(isDone ? BaseResponse.SUCCESS:BaseResponse.FAILED);

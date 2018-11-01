@@ -85,6 +85,7 @@ public class AlarmStrategy {
         Alarm alarm = new Alarm();
         alarm.setAlarmId(alarmId);
         alarm.setStatusId(statusId);
+        alarm.setUpdateDate(new Date());
         Integer num = alarmMapper.updateByPrimaryKeySelective(alarm);
 
         if (num != null && num > 0) {
@@ -109,6 +110,7 @@ public class AlarmStrategy {
         Alarm alarm = new Alarm();
         alarm.setAlarmId(alarmId);
         alarm.setStatusId(statusId);
+        alarm.setUpdateDate(new Date());
         Integer num = alarmMapper.updateByPrimaryKeySelective(alarm);
 
         if (num != null && num > 0) {

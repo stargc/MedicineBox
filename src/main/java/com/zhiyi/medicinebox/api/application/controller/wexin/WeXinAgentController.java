@@ -1,8 +1,8 @@
 package com.zhiyi.medicinebox.api.application.controller.wexin;
 
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
-import com.zhiyi.medicinebox.api.business.service.weixin.WXOpenIdResp;
-import com.zhiyi.medicinebox.api.business.service.weixin.WXTokenResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.vo.WXOpenIdResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.vo.WXTokenResp;
 import com.zhiyi.medicinebox.api.business.service.weixin.WXService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;

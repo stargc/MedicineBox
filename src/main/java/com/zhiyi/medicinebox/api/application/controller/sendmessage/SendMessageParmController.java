@@ -4,6 +4,7 @@ import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageParmMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageParm;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -20,7 +21,7 @@ public class SendMessageParmController {
 
     @RequestMapping("/deleteOverdueParm")
     @ResponseBody
-    public BaseResponse deleteByDate(Date date) {
+    public BaseResponse deleteByDate(@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date date) {
         int num = sendmessageParmMapper.deleteByDate(date);
 
         BaseResponse resp = new BaseResponse();
@@ -34,6 +35,7 @@ public class SendMessageParmController {
     public BaseResponse addParm(SendmessageParm parm) {
         BaseResponse resp = new BaseResponse();
         if (parm != null && !StringUtils.isEmpty(parm.getOpenId())) {
+            parm.setCreateDate(new Date());
             boolean done = sendmessageParmMapper.insertSelective(parm) > 0;
 
             resp.setResultCode(done ? BaseResponse.SUCCESS : BaseResponse.FAILED);

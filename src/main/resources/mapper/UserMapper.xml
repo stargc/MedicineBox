@@ -180,5 +180,6 @@
     <include refid="Base_Column_List" />
     from user
     where open_id = #{openid,jdbcType=VARCHAR}
+    limit 1
   </select>
 </mapper>

@@ -1,7 +1,7 @@
 package com.zhiyi.medicinebox.api.business.service.record;
 
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
-import com.zhiyi.medicinebox.api.business.common.vo.alarm.ViewRecordShow;
+import com.zhiyi.medicinebox.api.business.service.alarm.search.vo.ViewRecordShow;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.ViewRecordMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.ViewRecord;
 import lombok.extern.slf4j.Slf4j;

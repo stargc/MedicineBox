@@ -2,7 +2,6 @@ package com.zhiyi.medicinebox.api.business.service.alarm.add;
 
 import com.zhiyi.medicinebox.api.business.common.validator.ValidationResult;
 import com.zhiyi.medicinebox.api.business.common.validator.Validator;
-import com.zhiyi.medicinebox.api.business.common.vo.alarm.AlarmAddReq;
 import org.springframework.stereotype.Service;
 
 /**

@@ -2,11 +2,11 @@ package com.zhiyi.medicinebox.api.application.controller.alarm;
 
 import com.zhiyi.medicinebox.api.business.common.validator.ValidationResult;
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
-import com.zhiyi.medicinebox.api.business.common.vo.alarm.AlarmAddReq;
+import com.zhiyi.medicinebox.api.business.service.alarm.add.AlarmAddReq;
 import com.zhiyi.medicinebox.api.business.service.alarm.add.AlarmAddService;
 import com.zhiyi.medicinebox.api.business.service.alarm.add.AlarmAddVal;
-import com.zhiyi.medicinebox.api.business.service.alarm.search.AlarmListResp;
-import com.zhiyi.medicinebox.api.business.service.alarm.search.AlarmResp;
+import com.zhiyi.medicinebox.api.business.service.alarm.search.vo.AlarmListResp;
+import com.zhiyi.medicinebox.api.business.service.alarm.search.vo.AlarmResp;
 import com.zhiyi.medicinebox.api.business.service.alarm.search.AlarmSearchService;
 import com.zhiyi.medicinebox.api.business.service.alarm.updateStatus.AlarmUpdateStatusService;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +62,6 @@ public class AlarmController {
             log.error("get image 报错：" + ExceptionUtils.getStackTrace(e));
         }
     }
-
 
     @PostMapping("/add")
     public BaseResponse add(AlarmAddReq alarmAddReq,

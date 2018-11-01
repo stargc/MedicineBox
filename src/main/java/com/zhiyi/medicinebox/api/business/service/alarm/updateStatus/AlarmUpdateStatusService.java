@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+
 /**
  * @author guanchen
  * @version $Id UpdateStatusService.java, v 0.1 2018-10-18 14:31 star Exp $$
@@ -43,6 +45,7 @@ public class AlarmUpdateStatusService {
                 Alarm bean = new Alarm();
                 bean.setAlarmId(alarmId);
                 bean.setStatusId(statusId);
+                bean.setUpdateDate(new Date());
                 Integer num = alarmMapper.updateByPrimaryKeySelective(bean);
                 isDone = (num > 0);
                 break;
@@ -66,6 +69,7 @@ public class AlarmUpdateStatusService {
                 Alarm bean4 = new Alarm();
                 bean4.setAlarmId(alarmId);
                 bean4.setStatusId(statusId);
+                bean4.setUpdateDate(new Date());
                 Integer num4 = alarmMapper.updateByPrimaryKeySelective(bean4);
                 isDone = (num4 > 0);
                 break;

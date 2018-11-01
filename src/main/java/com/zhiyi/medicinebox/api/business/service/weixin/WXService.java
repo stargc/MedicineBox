@@ -1,12 +1,10 @@
 package com.zhiyi.medicinebox.api.business.service.weixin;
 
 import com.alibaba.fastjson.JSONObject;
-import com.mchange.util.Base64Encoder;
-import com.sun.javafx.collections.MappingChange;
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
-import com.zhiyi.medicinebox.api.business.common.vo.WXSendMegRequest;
-import com.zhiyi.medicinebox.api.business.service.weixin.WXOpenIdResp;
-import com.zhiyi.medicinebox.api.business.service.weixin.WXTokenResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.vo.WXOpenIdResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.vo.WXSendMegReq;
+import com.zhiyi.medicinebox.api.business.service.weixin.vo.WXTokenResp;
 import com.zhiyi.medicinebox.api.infrastructure.util.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
@@ -114,24 +112,24 @@ public class WXService {
      */
     public boolean sendEatMedicinePush(String access_token, String openId, String page, String formId, String medicineName, Date alarmTime, String dosage) {
 
-        WXSendMegRequest.EatMedTemplate data = new WXSendMegRequest.EatMedTemplate();
+        WXSendMegReq.EatMedTemplate data = new WXSendMegReq.EatMedTemplate();
 
-        WXSendMegRequest.MsgTemplate keyword1 = new WXSendMegRequest.MsgTemplate();
+        WXSendMegReq.MsgTemplate keyword1 = new WXSendMegReq.MsgTemplate();
         keyword1.setColor("#173177");
         keyword1.setValue(medicineName);
         data.setKeyword1(keyword1);
 
-        WXSendMegRequest.MsgTemplate keyword2 = new WXSendMegRequest.MsgTemplate();
+        WXSendMegReq.MsgTemplate keyword2 = new WXSendMegReq.MsgTemplate();
         keyword2.setColor("#173177");
         keyword2.setValue(DateUtils.Date2TimeString(alarmTime));
         data.setKeyword2(keyword2);
 
-        WXSendMegRequest.MsgTemplate keyword3 = new WXSendMegRequest.MsgTemplate();
+        WXSendMegReq.MsgTemplate keyword3 = new WXSendMegReq.MsgTemplate();
         keyword3.setColor("#173177");
         keyword3.setValue(dosage);
         data.setKeyword3(keyword3);
 
-        WXSendMegRequest parms = new WXSendMegRequest();
+        WXSendMegReq parms = new WXSendMegReq();
         parms.setData(data);
         parms.setForm_id(formId);
         parms.setPage(page);

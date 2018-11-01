@@ -1,4 +1,4 @@
-package com.zhiyi.medicinebox.api.business.common.vo.alarm;
+package com.zhiyi.medicinebox.api.business.service.alarm.search.vo;
 
 
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.ViewRecord;

@@ -2,7 +2,7 @@ package com.zhiyi.medicinebox.api.business.strategy;
 
 import com.zhiyi.medicinebox.api.business.common.constant.Consts;
 import com.zhiyi.medicinebox.api.business.service.weixin.WXService;
-import com.zhiyi.medicinebox.api.business.service.weixin.WXTokenResp;
+import com.zhiyi.medicinebox.api.business.service.weixin.vo.WXTokenResp;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.AlarmMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageLogMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageParmMapper;
