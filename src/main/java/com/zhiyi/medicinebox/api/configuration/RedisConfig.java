@@ -19,7 +19,7 @@ import redis.clients.jedis.JedisPoolConfig;
 import java.util.HashSet;
 import java.util.Set;
 
-@Configuration
+//@Configuration
 public class RedisConfig {
 
     @Value("${redis.nodes}")
