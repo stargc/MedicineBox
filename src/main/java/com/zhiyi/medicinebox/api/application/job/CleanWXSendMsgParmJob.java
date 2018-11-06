@@ -24,9 +24,9 @@ public class CleanWXSendMsgParmJob extends QuartzJobBean {
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         log.info( "定时清理 SendMessageParm 中过期的数据");
-//        Date scrapDate = new Date(System.currentTimeMillis() - 30*24*60*60*1000);
-//        sendmessageParmMapper.scrapParm(scrapDate);
-//        Date deleteDate = new Date(System.currentTimeMillis() - 30*24*60*60*1000);
-//        sendmessageParmMapper.deleteByDate(deleteDate);
+        Date scrapDate = new Date(System.currentTimeMillis() - 30*24*60*60*1000);
+        sendmessageParmMapper.scrapParm(scrapDate);
+        Date deleteDate = new Date(System.currentTimeMillis() - 30*24*60*60*1000);
+        sendmessageParmMapper.deleteByDate(deleteDate);
     }
 }

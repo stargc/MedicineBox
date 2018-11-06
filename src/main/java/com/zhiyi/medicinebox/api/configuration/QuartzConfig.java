@@ -1,10 +1,9 @@
 package com.zhiyi.medicinebox.api.configuration;
 
-import com.zhiyi.medicinebox.api.application.job.SendWXEatMedicineJob;
 import com.zhiyi.medicinebox.api.application.job.CleanWXSendMsgParmJob;
-import com.zhiyi.medicinebox.api.application.job.SimpleJob;
+import com.zhiyi.medicinebox.api.application.job.SendWXEatMedicineJob;
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,30 +15,17 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QuartzConfig {
 
-    @Value("${context_type}")
-    private String contextType;
-
-    @Bean
-    public JobDetail SimpleJob() {
-        return JobBuilder.newJob(SimpleJob.class).withIdentity("SimpleJob")
-                .storeDurably().build();
-    }
-
     @Bean
     public JobDetail sendWXEatMedicineJob() {
         return JobBuilder.newJob(SendWXEatMedicineJob.class).withIdentity("SendWXEatMedicine")
                 .storeDurably().build();
     }
     @Bean
-    public Trigger trigger() {
-        JobDetail job = null;
-        if ("prod".equals(contextType)){
-            job = sendWXEatMedicineJob();
-        } else {
-            job = SimpleJob();
-        }
+    @ConditionalOnProperty(name = "context_type", havingValue = "prod")
+    public Trigger SendWXEatMedicineTrigger() {
+        JobDetail job = sendWXEatMedicineJob();
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24).repeatForever();
-        return TriggerBuilder.newTrigger().forJob(job).withIdentity("mytrigger1").withSchedule(scheduleBuilder).build();
+        return TriggerBuilder.newTrigger().forJob(job).withIdentity("SendWXEatMedicineTrigger").withSchedule(scheduleBuilder).build();
     }
 
 
@@ -50,14 +36,10 @@ public class QuartzConfig {
     }
 
     @Bean
-    public Trigger trigger2() {
-        JobDetail job = null;
-        if ("prod".equals(contextType)){
-            job = cleanWXSendMsgParmJob();
-        } else {
-            job = SimpleJob();
-        }
+    @ConditionalOnProperty(name = "context_type", havingValue = "prod")
+    public Trigger cleanWXSendMsgParmTrigger() {
+        JobDetail job = cleanWXSendMsgParmJob();
         SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInMinutes(10).repeatForever();
-        return TriggerBuilder.newTrigger().forJob(job).withIdentity("mytrigger2").withSchedule(scheduleBuilder).build();
+        return TriggerBuilder.newTrigger().forJob(job).withIdentity("cleanWXSendMsgParmTrigger").withSchedule(scheduleBuilder).build();
     }
 }

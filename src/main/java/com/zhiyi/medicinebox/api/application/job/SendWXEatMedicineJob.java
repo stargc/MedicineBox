@@ -24,9 +24,9 @@ public class SendWXEatMedicineJob extends QuartzJobBean {
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
         log.info("定时 用户吃药提醒定时任务 -- 开启");
 
-//        /**搜索一个小时内 为发送个通知的 Alarm*/
-//        long time = 60 * 60 * 1000;
-//        sendMessageStrategy.startSendEatMassage(time);
+        /**搜索一个小时内 为发送个通知的 Alarm*/
+        long time = 60 * 60 * 1000;
+        sendMessageStrategy.startSendEatMassage(time);
     }
 }
 
