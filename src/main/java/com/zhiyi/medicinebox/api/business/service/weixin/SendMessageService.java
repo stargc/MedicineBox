@@ -1,4 +1,4 @@
-package com.zhiyi.medicinebox.api.business.strategy;
+package com.zhiyi.medicinebox.api.business.service.weixin;
 
 import com.zhiyi.medicinebox.api.business.common.constant.Consts;
 import com.zhiyi.medicinebox.api.business.service.weixin.WXService;
@@ -27,7 +27,7 @@ import java.util.List;
  * @version $Id AlarmStrategy.java, v 0.1 2018-07-19 17:49 star Exp $$
  */
 @Service
-public class SendMessageStrategy {
+public class SendMessageService {
     private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Resource

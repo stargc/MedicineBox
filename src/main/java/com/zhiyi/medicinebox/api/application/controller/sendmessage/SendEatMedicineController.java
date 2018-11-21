@@ -1,7 +1,7 @@
 package com.zhiyi.medicinebox.api.application.controller.sendmessage;
 
 import com.zhiyi.medicinebox.api.business.common.vo.BaseResponse;
-import com.zhiyi.medicinebox.api.business.strategy.SendMessageStrategy;
+import com.zhiyi.medicinebox.api.business.service.weixin.SendMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -20,7 +20,7 @@ import java.io.IOException;
 @Slf4j
 public class SendEatMedicineController {
     @Resource
-    private SendMessageStrategy sendMessageStrategy;
+    private SendMessageService sendMessageStrategy;
 
     @RequestMapping("/sendWXEatMed")
     @ResponseBody

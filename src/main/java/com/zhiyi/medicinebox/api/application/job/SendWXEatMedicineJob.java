@@ -1,6 +1,6 @@
 package com.zhiyi.medicinebox.api.application.job;
 
-import com.zhiyi.medicinebox.api.business.strategy.SendMessageStrategy;
+import com.zhiyi.medicinebox.api.business.service.weixin.SendMessageService;
 import lombok.extern.slf4j.Slf4j;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
@@ -18,7 +18,7 @@ import javax.annotation.Resource;
 public class SendWXEatMedicineJob extends QuartzJobBean {
 
     @Resource
-    private SendMessageStrategy sendMessageStrategy;
+    private SendMessageService sendMessageStrategy;
 
     @Override
     protected void executeInternal(JobExecutionContext jobExecutionContext) throws JobExecutionException {
