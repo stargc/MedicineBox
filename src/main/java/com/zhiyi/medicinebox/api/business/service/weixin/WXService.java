@@ -29,20 +29,20 @@ public class WXService {
     @Autowired
     private RestTemplate restTemplate;
 
-    @Value("wx_medbox_appid")
+    @Value("${wx_medbox_appid}")
     private String wxMedboxAppid;
-    @Value("wx_medbox_secret")
+    @Value("${wx_medbox_secret}")
     private String wxMedboxSecret;
-    @Value("wx_openid_server")
+    @Value("${wx_openid_server}")
     private String wxOpenidServer;
 
-    @Value("wx_token_server")
+    @Value("${wx_token_server}")
     private String wxTokenServer;
 
-    @Value("wx_template_sned_medicine_message")
+    @Value("${wx_template_sned_medicine_message}")
     private String wxTemplateSnedMedicineMessage;
 
-    @Value("wx_send_message_server")
+    @Value("${wx_send_message_server}")
     private String wxSendMessageServer;
 
     /***

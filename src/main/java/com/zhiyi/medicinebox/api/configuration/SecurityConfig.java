@@ -6,11 +6,11 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 @Configuration
-public class WebConfig {
+public class SecurityConfig {
 
     // 需要认证的URL
     private static final String[] AUTH_NEEDED_URLS = {
-            "/test",
+            "/test1",
     };
 
     // TOKEN认证filter

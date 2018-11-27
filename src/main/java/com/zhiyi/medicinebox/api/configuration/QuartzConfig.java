@@ -21,10 +21,11 @@ public class QuartzConfig {
                 .storeDurably().build();
     }
     @Bean
-    @ConditionalOnProperty(name = "context_type", havingValue = "prod")
+//    @ConditionalOnProperty(name = "context_type", havingValue = "prod")
     public Trigger SendWXEatMedicineTrigger() {
         JobDetail job = sendWXEatMedicineJob();
-        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24).repeatForever();
+        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInSeconds(10).repeatForever();
+//        SimpleScheduleBuilder scheduleBuilder = SimpleScheduleBuilder.simpleSchedule().withIntervalInHours(24).repeatForever();
         return TriggerBuilder.newTrigger().forJob(job).withIdentity("SendWXEatMedicineTrigger").withSchedule(scheduleBuilder).build();
     }
 

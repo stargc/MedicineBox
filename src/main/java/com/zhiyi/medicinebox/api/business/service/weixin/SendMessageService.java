@@ -1,7 +1,6 @@
 package com.zhiyi.medicinebox.api.business.service.weixin;
 
 import com.zhiyi.medicinebox.api.business.common.constant.Consts;
-import com.zhiyi.medicinebox.api.business.service.weixin.WXService;
 import com.zhiyi.medicinebox.api.business.service.weixin.vo.WXTokenResp;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.AlarmMapper;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.mapper.SendmessageLogMapper;
@@ -12,10 +11,10 @@ import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageLog;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.SendmessageParm;
 import com.zhiyi.medicinebox.api.infrastructure.persistence.po.ViewAlarm;
 import com.zhiyi.medicinebox.api.infrastructure.util.DateUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -27,8 +26,8 @@ import java.util.List;
  * @version $Id AlarmStrategy.java, v 0.1 2018-07-19 17:49 star Exp $$
  */
 @Service
+@Slf4j
 public class SendMessageService {
-    private final Logger logger = LogManager.getLogger(this.getClass().getName());
 
     @Resource
     private WXService wxStrategy;
@@ -42,45 +41,20 @@ public class SendMessageService {
     @Resource
     private SendmessageLogMapper sendmessageLogMapper;
 
-    @Value("eat_medicine_notification_skip_page")
+    @Value("${eat_medicine_notification_skip_page}")
     private String eatMedicineNotificationSkipPage;
 
-    /***
-     * 查询 time 秒内 所有的alarm,并发送提醒到指定用户
-     * @param time 单位秒
-     */
-    public void startSendEatMassage(long time){
-
-        WXTokenResp tokenResult = wxStrategy.getWinXinToken();
-
-        String access_token =  tokenResult.getAccessToken();
-        Date today = new Date();
-        Date startTime = new Date(today.getTime() - time);
-
-        List<ViewAlarm> alarmlist = viewAlarmMapper.findAlarmToSendMsg(startTime,today);
-        logger.info("共需发送用药提醒：" + alarmlist != null ? alarmlist.size() : "0" + "条");
-        if (alarmlist != null && !alarmlist.isEmpty()){
-            for (int i = 0; i < alarmlist.size(); i++) {
-                List<SendmessageParm> parms = sendmessageParmMapper.findByUserId(alarmlist.get(i).getUserId());
-                if (parms != null && !parms.isEmpty()){
-
-                    try {
-                        sendWXEatMessage(alarmlist.get(i), parms.get(0),access_token,eatMedicineNotificationSkipPage);
-                    } catch (Exception e) {
-                        logger.error(ExceptionUtils.getStackTrace(e));                    }
-                }
-            }
-        }
-    }
 
     /***
      * 发送微信吃药提醒
+     * 此方法进入异步线程池
      * @param alarm
      * @param parm 微信用于发送消息的相关参数
      * @param access_token
      * @param pageUrl
      * @return
      */
+    @Async("workTaskExecutor")
     public boolean sendWXEatMessage(ViewAlarm alarm, SendmessageParm parm, String access_token, String pageUrl) {
         if (alarm != null && parm != null) {
             String formId = "";
@@ -90,7 +64,7 @@ public class SendMessageService {
                 formId = parm.getPrepayId();
             }
             if (!"".equals(formId)) {
-                logger.info("开始发送用药提醒到用户: alarmID:" + alarm.getAlarmId() +
+                log.info("开始发送用药提醒到用户: alarmID:" + alarm.getAlarmId() +
                         ";药品名：" + alarm.getMedName() + "; 提醒时间： " + alarm.getAlarmTime() +
                         "; UserID： " + alarm.getUserId() + "; userName: " + alarm.getUserName());
 
@@ -102,7 +76,7 @@ public class SendMessageService {
                         .append(alarm.getDosage()).toString();
                 boolean done = wxStrategy.sendEatMedicinePush(access_token, alarm.getOpenId(),
                         page, formId, alarm.getMedName(), alarm.getAlarmTime(), alarm.getDosage());
-                logger.info("发送用药alarmID: " + alarm.getAlarmId() +"提醒结果：" + done);
+                log.info("发送用药alarmID: " + alarm.getAlarmId() +"提醒结果：" + done);
                 if (done) {
                     // 设置该条提醒已经发送
 

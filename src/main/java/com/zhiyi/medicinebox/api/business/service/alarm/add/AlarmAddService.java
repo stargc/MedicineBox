@@ -24,10 +24,10 @@ import java.util.Date;
 @Slf4j
 public class AlarmAddService {
 
-    @Value("default_alarm_image_url")
+    @Value("${default_alarm_image_url}")
     private String defaultAlarmImageUrl;
 
-    @Value("file_save_path_liunx")
+    @Value("${file_save_path_liunx}")
     private String fileSavePathLiunx;
 
     @Resource

@@ -67,7 +67,7 @@ public class LoggingFilter extends OncePerRequestFilter {
             }
 
         }
-        logger.info(msg.toString());
+//        logger.info(msg.toString());
     }
 
     private boolean isBinaryContent(final HttpServletRequest request) {
@@ -91,7 +91,7 @@ public class LoggingFilter extends OncePerRequestFilter {
         } catch (UnsupportedEncodingException e) {
             logger.warn("Failed to parse response payload", e);
         }
-        logger.info(msg.toString());
+//        logger.info(msg.toString());
     }
 
 }
