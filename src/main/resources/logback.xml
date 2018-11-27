@@ -8,9 +8,9 @@
     </appender>
 
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${catalina.home}/logs/hicashapi-service.log</file>
+        <file>${catalina.home}/logs/MedicineBox-service.log</file>
 　　　　　<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-　　　　　　　<fileNamePattern>${catalina.home}/logs/hicashapi-service.%d{yyyy-MM-dd}.log</fileNamePattern>
+　　　　　　　<fileNamePattern>${catalina.home}/logs/MedicineBox-service.%d{yyyy-MM-dd}.log</fileNamePattern>
 　　　　　　　<maxHistory>30</maxHistory>
 　　　　　</rollingPolicy>
 　　　　　<encoder>

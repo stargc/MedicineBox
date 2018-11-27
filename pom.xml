@@ -146,7 +146,7 @@
     </profiles>
 
     <build>
-        <finalName>hicash-api-service</finalName>
+        <finalName>MedicineBox-api-service</finalName>
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
