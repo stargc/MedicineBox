@@ -24,11 +24,17 @@ public class AlarmSearchService {
     @Resource
     private ViewAlarmMapper viewAlarmMapper;
 
-    public AlarmListResp searchByUserId(int userId) {
+    public AlarmListResp searchByUserId(int userId,Integer pageNo, Integer pageSize) {
         AlarmListResp resp = new AlarmListResp();
         resp.setResultCode(BaseResponse.SUCCESS);
+        int num = 0;
+        int offset = 0;
+        if (pageSize != null && pageSize != 0){
+            offset = pageSize;
+            num = (pageNo - 1) * pageSize;
+        }
 
-        List<ViewAlarm> list = viewAlarmMapper.findViewAlarmByUserId(userId);
+        List<ViewAlarm> list = viewAlarmMapper.findViewAlarmByUserId(userId,num,offset);
 
 
         List<ViewAlarmShow> result = new ArrayList<>();

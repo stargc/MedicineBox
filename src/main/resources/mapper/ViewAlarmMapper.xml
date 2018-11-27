@@ -44,7 +44,10 @@
         <include refid="Base_Column_List_VIEWALARM"/>
         FROM
         <include refid="Base_table_List_VIEWALARM"/>
-        where u.user_id = #{userid,jdbcType=INTEGER} and a.status_id = 1 ORDER BY a.alarm_time limit 100
+        where u.user_id = #{userid,jdbcType=INTEGER} and a.status_id = 1 ORDER BY a.alarm_time
+        <if test="offset != 0">
+            limit #{num,jdbcType=INTEGER},#{offset,jdbcType=INTEGER}
+        </if>
     </select>
 
     <select id="findViewAlarmByAlarmId" resultMap="BaseResultMap" parameterType="java.lang.Integer">

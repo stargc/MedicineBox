@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface ViewAlarmMapper {
-    List<ViewAlarm> findViewAlarmByUserId(int userid);
+    List<ViewAlarm> findViewAlarmByUserId(@Param("userid")int userid,@Param("num")int num, @Param("offset")int offset);
 
     ViewAlarm findViewAlarmByAlarmId(int alarmid);
 

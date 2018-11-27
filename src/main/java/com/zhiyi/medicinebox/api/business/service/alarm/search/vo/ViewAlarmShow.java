@@ -33,6 +33,7 @@ public class ViewAlarmShow implements Serializable {
 	private String alarmTimeShow;
 
 	public ViewAlarmShow(ViewAlarm v) {
+		this.alarmId = v.getAlarmId();
 		this.alarmTime = v.getAlarmTime();
 		this.dosage = v.getDosage();
 		this.medName = v.getMedName();

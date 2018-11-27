@@ -78,7 +78,7 @@ public class AlarmController {
     }
 
     @PostMapping("/findAlarmByUser")
-    public AlarmListResp findAlarmByUser(int userId) {
+    public AlarmListResp findAlarmByUser(int userId,Integer pageNo, Integer pageSize) {
         AlarmListResp resp = new AlarmListResp();
         if (userId == 0) {
             resp.setResultCode(BaseResponse.FAILED);
@@ -86,7 +86,7 @@ public class AlarmController {
             return resp;
         }
 
-        resp = searchService.searchByUserId(userId);
+        resp = searchService.searchByUserId(userId,pageNo,pageSize);
         return resp;
     }
 
